@@ -12,5 +12,6 @@ namespace webbanlaptop.Models
         public int DonGia { get; set; }
         public int ThuongHieuID { get; set; }
         public ThuongHieu? ThuongHieus { get; set; }
+
     }
 }
