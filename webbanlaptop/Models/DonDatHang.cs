@@ -11,6 +11,15 @@ namespace webbanlaptop.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime NgayLap { get; set; }
 
+        [Display(Name = "Họ tên")]
+        public string? HoTen { get; set; }
+
+        [Display(Name = "Số điện thoại")]
+        public string? SoDienThoai { get; set; }
+
+        [Display(Name = "Email")]
+        public string? Email { get; set; }
+
         [Display(Name = "Ghi chú")]
         public string? GhiChu { get; set; }
 
@@ -25,11 +34,12 @@ namespace webbanlaptop.Models
         [Display(Name = "Duyệt đơn")]
         public int DuyetDon { get; set; }
 
-        [Display(Name = "Địa chỉ")]
-        public int HuyDon { get; set; } = 0;
-
-        [Display(Name = "Hình thức")]
+        [Display(Name = "Thanh toán")]
         public int HinhThucThanhToanID { get; set; }
         public HinhThucThanhToan? HinhThucThanhToans { get; set; }
+
+        [Display(Name = "Nhận hàng")]
+        public int HinhThucNhanHangID { get; set; }
+        public HinhThucNhanHang? HinhThucNhanHangs { get; set; }
     }
 }

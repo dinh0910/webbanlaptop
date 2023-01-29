@@ -3,11 +3,11 @@ using System.Xml.Linq;
 
 namespace webbanlaptop.Models
 {
-    public class LoaiThongSo
+    public class LoaiSanPham
     {
-        public int LoaiThongSoID { get; set; }
+        public int LoaiSanPhamID { get; set; }
 
-        [Display(Name = "Tên")]
+        [Display(Name = "Tên loại")]
         public string? Ten { get; set; }
     }
 }

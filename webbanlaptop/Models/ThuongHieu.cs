@@ -7,7 +7,7 @@ namespace webbanlaptop.Models
     {
         public int ThuongHieuID { get; set; }
 
-        [Display(Name = "Tên")]
+        [Display(Name = "Tên thương hiệu")]
         public string? Ten { get; set; }
     }
 }
