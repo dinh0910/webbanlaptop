@@ -11,90 +11,90 @@ using webbanlaptop.Models;
 namespace webbanlaptop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ThongSosController : Controller
+    public class DanhMucConsController : Controller
     {
         private readonly webbanlaptopContext _context;
 
-        public ThongSosController(webbanlaptopContext context)
+        public DanhMucConsController(webbanlaptopContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/ThongSos
+        // GET: Admin/DanhMucCons
         public async Task<IActionResult> Index()
         {
-            var webbanlaptopContext = _context.ThongSo.Include(t => t.TenThongSos);
+            var webbanlaptopContext = _context.DanhMucCon.Include(d => d.DanhMucs);
             return View(await webbanlaptopContext.ToListAsync());
         }
 
-        // GET: Admin/ThongSos/Details/5
+        // GET: Admin/DanhMucCons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ThongSo == null)
+            if (id == null || _context.DanhMucCon == null)
             {
                 return NotFound();
             }
 
-            var thongSo = await _context.ThongSo
-                .Include(t => t.TenThongSos)
-                .FirstOrDefaultAsync(m => m.ThongSoID == id);
-            if (thongSo == null)
+            var danhMucCon = await _context.DanhMucCon
+                .Include(d => d.DanhMucs)
+                .FirstOrDefaultAsync(m => m.DanhMucConID == id);
+            if (danhMucCon == null)
             {
                 return NotFound();
             }
 
-            return View(thongSo);
+            return View(danhMucCon);
         }
 
-        // GET: Admin/ThongSos/Create
+        // GET: Admin/DanhMucCons/Create
         public IActionResult Create()
         {
-            ViewData["TenThongSoID"] = new SelectList(_context.TenThongSo, "TenThongSoID", "TenThongSoID");
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID");
             return View();
         }
 
-        // POST: Admin/ThongSos/Create
+        // POST: Admin/DanhMucCons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ThongSoID,TenThongSoID,NoiDung")] ThongSo thongSo)
+        public async Task<IActionResult> Create([Bind("DanhMucConID,DanhMucID,Ten")] DanhMucCon danhMucCon)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(thongSo);
+                _context.Add(danhMucCon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TenThongSoID"] = new SelectList(_context.TenThongSo, "TenThongSoID", "TenThongSoID", thongSo.TenThongSoID);
-            return View(thongSo);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", danhMucCon.DanhMucID);
+            return View(danhMucCon);
         }
 
-        // GET: Admin/ThongSos/Edit/5
+        // GET: Admin/DanhMucCons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ThongSo == null)
+            if (id == null || _context.DanhMucCon == null)
             {
                 return NotFound();
             }
 
-            var thongSo = await _context.ThongSo.FindAsync(id);
-            if (thongSo == null)
+            var danhMucCon = await _context.DanhMucCon.FindAsync(id);
+            if (danhMucCon == null)
             {
                 return NotFound();
             }
-            ViewData["TenThongSoID"] = new SelectList(_context.TenThongSo, "TenThongSoID", "TenThongSoID", thongSo.TenThongSoID);
-            return View(thongSo);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", danhMucCon.DanhMucID);
+            return View(danhMucCon);
         }
 
-        // POST: Admin/ThongSos/Edit/5
+        // POST: Admin/DanhMucCons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ThongSoID,TenThongSoID,NoiDung")] ThongSo thongSo)
+        public async Task<IActionResult> Edit(int id, [Bind("DanhMucConID,DanhMucID,Ten")] DanhMucCon danhMucCon)
         {
-            if (id != thongSo.ThongSoID)
+            if (id != danhMucCon.DanhMucConID)
             {
                 return NotFound();
             }
@@ -103,12 +103,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(thongSo);
+                    _context.Update(danhMucCon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ThongSoExists(thongSo.ThongSoID))
+                    if (!DanhMucConExists(danhMucCon.DanhMucConID))
                     {
                         return NotFound();
                     }
@@ -119,51 +119,51 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TenThongSoID"] = new SelectList(_context.TenThongSo, "TenThongSoID", "TenThongSoID", thongSo.TenThongSoID);
-            return View(thongSo);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", danhMucCon.DanhMucID);
+            return View(danhMucCon);
         }
 
-        // GET: Admin/ThongSos/Delete/5
+        // GET: Admin/DanhMucCons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ThongSo == null)
+            if (id == null || _context.DanhMucCon == null)
             {
                 return NotFound();
             }
 
-            var thongSo = await _context.ThongSo
-                .Include(t => t.TenThongSos)
-                .FirstOrDefaultAsync(m => m.ThongSoID == id);
-            if (thongSo == null)
+            var danhMucCon = await _context.DanhMucCon
+                .Include(d => d.DanhMucs)
+                .FirstOrDefaultAsync(m => m.DanhMucConID == id);
+            if (danhMucCon == null)
             {
                 return NotFound();
             }
 
-            return View(thongSo);
+            return View(danhMucCon);
         }
 
-        // POST: Admin/ThongSos/Delete/5
+        // POST: Admin/DanhMucCons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ThongSo == null)
+            if (_context.DanhMucCon == null)
             {
-                return Problem("Entity set 'webbanlaptopContext.ThongSo'  is null.");
+                return Problem("Entity set 'webbanlaptopContext.DanhMucCon'  is null.");
             }
-            var thongSo = await _context.ThongSo.FindAsync(id);
-            if (thongSo != null)
+            var danhMucCon = await _context.DanhMucCon.FindAsync(id);
+            if (danhMucCon != null)
             {
-                _context.ThongSo.Remove(thongSo);
+                _context.DanhMucCon.Remove(danhMucCon);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ThongSoExists(int id)
+        private bool DanhMucConExists(int id)
         {
-          return _context.ThongSo.Any(e => e.ThongSoID == id);
+          return _context.DanhMucCon.Any(e => e.DanhMucConID == id);
         }
     }
 }

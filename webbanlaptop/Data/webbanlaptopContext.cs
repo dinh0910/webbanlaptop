@@ -39,5 +39,7 @@ namespace webbanlaptop.Data
         public DbSet<webbanlaptop.Models.ThongSo> ThongSo { get; set; }
 
         public DbSet<webbanlaptop.Models.ThuongHieu> ThuongHieu { get; set; }
+
+        public DbSet<webbanlaptop.Models.DanhMucCon> DanhMucCon { get; set; }
     }
 }

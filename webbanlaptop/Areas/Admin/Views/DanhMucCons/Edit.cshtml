@@ -1,4 +1,4 @@
-﻿@model webbanlaptop.Models.ThongSo
+﻿@model webbanlaptop.Models.DanhMucCon
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,22 +6,22 @@
 
 <h1>Edit</h1>
 
-<h4>ThongSo</h4>
+<h4>DanhMucCon</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ThongSoID" />
+            <input type="hidden" asp-for="DanhMucConID" />
             <div class="form-group">
-                <label asp-for="TenThongSoID" class="control-label"></label>
-                <select asp-for="TenThongSoID" class="form-control" asp-items="ViewBag.TenThongSoID"></select>
-                <span asp-validation-for="TenThongSoID" class="text-danger"></span>
+                <label asp-for="DanhMucID" class="control-label"></label>
+                <select asp-for="DanhMucID" class="form-control" asp-items="ViewBag.DanhMucID"></select>
+                <span asp-validation-for="DanhMucID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NoiDung" class="control-label"></label>
-                <input asp-for="NoiDung" class="form-control" />
-                <span asp-validation-for="NoiDung" class="text-danger"></span>
+                <label asp-for="Ten" class="control-label"></label>
+                <input asp-for="Ten" class="form-control" />
+                <span asp-validation-for="Ten" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
