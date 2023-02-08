@@ -41,5 +41,7 @@ namespace webbanlaptop.Models
         [Display(Name = "Nhận hàng")]
         public int HinhThucNhanHangID { get; set; }
         public HinhThucNhanHang? HinhThucNhanHangs { get; set; }
+
+        public ICollection<ChiTietDatHang>? ChiTietDatHangs { get; set; }
     }
 }

@@ -25,5 +25,6 @@ namespace webbanlaptop.Models
         [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int ThanhTien { get; set; }
 
+
     }
 }

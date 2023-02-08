@@ -27,6 +27,6 @@ namespace webbanlaptop.Models
         [Display(Name = "Thương hiệu")]
         public int ThuongHieuID { get; set; }
         public ThuongHieu? ThuongHieus { get; set; }
-
+       
     }
 }
