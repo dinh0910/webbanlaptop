@@ -1,0 +1,35 @@
+﻿@model IEnumerable<webbanlaptop.Models.HinhThucNhanHang>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-hover" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NoiDung)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiDung)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HinhThucNhanHangID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HinhThucNhanHangID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HinhThucNhanHangID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

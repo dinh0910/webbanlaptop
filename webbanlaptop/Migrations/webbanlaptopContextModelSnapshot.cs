@@ -17,7 +17,7 @@ namespace webbanlaptop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -207,6 +207,45 @@ namespace webbanlaptop.Migrations
                     b.ToTable("HinhThucThanhToan");
                 });
 
+            modelBuilder.Entity("webbanlaptop.Models.KhuyenMai", b =>
+                {
+                    b.Property<int>("KhuyenMaiID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KhuyenMaiID"), 1L, 1);
+
+                    b.Property<string>("NoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("KhuyenMaiID");
+
+                    b.ToTable("KhuyenMai");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.KhuyenMaiSanPham", b =>
+                {
+                    b.Property<int>("KhuyenMaiSanPhamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KhuyenMaiSanPhamID"), 1L, 1);
+
+                    b.Property<int>("KhuyenMaiID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SanPhamID")
+                        .HasColumnType("int");
+
+                    b.HasKey("KhuyenMaiSanPhamID");
+
+                    b.HasIndex("KhuyenMaiID");
+
+                    b.HasIndex("SanPhamID");
+
+                    b.ToTable("KhuyenMaiSanPham");
+                });
+
             modelBuilder.Entity("webbanlaptop.Models.LoaiSanPham", b =>
                 {
                     b.Property<int>("LoaiSanPhamID")
@@ -237,6 +276,27 @@ namespace webbanlaptop.Migrations
                     b.HasKey("LoaiThongSoID");
 
                     b.ToTable("LoaiThongSo");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.Mau", b =>
+                {
+                    b.Property<int>("MauID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MauID"), 1L, 1);
+
+                    b.Property<int>("SanPhamID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MauID");
+
+                    b.HasIndex("SanPhamID");
+
+                    b.ToTable("Mau");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.Quyen", b =>
@@ -377,6 +437,45 @@ namespace webbanlaptop.Migrations
                     b.ToTable("ThongSo");
                 });
 
+            modelBuilder.Entity("webbanlaptop.Models.ThongTin", b =>
+                {
+                    b.Property<int>("ThongTinID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThongTinID"), 1L, 1);
+
+                    b.Property<string>("NoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ThongTinID");
+
+                    b.ToTable("ThongTin");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.ThongTinSanPham", b =>
+                {
+                    b.Property<int>("ThongTinSanPhamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThongTinSanPhamID"), 1L, 1);
+
+                    b.Property<int>("SanPhamID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThongTinID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ThongTinSanPhamID");
+
+                    b.HasIndex("SanPhamID");
+
+                    b.HasIndex("ThongTinID");
+
+                    b.ToTable("ThongTinSanPham");
+                });
+
             modelBuilder.Entity("webbanlaptop.Models.ThuongHieu", b =>
                 {
                     b.Property<int>("ThuongHieuID")
@@ -396,7 +495,7 @@ namespace webbanlaptop.Migrations
             modelBuilder.Entity("webbanlaptop.Models.ChiTietDatHang", b =>
                 {
                     b.HasOne("webbanlaptop.Models.DonDatHang", "DonDatHangs")
-                        .WithMany()
+                        .WithMany("ChiTietDatHangs")
                         .HasForeignKey("DonDatHangID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -443,6 +542,36 @@ namespace webbanlaptop.Migrations
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.HinhAnh", b =>
+                {
+                    b.HasOne("webbanlaptop.Models.SanPham", "SanPhams")
+                        .WithMany()
+                        .HasForeignKey("SanPhamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.KhuyenMaiSanPham", b =>
+                {
+                    b.HasOne("webbanlaptop.Models.KhuyenMai", "KhuyenMais")
+                        .WithMany()
+                        .HasForeignKey("KhuyenMaiID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webbanlaptop.Models.SanPham", "SanPhams")
+                        .WithMany()
+                        .HasForeignKey("SanPhamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KhuyenMais");
+
+                    b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.Mau", b =>
                 {
                     b.HasOne("webbanlaptop.Models.SanPham", "SanPhams")
                         .WithMany()
@@ -519,6 +648,30 @@ namespace webbanlaptop.Migrations
                     b.Navigation("SanPhams");
 
                     b.Navigation("TenThongSos");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.ThongTinSanPham", b =>
+                {
+                    b.HasOne("webbanlaptop.Models.SanPham", "SanPhams")
+                        .WithMany()
+                        .HasForeignKey("SanPhamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webbanlaptop.Models.ThongTin", "ThongTins")
+                        .WithMany()
+                        .HasForeignKey("ThongTinID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SanPhams");
+
+                    b.Navigation("ThongTins");
+                });
+
+            modelBuilder.Entity("webbanlaptop.Models.DonDatHang", b =>
+                {
+                    b.Navigation("ChiTietDatHangs");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,26 @@
+﻿<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-2">
+                    <div class="text-center mb-4">
+                        <span class="fw-semibold fs-3">Đăng nhập tài khoản</span>
+                    </div>
+                    <form asp-antiforgery="true" action="/Home/Login" method="post">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput">
+                            <label for="floatingInput">Tài khoản</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Mật khẩu</label>
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" value="Đăng nhập" class="btn btn-success col fw-semibold" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

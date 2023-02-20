@@ -12,7 +12,7 @@ namespace webbanlaptop.Models
         public string? TenTaiKhoan { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}")]
         [Display(Name = "Mật khẩu")]
         public string? MatKhau { get; set; }
 

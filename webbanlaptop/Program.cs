@@ -7,6 +7,11 @@ builder.Services.AddDbContext<webbanlaptopContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.Cookie.Name = "WebBanLaptop";
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
+});
 
 var app = builder.Build();
 
@@ -21,13 +26,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "area",
-    pattern: "{area=Admin}/{controller=Home}/{action=index}/{id?}"
+    pattern: "{area:exists}/{controller=Home}/{action=index}/{id?}"
 );
 
 app.MapControllerRoute(

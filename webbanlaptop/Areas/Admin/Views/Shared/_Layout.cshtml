@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/webbanlaptop.styles.css" asp-append-version="true" />
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.2/b-2.3.4/fc-4.2.1/sc-2.1.0/sb-1.4.0/sp-2.1.1/sl-1.6.0/datatables.min.css" />
 </head>
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -48,15 +50,15 @@
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDanhMuc" aria-expanded="false" aria-controls="collapseDanhMuc">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý Danh mục
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseDanhMuc" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-area="" asp-controller="DanhMucs" asp-action="Index">Danh sách Danh mục</a>
-                                <a class="nav-link" asp-area="" asp-controller="DanhMucCons" asp-action="Index">Danh sách Danh mục con</a>
+                                <a class="nav-link" asp-controller="DanhMucs" asp-action="Index">Danh sách Danh mục</a>
+                                <a class="nav-link" asp-controller="DanhMucCons" asp-action="Index">Danh sách Danh mục con</a>
                             </nav>
                         </div>
                         <!--<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -90,24 +92,24 @@
                                 </div>
                             </nav>
                         </div>-->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSanPham" aria-expanded="false" aria-controls="collapseSanPham">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý Sản phẩm
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseSanPham" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-area="" asp-controller="ThuongHieus" asp-action="Index">Danh sách Thương hiệu</a>
-                                <a class="nav-link" asp-area="" asp-controller="KhuyenMais" asp-action="Index">Danh sách Thông tin Khuyến mãi</a>
-                                <a class="nav-link" asp-area="" asp-controller="ThongSos" asp-action="Index">Danh sách Thông số Sản phẩm</a>
-                                <a class="nav-link" asp-area="" asp-controller="ThongTinSanPhams" asp-action="Index">Danh sách Thông tin Sản phẩm</a>
-                                <a class="nav-link" asp-area="" asp-controller="LoaiSanPhams" asp-action="Index">Danh sách Loại sản phẩm</a>
-                                <a class="nav-link" asp-area="" asp-controller="Maus" asp-action="Index">Danh sách Màu sắc Sản phẩm</a>
-                                <a class="nav-link" asp-area="" asp-controller="SanPhams" asp-action="Index">Danh sách Sản phẩm</a>
+                                <a class="nav-link" asp-controller="ThuongHieus" asp-action="Index">Danh sách Thương hiệu</a>
+                                <a class="nav-link" asp-controller="KhuyenMais" asp-action="Index">Danh sách Thông tin Khuyến mãi</a>
+                                <a class="nav-link" asp-controller="ThongSos" asp-action="Index">Danh sách Thông số Sản phẩm</a>
+                                <a class="nav-link" asp-controller="ThongTinSanPhams" asp-action="Index">Danh sách Thông tin Sản phẩm</a>
+                                <a class="nav-link" asp-controller="LoaiSanPhams" asp-action="Index">Danh sách Loại sản phẩm</a>
+                                <a class="nav-link" asp-controller="Maus" asp-action="Index">Danh sách Màu sắc Sản phẩm</a>
+                                <a class="nav-link" asp-controller="SanPhams" asp-action="Index">Danh sách Sản phẩm</a>
                             </nav>
                         </div>
 
-                        <a class="nav-link collapsed" asp-area="" asp-controller="DonDatHangs" asp-action="Index">
+                        <a class="nav-link collapsed" asp-controller="DonDatHangs" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Quản lý Đơn đặt hàng
                         </a>
@@ -119,8 +121,10 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-area="" asp-controller="Banners" asp-action="Index">Danh sách Banner</a>
-                                <a class="nav-link" asp-area="" asp-controller="BaiViets" asp-action="Index">Danh sách Bài viết</a>
+                                <a class="nav-link" asp-controller="TaiKhoans" asp-action="Index">Danh sách Tài khoản</a>
+                                <a class="nav-link" asp-controller="Quyens" asp-action="Index">Danh sách Quyền</a>
+                                <a class="nav-link" asp-controller="Banners" asp-action="Index">Danh sách Banner</a>
+                                <a class="nav-link" asp-controller="BaiViets" asp-action="Index">Danh sách Bài viết</a>
                             </nav>
                         </div>
 
@@ -152,7 +156,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                        <div class="text-muted">Copyright &copy; Nguyễn Ngà Website 2023</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -167,6 +171,8 @@
     <script src="~/js/scripts.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.2/b-2.3.4/fc-4.2.1/sc-2.1.0/sb-1.4.0/sp-2.1.1/sl-1.6.0/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

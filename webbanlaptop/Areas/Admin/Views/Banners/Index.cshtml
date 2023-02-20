@@ -9,25 +9,26 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover" id="myTable">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.HinhAnh)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BannerID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BannerID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BannerID">Delete</a>
+        <tr class="mb-4">
+            <td class ="d-flex">
+                <div class="p-2 w-100">
+                    <img src="~/images/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
+                </div>
+                <div class="p-2 flex-shrink-1 d-flex flex-column">
+                    <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">Edit</a>
+                    <a class="p-2" asp-action="Details" asp-route-id="@item.BannerID">Details</a>
+                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID">Delete</a>
+                </div>
             </td>
         </tr>
 }
