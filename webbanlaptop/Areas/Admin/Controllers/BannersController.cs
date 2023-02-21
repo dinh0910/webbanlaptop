@@ -61,6 +61,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 banner.HinhAnh = Upload(file);
                 _context.Add(banner);
+                TempData["AlertMessage"] = "Thêm thành công!";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

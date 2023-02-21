@@ -4,6 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @TempData["AlertMessage"]
+    </div>
+}
+
 <h1>Index</h1>
 
 <p>

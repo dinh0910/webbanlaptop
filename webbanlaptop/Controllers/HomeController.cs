@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using webbanlaptop.Models;
 using webbanlaptop.Libs;
 using webbanlaptop.Data;
+using Microsoft.AspNetCore.Authentication;
 
 
 namespace webbanlaptop.Controllers
@@ -14,7 +16,7 @@ namespace webbanlaptop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly webbanlaptopContext _context;
-        //public INotyfService _notifyService { get; }
+        public INotyfService _notifyService { get; }
 
         public const string SessionTK = "_TaiKhoanID";
         public const string SessionHoten = "_HoTen";
@@ -23,10 +25,11 @@ namespace webbanlaptop.Controllers
         public const string SessionSDT = "_SDT";
         public const string SessionDiaChi = "_DiaChi";
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, webbanlaptopContext context, INotyfService notifyService)
         {
             _logger = logger;
-            //_notifyService = notifyService;
+            _context = context;
+            _notifyService = notifyService;
 
         }
 
@@ -42,13 +45,11 @@ namespace webbanlaptop.Controllers
             if (ModelState.IsValid)
             {
                 string mahoamatkhau = SHA1.ComputeHash(TaiKhoan.MatKhau);
-                //var taiKhoan = db.Khachhangs.Where(r => r.TenDangNhap == khachHang.TenDangNhap && r.MatKhau == mahoamatkhau).SingleOrDefault();
                 var taiKhoan = await _context.TaiKhoan.FirstOrDefaultAsync(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan && r.MatKhau == mahoamatkhau);
 
                 if (taiKhoan == null)
                 {
-                    //_notifyService.Error("Tên đăng nhập hoặc mật khẩu không chính xác !");
-                    return View(TaiKhoan);
+                    TempData["AlertMessageLogin"] = "Đăng nhập không thành công!";
                 }
                 else
                 {
@@ -70,15 +71,20 @@ namespace webbanlaptop.Controllers
                         HttpContext.Session.SetInt32("CartNumber", data.Count);
                     }*/
 
-                    //_notifyService.Success("Đăng nhập thành công ");
+                    _notifyService.Success("Đăng nhập thành công ");
+                    TempData["AlertMessageLogin"] = "Đăng nhập thành công!";
 
 
                     // Quay về trang chủ
                     return RedirectToAction("Index", "Home");
+                    //return View(TaiKhoan);
                 }
             }
 
-            return View(TaiKhoan);
+            TempData["AlertMessageLogin"] = "Đăng nhập thành công!";
+
+            return RedirectToAction("Index", "Home");
+            //return View(TaiKhoan);
         }
 
         public IActionResult Privacy()
