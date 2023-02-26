@@ -4,17 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-@if (TempData["AlertMessage"] != null)
-{
-    <div class="alert alert-primary" role="alert">
-        @TempData["AlertMessage"]
-    </div>
-}
-
-<h1>Index</h1>
+<h1>Danh sách Banner</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Thêm mới</a>
 </p>
 <table class="table table-hover" id="myTable">
     <thead>
@@ -32,9 +25,17 @@
                     <img src="~/images/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
                 </div>
                 <div class="p-2 flex-shrink-1 d-flex flex-column">
-                    <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">Edit</a>
-                    <a class="p-2" asp-action="Details" asp-route-id="@item.BannerID">Details</a>
-                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID">Delete</a>
+                    <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">
+                        <i class="fa-solid fa-pen-to-square text-success"></i>
+                    </a>
+
+                    <a class="p-2" asp-action="Details" asp-route-id="@item.BannerID">
+                        <i class="fa-solid fa-circle-info text-primary"></i>
+                    </a>
+
+                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID">
+                        <i class="fa-solid fa-trash text-danger"></i>
+                    </a>
                 </div>
             </td>
         </tr>

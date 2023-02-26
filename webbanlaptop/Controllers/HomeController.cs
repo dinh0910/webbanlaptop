@@ -1,14 +1,10 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using NToastNotify;
 using System.Diagnostics;
-using webbanlaptop.Models;
-using webbanlaptop.Libs;
 using webbanlaptop.Data;
-using Microsoft.AspNetCore.Authentication;
-
+using webbanlaptop.Libs;
+using webbanlaptop.Models;
 
 namespace webbanlaptop.Controllers
 {
@@ -16,7 +12,7 @@ namespace webbanlaptop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly webbanlaptopContext _context;
-        public INotyfService _notifyService { get; }
+        private readonly IToastNotification _toastNotification;
 
         public const string SessionTK = "_TaiKhoanID";
         public const string SessionHoten = "_HoTen";
@@ -25,12 +21,11 @@ namespace webbanlaptop.Controllers
         public const string SessionSDT = "_SDT";
         public const string SessionDiaChi = "_DiaChi";
 
-        public HomeController(ILogger<HomeController> logger, webbanlaptopContext context, INotyfService notifyService)
+        public HomeController(ILogger<HomeController> logger, webbanlaptopContext context, IToastNotification toastNotification)
         {
             _logger = logger;
             _context = context;
-            _notifyService = notifyService;
-
+            _toastNotification = toastNotification;
         }
 
         public IActionResult Index()
@@ -45,50 +40,100 @@ namespace webbanlaptop.Controllers
             if (ModelState.IsValid)
             {
                 string mahoamatkhau = SHA1.ComputeHash(TaiKhoan.MatKhau);
-                var taiKhoan = await _context.TaiKhoan.FirstOrDefaultAsync(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan && r.MatKhau == mahoamatkhau);
-
+                var taiKhoan = await _context.TaiKhoan.FirstOrDefaultAsync(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan
+                                                                            && r.MatKhau == mahoamatkhau
+                                                                            && r.QuyenID == 2);
                 if (taiKhoan == null)
                 {
-                    TempData["AlertMessageLogin"] = "Đăng nhập không thành công!";
+                    _toastNotification.AddErrorToastMessage("Đăng nhập không thành công!");
                 }
                 else
                 {
                     // Đăng ký SESSION
-
                     HttpContext.Session.SetInt32(SessionTK, (int)taiKhoan.TaiKhoanID);
-                    HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
                     HttpContext.Session.SetString(SessionTenDN, taiKhoan.TenTaiKhoan);
+                    HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
                     HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
                     HttpContext.Session.SetString(SessionSDT, taiKhoan.SoDienThoai);
                     HttpContext.Session.SetString(SessionDiaChi, taiKhoan.DiaChi);
 
-
-                    //var cart = _context.Carts.FirstOrDefault(x => x.IdKh == (int)HttpContext.Session.GetInt32("_IdKhachHang"));
-                    /*if (cart is not null)
-                    {
-                        var data = JsonConvert.DeserializeObject<List<CartItem>>(cart.Data);
-
-                        HttpContext.Session.SetInt32("CartNumber", data.Count);
-                    }*/
-
-                    _notifyService.Success("Đăng nhập thành công ");
-                    TempData["AlertMessageLogin"] = "Đăng nhập thành công!";
-
-
-                    // Quay về trang chủ
+                    _toastNotification.AddSuccessToastMessage("Đăng nhập thành công!");
                     return RedirectToAction("Index", "Home");
-                    //return View(TaiKhoan);
                 }
             }
-
-            TempData["AlertMessageLogin"] = "Đăng nhập thành công!";
-
-            return RedirectToAction("Index", "Home");
-            //return View(TaiKhoan);
+            return View(TaiKhoan);
         }
 
-        public IActionResult Privacy()
+        public void OnGet()
         {
+            // Success Toast
+            _toastNotification.AddSuccessToastMessage("Woo hoo - it works!");
+
+            // Info Toast
+            _toastNotification.AddInfoToastMessage("Here is some information.");
+
+            // Error Toast
+            _toastNotification.AddErrorToastMessage("Woops an error occured.");
+
+            // Warning Toast
+            _toastNotification.AddWarningToastMessage("Here is a simple warning!");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("Id,TenTaiKhoan,MatKhau")] TaiKhoan TaiKhoan)
+        {
+            if (ModelState.IsValid)
+            {
+                var check = _context.TaiKhoan.FirstOrDefault(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan);
+                if (check == null)
+                {
+                    if (RegexPassword.Validation(TaiKhoan.MatKhau))
+                    {
+                        TaiKhoan.MatKhau = SHA1.ComputeHash(TaiKhoan.MatKhau);
+                        _context.Add(TaiKhoan);
+                        await _context.SaveChangesAsync();
+                        _toastNotification.AddSuccessToastMessage("Đăng ký tài khoản thành công!");
+                        return RedirectToAction("Login", "Home");
+                    }
+                    _toastNotification.AddErrorToastMessage("Mật khẩu phải nhiều hơn 8 ký tự, ít nhất 1 chữ thường 1 chữ in hoa, 1 chữ số, 1 ký tự đặc biệt!");
+                }
+                else
+                {
+                    _toastNotification.AddWarningToastMessage("Tên đăng nhập đã tồn tại. Bạn hãy nhập tên khác!");
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            // Xóa SESSION
+            HttpContext.Session.Remove("_Id");
+            HttpContext.Session.Remove("_Hoten");
+            HttpContext.Session.Remove("_TenDN");
+            HttpContext.Session.Remove("_Quyen");
+            HttpContext.Session.Remove("_HinhAnh");
+            HttpContext.Session.Remove("_Email");
+
+            // Quy về trang chủ
+            return RedirectToAction("Login", "Home");
+        }
+
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult ChangePassword() 
+        { 
             return View();
         }
 

@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NToastNotify;
 using webbanlaptop.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<webbanlaptopContext>(options =>
@@ -14,7 +15,14 @@ builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromMinutes(60);
 });
 
-builder.Services.AddNotyf(config => { config.DurationInSeconds = 4; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
+// Add services to the container.
+builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
+{
+    ProgressBar = true,
+    Timeout = 5000
+});
+
+//builder.Services.AddNotyf(config => { config.DurationInSeconds = 4; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
 
 
 var app = builder.Build();
@@ -35,6 +43,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseNToastNotify();
 
 app.MapControllerRoute(
     name: "area",

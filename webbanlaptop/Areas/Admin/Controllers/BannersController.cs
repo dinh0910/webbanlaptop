@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
+using NToastNotify;
+
 
 namespace webbanlaptop.Areas.Admin.Controllers
 {
@@ -14,10 +16,13 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class BannersController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public BannersController(webbanlaptopContext context)
+
+        public BannersController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/Banners
@@ -61,7 +66,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 banner.HinhAnh = Upload(file);
                 _context.Add(banner);
-                TempData["AlertMessage"] = "Thêm thành công!";
+                _toastNotification.AddSuccessToastMessage("Woo hoo - it works!");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

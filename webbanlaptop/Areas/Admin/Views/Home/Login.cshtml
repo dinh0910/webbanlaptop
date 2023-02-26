@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Hugo 0.104.2">
+        <title>Đăng nhập tài khoản Admin</title>
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link href="~/css/signin.css" rel="stylesheet">
+        <link href="~/css/styleAdminLogin.css" rel="stylesheet">
+    </head>
+    <body class="text-center">
+        <main class="form-signin w-100 m-auto">
+        <form asp-antiforgery="true" action="Login" method="post">
+            <h1 class="h3 mb-3 fw-normal">Đăng nhập tài khoản Admin</h1>
+
+            <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" name="TenTaiKhoan" placeholder="Tên tài khoản">
+            <label for="floatingInput">Tên tài khoản</label>
+            </div>
+            <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="MatKhau" placeholder="Mật khẩu">
+            <label for="floatingPassword">Mật khẩu</label>
+            </div>
+
+            <div class="checkbox mb-3">
+            <!--<label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>-->
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng nhập</button>
+            <p class="mt-5 mb-3 text-muted">&copy; Nguyễn Ngà</p>
+        </form>
+        </main>
+        @await Component.InvokeAsync("NToastNotify")
+    </body>
+</html>

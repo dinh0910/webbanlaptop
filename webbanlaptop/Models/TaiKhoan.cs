@@ -12,9 +12,8 @@ namespace webbanlaptop.Models
         public string? TenTaiKhoan { get; set; }
 
         [Required]
-        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}")]
         [Display(Name = "Mật khẩu")]
-        public string? MatKhau { get; set; }
+        public string MatKhau { get; set; }
 
         [Display(Name = "Họ tên")]
         public string? HoTen { get; set; }
@@ -29,7 +28,7 @@ namespace webbanlaptop.Models
         public string? Email { get; set; }
 
         [Display(Name = "Quyền")]
-        public int QuyenID { get; set; }
+        public int QuyenID { get; set; } = 2;
         public Quyen? Quyens { get; set; }
     }
 }

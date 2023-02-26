@@ -1,9 +1,29 @@
-﻿@model webbanlaptop.Models.TaiKhoanLogin
+﻿<div class="container mb-5">
+    <div class="row">
+        <div class="col"></div>
 
-@{
-    ViewData["Title"] = "Privacy Policy";
-}
+        <div class="col-7">
+            <div class="fw-bold fs-3 text-center" style="color:#7fad39">
+                ĐĂNG NHẬP TÀI KHOẢN
+            </div>
+            <form asp-antiforgery="true" action="/Home/Login" method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" name="TenTaiKhoan" class="form-control" id="floatingInput" placeholder="Tài khoản" />
+                    <label for="floatingInput">Tài khoản</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" name="MatKhau" class="form-control" id="password" placeholder="Nhập mật khẩu của bạn" oninput="checkpd();" required />
+                    <label for="password">Mật khẩu</label>
+                    <a href="/Home/ChangePassword" class="d-flex flex-row-reverse mt-1 text-decoration-none text-muted" role="button" style="font-size:12px;">
+                        Quên mật khẩu?
+                    </a>
+                </div>
+                <div class="d-grid">
+                    <input type="submit" id="submit" value="Đăng ký" class="btn btn-success col fw-semibold" style="color:#7fad39" />
+                </div>
+            </form>
+        </div>
 
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+        <div class="col"></div>
+    </div>
+</div>

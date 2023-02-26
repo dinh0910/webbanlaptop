@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.NoiDung)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HinhThucNhanHangID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HinhThucNhanHangID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HinhThucNhanHangID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.HinhThucNhanHangID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                <a asp-action="Details" asp-route-id="@item.HinhThucNhanHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.HinhThucNhanHangID"><i class="fa-solid fa-trash text-danger"></i></a>
             </td>
         </tr>
 }

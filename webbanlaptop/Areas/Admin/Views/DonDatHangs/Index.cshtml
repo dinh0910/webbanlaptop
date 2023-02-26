@@ -79,9 +79,9 @@
                 @Html.DisplayFor(modelItem => item.HinhThucNhanHangs.HinhThucNhanHangID)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DonDatHangID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DonDatHangID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DonDatHangID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                <a asp-action="Details" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-trash text-danger"></i></a>
             </td>
         </tr>
 }

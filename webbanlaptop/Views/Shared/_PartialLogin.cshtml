@@ -4,21 +4,26 @@
             <div class="modal-body">
                 <div class="p-2">
                     <div class="text-center mb-4">
-                        <span class="fw-semibold fs-3">Đăng nhập tài khoản</span>
+                        <span class="fw-bold fs-3" style="color:#7fad39">ĐĂNG NHẬP TÀI KHOẢN</span>
                     </div>
                     <form asp-antiforgery="true" action="/Home/Login" method="post">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput">
+                            <input type="text" name="TenTaiKhoan" class="form-control" id="floatingInput" placeholder="Tài khoản">
                             <label for="floatingInput">Tài khoản</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" name="MatKhau" class="form-control" id="floatingPassword" placeholder="Mật khẩu">
                             <label for="floatingPassword">Mật khẩu</label>
+                            <a href="/Home/ChangePassword" class="d-flex flex-row-reverse mt-1 text-decoration-none text-muted" role="button" style="font-size:12px;">
+                                Quên mật khẩu?
+                            </a>
                         </div>
                         <div class="d-grid">
-                            <input type="submit" value="Đăng nhập" class="btn btn-success col fw-semibold" />
+                            <input type="submit" value="Đăng nhập" class="btn text-white col fw-semibold" style="background-color:#7fad39" />
                         </div>
                     </form>
+                    <hr />
+                    <span class="text-muted">Bạn chưa có tài khoản? <a class="text-decoration-none text-primary" asp-action="Register">Đăng ký ngay</a></span>
                 </div>
             </div>
         </div>
