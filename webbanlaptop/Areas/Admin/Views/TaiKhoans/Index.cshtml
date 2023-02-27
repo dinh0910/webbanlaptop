@@ -33,6 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Quyens)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -59,9 +60,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quyens.QuyenID)
             </td>
-            <a asp-action="Edit" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
-            <a asp-action="Details" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-circle-info text-primary"></i></a>
-            <a asp-action="Delete" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-trash text-danger"></i></a>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                <a asp-action="Details" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-trash text-danger"></i></a>
+            </td>
         </tr>
 }
     </tbody>

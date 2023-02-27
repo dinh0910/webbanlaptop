@@ -52,10 +52,10 @@ namespace webbanlaptop.Controllers
                     // Đăng ký SESSION
                     HttpContext.Session.SetInt32(SessionTK, (int)taiKhoan.TaiKhoanID);
                     HttpContext.Session.SetString(SessionTenDN, taiKhoan.TenTaiKhoan);
-                    HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
-                    HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
-                    HttpContext.Session.SetString(SessionSDT, taiKhoan.SoDienThoai);
-                    HttpContext.Session.SetString(SessionDiaChi, taiKhoan.DiaChi);
+                    //HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
+                    //HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
+                    //HttpContext.Session.SetString(SessionSDT, taiKhoan.SoDienThoai);
+                    //HttpContext.Session.SetString(SessionDiaChi, taiKhoan.DiaChi);
 
                     _toastNotification.AddSuccessToastMessage("Đăng nhập thành công!");
                     return RedirectToAction("Index", "Home");
@@ -114,16 +114,14 @@ namespace webbanlaptop.Controllers
 
         public ActionResult Logout()
         {
-            // Xóa SESSION
-            HttpContext.Session.Remove("_Id");
-            HttpContext.Session.Remove("_Hoten");
-            HttpContext.Session.Remove("_TenDN");
-            HttpContext.Session.Remove("_Quyen");
-            HttpContext.Session.Remove("_HinhAnh");
-            HttpContext.Session.Remove("_Email");
+            HttpContext.Session.Remove("_TaiKhoanID");
+            //HttpContext.Session.Remove("_Hoten");
+            HttpContext.Session.Remove("_TenTaiKhoan");
+            //HttpContext.Session.Remove("_Quyen");
+            //HttpContext.Session.Remove("_HinhAnh");
+            //HttpContext.Session.Remove("_Email");
 
-            // Quy về trang chủ
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -134,6 +132,11 @@ namespace webbanlaptop.Controllers
 
         public IActionResult ChangePassword() 
         { 
+            return View();
+        }
+
+        public IActionResult PersonalInformation()
+        {
             return View();
         }
 

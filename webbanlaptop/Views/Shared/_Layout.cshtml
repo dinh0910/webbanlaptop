@@ -37,9 +37,8 @@
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+                <a href="/Home/Login"><i class="fa fa-user"></i> Login</a>
             </div>
-            <partial name="_PartialLogin" />
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
@@ -105,7 +104,19 @@
                                 </ul>
                             </div>-->
                             <div class="header__top__right__auth">
-                                <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-user"></i> Đăng nhập</a>
+                                @if(@Context.Session.GetInt32("_TaiKhoanID") == null){
+                                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-user"></i> Đăng nhập</a>
+                                } else
+                                {
+                                    <a class="" data-bs-toggle="dropdown" aria-expanded="false" href="#" role="button">
+                                        <i class="fa fa-user"></i> Chào, @Context.Session.GetString("_TenTaiKhoan")!
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/Home/PersonalInformation" class="dropdown-item" role="button">Thông tin cá nhân</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a href="/Home/Logout" class="dropdown-item">Đăng xuất</a></li>
+                                    </ul>
+                                }
                             </div>
                             <partial name="_PartialLogin" />
                         </div>
@@ -124,7 +135,7 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="/">Shop</a></li>
                             <li>
                                 <a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
