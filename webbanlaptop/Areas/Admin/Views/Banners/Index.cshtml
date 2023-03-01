@@ -6,9 +6,34 @@
 
 <h1>Danh sách Banner</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Thêm mới</a>
-</p>
+<div>
+    <a class="btn btn-primary mb-5" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Thêm mới</a>
+</div>
+
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-2">
+                    <div class="text-center mb-4">
+                        <span class="fw-bold fs-3" style="color:#7fad39">Thêm Banner</span>
+                    </div>
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="control-label">Hình ảnh</label>
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table table-hover" id="myTable">
     <thead>
         <tr>
@@ -33,9 +58,23 @@
                         <i class="fa-solid fa-circle-info text-primary"></i>
                     </a>
 
-                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID">
+                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
                         <i class="fa-solid fa-trash text-danger"></i>
                     </a>
+                    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="/Admin/Banners/Delete/@item.BannerID" role="button" class="btn btn-danger">Xóa</a>
+                                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </td>
         </tr>

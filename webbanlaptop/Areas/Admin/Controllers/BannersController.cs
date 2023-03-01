@@ -66,7 +66,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 banner.HinhAnh = Upload(file);
                 _context.Add(banner);
-                _toastNotification.AddSuccessToastMessage("Woo hoo - it works!");
+                _toastNotification.AddSuccessToastMessage("Thêm thành công!");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -141,28 +141,16 @@ namespace webbanlaptop.Areas.Admin.Controllers
             if (banner == null)
             {
                 return NotFound();
-            }
-
-            return View(banner);
-        }
-
-        // POST: Admin/Banners/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Banner == null)
+            } else
             {
-                return Problem("Entity set 'webbanlaptopContext.Banner'  is null.");
-            }
-            var banner = await _context.Banner.FindAsync(id);
-            if (banner != null)
-            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
                 _context.Banner.Remove(banner);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
+            //return View(banner);
         }
 
         private bool BannerExists(int id)
