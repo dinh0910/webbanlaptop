@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
+using NToastNotify;
 
 namespace webbanlaptop.Areas.Admin.Controllers
 {
@@ -14,10 +15,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class QuyensController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public QuyensController(webbanlaptopContext context)
+        public QuyensController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/Quyens
@@ -115,43 +118,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(quyen);
-        }
-
-        // GET: Admin/Quyens/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Quyen == null)
-            {
-                return NotFound();
-            }
-
-            var quyen = await _context.Quyen
-                .FirstOrDefaultAsync(m => m.QuyenID == id);
-            if (quyen == null)
-            {
-                return NotFound();
-            }
-
-            return View(quyen);
-        }
-
-        // POST: Admin/Quyens/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Quyen == null)
-            {
-                return Problem("Entity set 'webbanlaptopContext.Quyen'  is null.");
-            }
-            var quyen = await _context.Quyen.FindAsync(id);
-            if (quyen != null)
-            {
-                _context.Quyen.Remove(quyen);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool QuyenExists(int id)

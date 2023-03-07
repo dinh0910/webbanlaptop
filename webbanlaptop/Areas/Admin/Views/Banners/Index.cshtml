@@ -15,13 +15,12 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="p-2">
-                    <div class="text-center mb-4">
+                    <div class="text-center mb-2">
                         <span class="fw-bold fs-3" style="color:#7fad39">Thêm Banner</span>
                     </div>
                     <form asp-action="Create" enctype="multipart/form-data">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label class="control-label">Hình ảnh</label>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Hình ảnh</label>
                             <input type="file" name="file" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -53,12 +52,13 @@
                     <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">
                         <i class="fa-solid fa-pen-to-square text-success"></i>
                     </a>
+                    
 
                     <a class="p-2" asp-action="Details" asp-route-id="@item.BannerID">
                         <i class="fa-solid fa-circle-info text-primary"></i>
                     </a>
 
-                    <a class="p-2" asp-action="Delete" asp-route-id="@item.BannerID" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                    <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
                         <i class="fa-solid fa-trash text-danger"></i>
                     </a>
                     <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">

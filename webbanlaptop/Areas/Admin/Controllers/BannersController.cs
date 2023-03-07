@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
+using webbanlaptop.Areas.Admin;
 using NToastNotify;
 
 
@@ -17,7 +18,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
     {
         private readonly webbanlaptopContext _context;
         private readonly IToastNotification _toastNotification;
-
 
         public BannersController(webbanlaptopContext context, IToastNotification toastNotification)
         {
@@ -50,10 +50,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Banners/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Admin/Banners/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -69,8 +65,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 _toastNotification.AddSuccessToastMessage("Thêm thành công!");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+                //return RedirectToAction("Error404", "Errors");
             }
-            return View(banner);
+            _toastNotification.AddErrorToastMessage("Thêm thất bại!");
+            //return RedirectToAction("Error404", "Errors");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/Banners/Edit/5
@@ -94,7 +93,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(IFormFile file, int id, [Bind("BannerID,HinhAnh")] Banner banner)
+        public async Task<IActionResult> Edit(int id, IFormFile file, [Bind("BannerID,HinhAnh")] Banner banner)
         {
             if (id != banner.BannerID)
             {
@@ -109,6 +108,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                     {
                         banner.HinhAnh = Upload(file);
                     }
+                    _toastNotification.AddSuccessToastMessage("Sửa thành công!");
                     _context.Update(banner);
                     await _context.SaveChangesAsync();
                 }
@@ -125,6 +125,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            _toastNotification.AddErrorToastMessage("Sửa thất bại!");
             return View(banner);
         }
 

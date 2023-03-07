@@ -15,19 +15,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ten)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ten)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.QuyenID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
-                <a asp-action="Details" asp-route-id="@item.QuyenID"><i class="fa-solid fa-circle-info text-primary"></i></a>
-                <a asp-action="Delete" asp-route-id="@item.QuyenID"><i class="fa-solid fa-trash text-danger"></i></a>
+        <tr class="mb-4">
+            <td class="d-flex">
+                <div class="p-2 w-100">
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </div>
+                <div class="p-2 flex-shrink-1 d-flex flex-column">
+                    <a asp-action="Edit" asp-route-id="@item.QuyenID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.QuyenID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                </div>
             </td>
         </tr>
 }

@@ -8,18 +8,17 @@ builder.Services.AddDbContext<webbanlaptopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("webbanlaptopContext") ?? throw new InvalidOperationException("Connection string 'webbanlaptopContext' not found.")));
 
 // Add services to the container.
+builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions()
+{
+    ProgressBar = true,
+    Timeout = 5000
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => {
     options.Cookie.Name = "WebBanLaptop";
     options.IdleTimeout = TimeSpan.FromMinutes(60);
-});
-
-// Add services to the container.
-builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
-{
-    ProgressBar = true,
-    Timeout = 5000
 });
 
 //builder.Services.AddNotyf(config => { config.DurationInSeconds = 4; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
