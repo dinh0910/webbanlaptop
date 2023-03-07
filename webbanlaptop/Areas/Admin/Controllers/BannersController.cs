@@ -136,7 +136,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             var banner = await _context.Banner
                 .FirstOrDefaultAsync(m => m.BannerID == id);
             if (banner == null)
@@ -147,11 +146,8 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 _toastNotification.AddSuccessToastMessage("Xóa thành công!");
                 _context.Banner.Remove(banner);
             }
-
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
-            //return View(banner);
         }
 
         private bool BannerExists(int id)

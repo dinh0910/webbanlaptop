@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using webbanlaptop.Data;
+using webbanlaptop.Libs;
 using webbanlaptop.Models;
 
 namespace webbanlaptop.Areas.Admin.Controllers
@@ -14,10 +17,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class TaiKhoansController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public TaiKhoansController(webbanlaptopContext context)
+        public TaiKhoansController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/TaiKhoans
@@ -47,11 +52,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
         }
 
         // GET: Admin/TaiKhoans/Create
-        public IActionResult Create()
-        {
-            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "QuyenID");
-            return View();
-        }
 
         // POST: Admin/TaiKhoans/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -62,12 +62,18 @@ namespace webbanlaptop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(taiKhoan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (RegexPassword.Validation(taiKhoan.MatKhau))
+                {
+                    taiKhoan.MatKhau = SHA1.ComputeHash(taiKhoan.MatKhau);
+                    _context.Add(taiKhoan);
+                    await _context.SaveChangesAsync();
+                    _toastNotification.AddSuccessToastMessage("Thêm thành công!");
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "QuyenID", taiKhoan.QuyenID);
-            return View(taiKhoan);
+            _toastNotification.AddErrorToastMessage("Thêm thất bại!");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/TaiKhoans/Edit/5
@@ -138,25 +144,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            return View(taiKhoan);
-        }
-
-        // POST: Admin/TaiKhoans/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.TaiKhoan == null)
+            else
             {
-                return Problem("Entity set 'webbanlaptopContext.TaiKhoan'  is null.");
-            }
-            var taiKhoan = await _context.TaiKhoan.FindAsync(id);
-            if (taiKhoan != null)
-            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
                 _context.TaiKhoan.Remove(taiKhoan);
             }
-            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

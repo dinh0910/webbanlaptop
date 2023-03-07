@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
 
@@ -14,10 +15,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class DanhMucsController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public DanhMucsController(webbanlaptopContext context)
+        public DanhMucsController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/DanhMucs
@@ -45,10 +48,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
         }
 
         // GET: Admin/DanhMucs/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Admin/DanhMucs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -61,9 +60,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 _context.Add(danhMuc);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Thêm thành công!");
                 return RedirectToAction(nameof(Index));
             }
-            return View(danhMuc);
+            _toastNotification.AddErrorToastMessage("Thêm thất bại!");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/DanhMucs/Edit/5
@@ -131,25 +132,13 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            return View(danhMuc);
-        }
-
-        // POST: Admin/DanhMucs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.DanhMuc == null)
+            else
             {
-                return Problem("Entity set 'webbanlaptopContext.DanhMuc'  is null.");
-            }
-            var danhMuc = await _context.DanhMuc.FindAsync(id);
-            if (danhMuc != null)
-            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
+
                 _context.DanhMuc.Remove(danhMuc);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
