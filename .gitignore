@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/webbanlaptop/Areas/Admin/Views/DanhMucCons/Create.cshtml
