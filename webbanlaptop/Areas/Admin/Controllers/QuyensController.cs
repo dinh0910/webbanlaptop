@@ -47,12 +47,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return View(quyen);
         }
 
-        // GET: Admin/Quyens/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Admin/Quyens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,6 +112,29 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(quyen);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.Quyen == null)
+            {
+                return NotFound();
+            }
+
+            var quyen = await _context.Quyen
+                .FirstOrDefaultAsync(m => m.QuyenID == id);
+            if (quyen == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
+                _context.Quyen.Remove(quyen);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool QuyenExists(int id)

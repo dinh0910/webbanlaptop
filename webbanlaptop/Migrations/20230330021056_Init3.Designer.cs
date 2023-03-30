@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webbanlaptop.Data;
 
@@ -11,9 +12,10 @@ using webbanlaptop.Data;
 namespace webbanlaptop.Migrations
 {
     [DbContext(typeof(webbanlaptopContext))]
-    partial class webbanlaptopContextModelSnapshot : ModelSnapshot
+    [Migration("20230330021056_Init3")]
+    partial class Init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("BannerID");
 
-                    b.ToTable("Banner", (string)null);
+                    b.ToTable("Banner");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ChiTietDatHang", b =>
@@ -67,7 +69,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("SanPhamID");
 
-                    b.ToTable("ChiTietDatHang", (string)null);
+                    b.ToTable("ChiTietDatHang");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.DanhMuc", b =>
@@ -83,7 +85,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("DanhMucID");
 
-                    b.ToTable("DanhMuc", (string)null);
+                    b.ToTable("DanhMuc");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.DanhMucCon", b =>
@@ -104,7 +106,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("DanhMucID");
 
-                    b.ToTable("DanhMucCon", (string)null);
+                    b.ToTable("DanhMucCon");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.DonDatHang", b =>
@@ -151,7 +153,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("HinhThucThanhToanID");
 
-                    b.ToTable("DonDatHang", (string)null);
+                    b.ToTable("DonDatHang");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.HinhAnh", b =>
@@ -172,7 +174,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("SanPhamID");
 
-                    b.ToTable("HinhAnh", (string)null);
+                    b.ToTable("HinhAnh");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.HinhThucNhanHang", b =>
@@ -188,7 +190,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("HinhThucNhanHangID");
 
-                    b.ToTable("HinhThucNhanHang", (string)null);
+                    b.ToTable("HinhThucNhanHang");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.HinhThucThanhToan", b =>
@@ -204,7 +206,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("HinhThucThanhToanID");
 
-                    b.ToTable("HinhThucThanhToan", (string)null);
+                    b.ToTable("HinhThucThanhToan");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.KhuyenMai", b =>
@@ -220,7 +222,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("KhuyenMaiID");
 
-                    b.ToTable("KhuyenMai", (string)null);
+                    b.ToTable("KhuyenMai");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.KhuyenMaiSanPham", b =>
@@ -243,7 +245,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("SanPhamID");
 
-                    b.ToTable("KhuyenMaiSanPham", (string)null);
+                    b.ToTable("KhuyenMaiSanPham");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.LoaiSanPham", b =>
@@ -259,7 +261,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("LoaiSanPhamID");
 
-                    b.ToTable("LoaiSanPham", (string)null);
+                    b.ToTable("LoaiSanPham");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.LoaiThongSo", b =>
@@ -275,7 +277,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("LoaiThongSoID");
 
-                    b.ToTable("LoaiThongSo", (string)null);
+                    b.ToTable("LoaiThongSo");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.Mau", b =>
@@ -291,7 +293,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("MauID");
 
-                    b.ToTable("Mau", (string)null);
+                    b.ToTable("Mau");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.Quyen", b =>
@@ -307,7 +309,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("QuyenID");
 
-                    b.ToTable("Quyen", (string)null);
+                    b.ToTable("Quyen");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.SanPham", b =>
@@ -344,7 +346,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("ThuongHieuID");
 
-                    b.ToTable("SanPham", (string)null);
+                    b.ToTable("SanPham");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.TaiKhoan", b =>
@@ -382,7 +384,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("QuyenID");
 
-                    b.ToTable("TaiKhoan", (string)null);
+                    b.ToTable("TaiKhoan");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.TenThongSo", b =>
@@ -403,7 +405,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("LoaiThongSoID");
 
-                    b.ToTable("TenThongSo", (string)null);
+                    b.ToTable("TenThongSo");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ThongSo", b =>
@@ -429,7 +431,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("TenThongSoID");
 
-                    b.ToTable("ThongSo", (string)null);
+                    b.ToTable("ThongSo");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ThongTin", b =>
@@ -445,7 +447,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("ThongTinID");
 
-                    b.ToTable("ThongTin", (string)null);
+                    b.ToTable("ThongTin");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ThongTinSanPham", b =>
@@ -468,7 +470,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasIndex("ThongTinID");
 
-                    b.ToTable("ThongTinSanPham", (string)null);
+                    b.ToTable("ThongTinSanPham");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ThuongHieu", b =>
@@ -484,7 +486,7 @@ namespace webbanlaptop.Migrations
 
                     b.HasKey("ThuongHieuID");
 
-                    b.ToTable("ThuongHieu", (string)null);
+                    b.ToTable("ThuongHieu");
                 });
 
             modelBuilder.Entity("webbanlaptop.Models.ChiTietDatHang", b =>

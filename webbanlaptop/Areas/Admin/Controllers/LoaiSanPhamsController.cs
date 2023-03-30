@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
 
@@ -14,10 +15,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class LoaiSanPhamsController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public LoaiSanPhamsController(webbanlaptopContext context)
+        public LoaiSanPhamsController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/LoaiSanPhams
@@ -44,12 +47,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return View(loaiSanPham);
         }
 
-        // GET: Admin/LoaiSanPhams/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Admin/LoaiSanPhams/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -61,9 +58,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 _context.Add(loaiSanPham);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Thêm thành công!");
                 return RedirectToAction(nameof(Index));
             }
-            return View(loaiSanPham);
+            _toastNotification.AddErrorToastMessage("Thêm thất bại!");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/LoaiSanPhams/Edit/5
@@ -130,26 +129,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
             if (loaiSanPham == null)
             {
                 return NotFound();
-            }
-
-            return View(loaiSanPham);
-        }
-
-        // POST: Admin/LoaiSanPhams/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.LoaiSanPham == null)
+            } else
             {
-                return Problem("Entity set 'webbanlaptopContext.LoaiSanPham'  is null.");
-            }
-            var loaiSanPham = await _context.LoaiSanPham.FindAsync(id);
-            if (loaiSanPham != null)
-            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
                 _context.LoaiSanPham.Remove(loaiSanPham);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

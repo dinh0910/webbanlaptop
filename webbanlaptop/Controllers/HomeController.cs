@@ -42,7 +42,7 @@ namespace webbanlaptop.Controllers
                 string mahoamatkhau = SHA1.ComputeHash(TaiKhoan.MatKhau);
                 var taiKhoan = await _context.TaiKhoan.FirstOrDefaultAsync(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan
                                                                             && r.MatKhau == mahoamatkhau
-                                                                            && r.QuyenID == 2);
+                                                                            && r.QuyenID == 3);
                 if (taiKhoan == null)
                 {
                     _toastNotification.AddErrorToastMessage("Đăng nhập không thành công!");
@@ -144,6 +144,11 @@ namespace webbanlaptop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult ViewCart()
+        {
+            return View();
         }
     }
 }

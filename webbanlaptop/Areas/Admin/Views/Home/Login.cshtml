@@ -18,16 +18,16 @@
     </head>
     <body class="text-center">
         <main class="form-signin w-100 m-auto">
-        <form asp-antiforgery="true" action="Login" method="post">
+        <form asp-antiforgery="true" action="admin/home/login" method="post">
             <h1 class="h3 mb-3 fw-normal">Đăng nhập tài khoản Admin</h1>
 
             <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" name="TenTaiKhoan" placeholder="Tên tài khoản">
-            <label for="floatingInput">Tên tài khoản</label>
+                <input type="text" class="form-control" id="floatingInput" name="TenTaiKhoan" placeholder="Tên tài khoản">
+                <label for="floatingInput">Tên tài khoản</label>
             </div>
             <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" name="MatKhau" placeholder="Mật khẩu">
-            <label for="floatingPassword">Mật khẩu</label>
+                <input type="password" class="form-control" id="floatingPassword" name="MatKhau" placeholder="Mật khẩu">
+                <label for="floatingPassword">Mật khẩu</label>
             </div>
 
             <div class="checkbox mb-3">

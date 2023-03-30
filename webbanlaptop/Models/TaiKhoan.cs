@@ -28,7 +28,7 @@ namespace webbanlaptop.Models
         public string? Email { get; set; }
 
         [Display(Name = "Quyền")]
-        public int QuyenID { get; set; } = 2;
+        public int QuyenID { get; set; } = 3;
         public Quyen? Quyens { get; set; }
     }
 }

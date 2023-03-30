@@ -1,4 +1,4 @@
-﻿@model webbanlaptop.Models.Mau
+﻿@model webbanlaptop.Models.DanhMuc
 
 @{
     ViewData["Title"] = "Details";
@@ -7,15 +7,9 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Mau</h4>
+    <h4>DanhMuc</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SanPhams)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SanPhams.SanPhamID)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Ten)
         </dt>
@@ -25,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.MauID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.DanhMucID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
 
@@ -14,16 +15,19 @@ namespace webbanlaptop.Areas.Admin.Controllers
     public class DanhMucConsController : Controller
     {
         private readonly webbanlaptopContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public DanhMucConsController(webbanlaptopContext context)
+        public DanhMucConsController(webbanlaptopContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/DanhMucCons
         public async Task<IActionResult> Index()
         {
             var webbanlaptopContext = _context.DanhMucCon.Include(d => d.DanhMucs);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten");
             return View(await webbanlaptopContext.ToListAsync());
         }
 
@@ -46,13 +50,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return View(danhMucCon);
         }
 
-        // GET: Admin/DanhMucCons/Create
-        public IActionResult Create()
-        {
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID");
-            return View();
-        }
-
         // POST: Admin/DanhMucCons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -64,10 +61,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 _context.Add(danhMucCon);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Thêm thành công!");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", danhMucCon.DanhMucID);
-            return View(danhMucCon);
+            _toastNotification.AddErrorToastMessage("Thêm thất bại!");
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten", danhMucCon.DanhMucID);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/DanhMucCons/Edit/5
@@ -137,26 +136,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
             if (danhMucCon == null)
             {
                 return NotFound();
-            }
-
-            return View(danhMucCon);
-        }
-
-        // POST: Admin/DanhMucCons/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.DanhMucCon == null)
+            } else
             {
-                return Problem("Entity set 'webbanlaptopContext.DanhMucCon'  is null.");
-            }
-            var danhMucCon = await _context.DanhMucCon.FindAsync(id);
-            if (danhMucCon != null)
-            {
+                _toastNotification.AddSuccessToastMessage("Xóa thành công!");
                 _context.DanhMucCon.Remove(danhMucCon);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

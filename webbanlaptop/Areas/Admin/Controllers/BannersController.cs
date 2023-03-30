@@ -163,7 +163,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 // Phát sinh tên mới cho file để tránh trùng tên
                 fn = Guid.NewGuid().ToString() + "_" + file.FileName;
-                var path = $"wwwroot\\images\\{fn}"; // đường dẫn lưu file
+                var path = $"wwwroot\\images\\banners\\{fn}"; // đường dẫn lưu file
                 // upload file lên đường dẫn chỉ định
                 using (var stream = new FileStream(path, FileMode.Create))
                 {

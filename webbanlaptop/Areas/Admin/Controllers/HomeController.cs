@@ -31,12 +31,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             _toastNotification = toastNotification;
         }
 
-        //[Route("/admin/index")]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(TaiKhoanLogin TaiKhoan)
@@ -46,7 +40,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 string mahoamatkhau = SHA1.ComputeHash(TaiKhoan.MatKhau);
                 var taiKhoan = await _context.TaiKhoan.FirstOrDefaultAsync(r => r.TenTaiKhoan == TaiKhoan.TenTaiKhoan 
                                                                             && r.MatKhau == mahoamatkhau
-                                                                            && r.QuyenID == 1);
+                                                                            && (r.QuyenID == 1 || r.QuyenID == 2));
 
                 if (taiKhoan == null)
                 {
@@ -55,9 +49,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 else
                 {
                     // Đăng ký SESSION
-
                     HttpContext.Session.SetInt32(SessionTKAdmin, (int)taiKhoan.TaiKhoanID);
-
+                    HttpContext.Session.SetString(SessionTenDN, taiKhoan.TenTaiKhoan);
+                    //HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
+                    //HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
+                    //HttpContext.Session.SetString(SessionSDT, taiKhoan.SoDienThoai);
+                    //HttpContext.Session.SetString(SessionDiaChi, taiKhoan.DiaChi);
                     _toastNotification.AddSuccessToastMessage("Đăng nhập thành công!");
                     return RedirectToAction("Index", "Home");
                 }
@@ -65,10 +62,32 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return View(TaiKhoan);
         }
 
-        //[Route("/admin")]
+        [Route("/admin")]
         public IActionResult Login()
         {
             return View();
+        }
+
+        [Route("/admin/home")]
+        public IActionResult Index()
+        {
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Home");
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Remove("_TaiKhoanID");
+            //HttpContext.Session.Remove("_Hoten");
+            //HttpContext.Session.Remove("_TenTaiKhoan");
+            //HttpContext.Session.Remove("_Quyen");
+            //HttpContext.Session.Remove("_HinhAnh");
+            //HttpContext.Session.Remove("_Email");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

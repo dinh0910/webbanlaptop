@@ -135,7 +135,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             else
             {
                 _toastNotification.AddSuccessToastMessage("Xóa thành công!");
-
                 _context.DanhMuc.Remove(danhMuc);
             }
 

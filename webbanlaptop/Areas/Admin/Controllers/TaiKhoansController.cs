@@ -28,8 +28,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // GET: Admin/TaiKhoans
         public async Task<IActionResult> Index()
         {
-            var webbanlaptopContext = _context.TaiKhoan.Include(t => t.Quyens);
-            return View(await webbanlaptopContext.ToListAsync());
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                var webbanlaptopContext = _context.TaiKhoan.Include(t => t.Quyens);
+                return View(await webbanlaptopContext.ToListAsync());
+            }
+            return RedirectToAction("Login", "Home");
         }
 
         // GET: Admin/TaiKhoans/Details/5
@@ -71,7 +75,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "QuyenID", taiKhoan.QuyenID);
+            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "Ten", taiKhoan.QuyenID);
             _toastNotification.AddErrorToastMessage("Thêm thất bại!");
             return RedirectToAction(nameof(Index));
         }
@@ -89,7 +93,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "QuyenID", taiKhoan.QuyenID);
+            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "Ten", taiKhoan.QuyenID);
             return View(taiKhoan);
         }
 
@@ -125,7 +129,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "QuyenID", taiKhoan.QuyenID);
+            ViewData["QuyenID"] = new SelectList(_context.Quyen, "QuyenID", "Ten", taiKhoan.QuyenID);
             return View(taiKhoan);
         }
 

@@ -12,6 +12,8 @@ namespace webbanlaptop.Models
 
         public string MatKhau { get; set; }
 
+        public string? HoTen { get; set; }
+
         internal static Task SignOutAsync()
         {
             throw new NotImplementedException();

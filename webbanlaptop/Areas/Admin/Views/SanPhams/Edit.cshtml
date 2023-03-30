@@ -1,24 +1,30 @@
-﻿@model webbanlaptop.Models.DanhMuc
+﻿@model webbanlaptop.Models.DanhMucCon
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
-<h4>DanhMuc</h4>
+<h4>DanhMucCon</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DanhMucConID" />
+            <div class="form-group">
+                <label asp-for="DanhMucID" class="control-label"></label>
+                <select asp-for="DanhMucID" class="form-control" asp-items="ViewBag.DanhMucID"></select>
+                <span asp-validation-for="DanhMucID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Ten" class="control-label"></label>
                 <input asp-for="Ten" class="form-control" />
                 <span asp-validation-for="Ten" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

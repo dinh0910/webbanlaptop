@@ -78,8 +78,7 @@ namespace webbanlaptop.Migrations
                 name: "Quyen",
                 columns: table => new
                 {
-                    QuyenID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuyenID = table.Column<int>(type: "int", nullable: false),
                     Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

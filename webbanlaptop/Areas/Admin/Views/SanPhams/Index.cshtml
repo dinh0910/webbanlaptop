@@ -1,0 +1,130 @@
+﻿@model IEnumerable<webbanlaptop.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh mục Sản phẩm</h1>
+
+<div>
+    <a class="btn btn-primary mb-5" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Thêm mới</a>
+</div>
+
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="text-center mb-2">
+                    <span class="fw-bold fs-3" style="color:#7fad39">Thêm Sản phẩm</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2">
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="control-label">Danh mục</label>
+                            <select name="DanhMucConID" class="form-control" asp-items="ViewBag.DanhMucConID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Loại sản phẩm</label>
+                            <select name="LoaiSanPhamID" class="form-control" asp-items="ViewBag.LoaiSanPhamID"></select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Thương hiệu</label>
+                            <select name="ThuongHieuID" class="form-control" asp-items="ViewBag.ThuongHieuID"></select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Tên sản phẩm</label>
+                            <input type="text" name="Ten" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Hình ảnh</label>
+                            <input type="file" name="HinhAnh" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Đơn giá</label>
+                            <input type="text" name="DonGia" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Danh mục con
+            </th>
+            <th>
+                Loại sản phẩm
+            </th>
+            <th>
+                Thương hiệu
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <img src="~/images/products/@Html.DisplayFor(modelItem => item.HinhAnh)" width="100" class="img-thumbnail" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DanhMucCons.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSanPhams.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThuongHieus.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SanPhamID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+
+                <a asp-action="Details" asp-route-id="@item.SanPhamID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+
+                <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                    <i class="fa-solid fa-trash text-danger"></i>
+                </a>
+                <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="/Admin/SanPhams/Delete/@item.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
+                                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
