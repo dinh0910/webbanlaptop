@@ -59,7 +59,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View(TaiKhoan);
+            return RedirectToAction("Login", "Home");
         }
 
         [Route("/admin")]

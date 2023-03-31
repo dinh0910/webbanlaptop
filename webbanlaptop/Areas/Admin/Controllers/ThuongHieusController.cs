@@ -29,24 +29,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
               return View(await _context.ThuongHieu.ToListAsync());
         }
 
-        // GET: Admin/ThuongHieus/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.ThuongHieu == null)
-            {
-                return NotFound();
-            }
-
-            var thuongHieu = await _context.ThuongHieu
-                .FirstOrDefaultAsync(m => m.ThuongHieuID == id);
-            if (thuongHieu == null)
-            {
-                return NotFound();
-            }
-
-            return View(thuongHieu);
-        }
-
         // POST: Admin/ThuongHieus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

@@ -28,28 +28,12 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // GET: Admin/Banners
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Banner.ToListAsync());
-        }
-
-        // GET: Admin/Banners/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Banner == null)
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                return NotFound();
+                return View(await _context.Banner.ToListAsync());
             }
-
-            var banner = await _context.Banner
-                .FirstOrDefaultAsync(m => m.BannerID == id);
-            if (banner == null)
-            {
-                return NotFound();
-            }
-
-            return View(banner);
+            return RedirectToAction("Login", "Home");
         }
-
-        // GET: Admin/Banners/Create
 
         // POST: Admin/Banners/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

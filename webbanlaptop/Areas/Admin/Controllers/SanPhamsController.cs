@@ -21,16 +21,15 @@ namespace webbanlaptop.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var webbanlaptopContext = _context.SanPham.Include(d => d.DanhMucCons).Include(d => d.LoaiSanPhams);
-            ViewData["DanhMucConID"] = new SelectList(_context.DanhMucCon, "DanhMucConID", "Ten");
-            ViewData["LoaiSanPhamID"] = new SelectList(_context.LoaiSanPham, "LoaiSanPhamID", "Ten");
+            var webbanlaptopContext = _context.SanPham.Include(d => d.DanhMucs);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten");
             ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten");
             return View(await webbanlaptopContext.ToListAsync());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("SanPhamID,DanhMucConID,LoaiSanPhamID,Ten,HinhAnh,DonGia,ThuongHieuID")] SanPham sanPham)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,ThanhTien")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {
@@ -41,8 +40,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             _toastNotification.AddErrorToastMessage("Thêm thất bại!");
-            ViewData["DanhMucConID"] = new SelectList(_context.DanhMucCon, "DanhMucConID", "Ten", sanPham.DanhMucConID);
-            ViewData["LoaiSanPhamID"] = new SelectList(_context.LoaiSanPham, "LoaiSanPhamID", "Ten", sanPham.LoaiSanPhamID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucConID", "Ten", sanPham.DanhMucID);
             ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return RedirectToAction(nameof(Index));
         }
@@ -55,8 +53,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             }
 
             var sanPham = await _context.SanPham
-                .Include(d => d.DanhMucCons)
-                .Include(d => d.LoaiSanPhams)
+                .Include(d => d.DanhMucs)
                 .Include(d => d.ThuongHieus)
                 .FirstOrDefaultAsync(m => m.SanPhamID == id);
             if (sanPham == null)

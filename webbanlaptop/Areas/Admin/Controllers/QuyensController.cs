@@ -29,24 +29,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
               return View(await _context.Quyen.ToListAsync());
         }
 
-        // GET: Admin/Quyens/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Quyen == null)
-            {
-                return NotFound();
-            }
-
-            var quyen = await _context.Quyen
-                .FirstOrDefaultAsync(m => m.QuyenID == id);
-            if (quyen == null)
-            {
-                return NotFound();
-            }
-
-            return View(quyen);
-        }
-
         // POST: Admin/Quyens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

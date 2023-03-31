@@ -49,18 +49,13 @@
         <tr class="mb-4">
             <td class ="d-flex">
                 <div class="p-2 w-100">
-                    <img src="~/images/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
+                    <img src="~/images/banners/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
                 </div>
                 <div class="p-2 flex-shrink-1 d-flex flex-column">
                     <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">
                         <i class="fa-solid fa-pen-to-square text-success"></i>
                     </a>
                     
-
-                    <a class="p-2" asp-action="Details" asp-route-id="@item.BannerID">
-                        <i class="fa-solid fa-circle-info text-primary"></i>
-                    </a>
-
                     <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
                         <i class="fa-solid fa-trash text-danger"></i>
                     </a>

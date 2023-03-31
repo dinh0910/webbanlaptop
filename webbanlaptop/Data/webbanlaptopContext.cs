@@ -14,7 +14,7 @@ namespace webbanlaptop.Data
         {
         }
 
-        public DbSet<webbanlaptop.Models.Banner> Banner { get; set; } = default!;
+        public DbSet<webbanlaptop.Models.Banner> Banner { get; set; }
 
         public DbSet<webbanlaptop.Models.DanhMuc> DanhMuc { get; set; }
 
@@ -40,8 +40,6 @@ namespace webbanlaptop.Data
 
         public DbSet<webbanlaptop.Models.ThuongHieu> ThuongHieu { get; set; }
 
-        public DbSet<webbanlaptop.Models.DanhMucCon> DanhMucCon { get; set; }
-
         public DbSet<webbanlaptop.Models.KhuyenMai> KhuyenMai { get; set; }
 
         public DbSet<webbanlaptop.Models.KhuyenMaiSanPham> KhuyenMaiSanPham { get; set; }
@@ -53,7 +51,5 @@ namespace webbanlaptop.Data
         public DbSet<webbanlaptop.Models.ThongTinSanPham> ThongTinSanPham { get; set; }
 
         public DbSet<webbanlaptop.Models.HinhThucNhanHang> HinhThucNhanHang { get; set; }
-
-        public DbSet<webbanlaptop.Models.LoaiSanPham> LoaiSanPham { get; set; }
     }
 }

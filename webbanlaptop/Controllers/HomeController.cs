@@ -30,6 +30,10 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Index()
         {
+            var banner = _context.Banner;
+            var danhmuc = _context.DanhMuc;
+            ViewBag.banner = banner;
+            ViewBag.danhmuc = danhmuc;
             return View();
         }
 
@@ -149,6 +153,23 @@ namespace webbanlaptop.Controllers
         public IActionResult ViewCart()
         {
             return View();
+        }
+
+        public async Task<IActionResult> ShopGrid(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var grid = await _context.SanPham.FirstOrDefaultAsync(d => d.DanhMucID == id);
+
+            var danhmuc = _context.DanhMuc;
+            ViewBag.danhmuc = danhmuc;
+
+            var sanPham = _context.SanPham;
+            ViewBag.sanPham = sanPham;
+
+            return View(grid);
         }
     }
 }

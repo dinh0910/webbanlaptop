@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var danhmuc = ViewBag.danhmuc as IQueryable<webbanlaptop.Models.DanhMuc>;
+    var d = "macbook";
 }
 
 <section class="hero">
@@ -11,20 +13,12 @@
                 <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
-                        <span>All departments</span>
+                        <span>Danh mục</span>
                     </div>
                     <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
+                        @foreach(var item in danhmuc){
+                            <li><a asp-asp-controller="Home" asp-action="ShopGrid" asp-route-id="@item.DanhMucID">@item.Ten</a></li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -81,7 +75,7 @@
 </section>
 
 <div class="row featured__filter">
-    <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+    <div class="col-lg-3 col-md-4 col-sm-6 mix @d">
         <div class="featured__item">
             <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                 <ul class="featured__item__pic__hover">

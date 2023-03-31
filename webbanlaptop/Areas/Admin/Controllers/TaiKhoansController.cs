@@ -36,27 +36,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-        // GET: Admin/TaiKhoans/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.TaiKhoan == null)
-            {
-                return NotFound();
-            }
-
-            var taiKhoan = await _context.TaiKhoan
-                .Include(t => t.Quyens)
-                .FirstOrDefaultAsync(m => m.TaiKhoanID == id);
-            if (taiKhoan == null)
-            {
-                return NotFound();
-            }
-
-            return View(taiKhoan);
-        }
-
-        // GET: Admin/TaiKhoans/Create
-
         // POST: Admin/TaiKhoans/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

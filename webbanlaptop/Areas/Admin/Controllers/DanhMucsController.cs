@@ -29,26 +29,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
               return View(await _context.DanhMuc.ToListAsync());
         }
 
-        // GET: Admin/DanhMucs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.DanhMuc == null)
-            {
-                return NotFound();
-            }
-
-            var danhMuc = await _context.DanhMuc
-                .FirstOrDefaultAsync(m => m.DanhMucID == id);
-            if (danhMuc == null)
-            {
-                return NotFound();
-            }
-
-            return View(danhMuc);
-        }
-
-        // GET: Admin/DanhMucs/Create
-
         // POST: Admin/DanhMucs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
