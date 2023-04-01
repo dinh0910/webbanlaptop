@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Home Page";
     var danhmuc = ViewBag.danhmuc as IQueryable<webbanlaptop.Models.DanhMuc>;
+    var sanpham = ViewBag.sanpham as IQueryable<webbanlaptop.Models.SanPham>;
     var d = "macbook";
+    var i = 0;
 }
 
 <section class="hero">
@@ -58,7 +60,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Featured Product</h2>
+                    <h2>Sản phẩm nổi bật</h2>
                 </div>
             </div>
             <div class="featured__controls">
@@ -71,23 +73,34 @@
                 </ul>
             </div>
         </div>
-    </div>
-</section>
+        <div class="row featured__filter">
+            @foreach(var item in sanpham){
+                if (i < 8)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix @d">
+                        <div class="featured__item shadow p-3 mb-5 bg-light rounded-3">
+                            <div class="featured__item__pic">
+                                <img src="~/images/products/@item.HinhAnh" />
+                                @if(item.GiamGia > 0){
+                                    <div class="product__discount__percent">-@item.GiamGia%</div>
+                                }
+                                <ul class="featured__item__pic__hover">
+                                    <li class="shadow rounded-circle"><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li class="shadow rounded-circle"><a asp-action="AddToCart" asp-route-id="@item.SanPhamID"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text">
+                                <div heigh="31" width="21"><h6><a href="#">@item.Ten</a></h6></div>
+                                <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
+                            </div>
+                        </div>
+                    </div>
+                    i++;
+                }
+            }
+        </div>
+        <div class="row">
 
-<div class="row featured__filter">
-    <div class="col-lg-3 col-md-4 col-sm-6 mix @d">
-        <div class="featured__item">
-            <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
-                <ul class="featured__item__pic__hover">
-                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-            </div>
-            <div class="featured__item__text">
-                <h6><a href="#">Crab Pool Security</a></h6>
-                <h5>$30.00</h5>
-            </div>
         </div>
     </div>
-</div>
+</section>
