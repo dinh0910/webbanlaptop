@@ -1936,6 +1936,8 @@ ol {
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
 	display: inline-block;
 	margin-right: 25px;
+	width: 101px;
+	height: 101px;
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item h5 {
@@ -1959,11 +1961,16 @@ ol {
 
 .shoping__cart__table table tbody tr td.shoping__cart__item__close {
 	text-align: right;
+	color: #7fad39;
+}
+
+.btn_remove:hover {
+	color: #7fad39;
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item__close span {
 	font-size: 24px;
-	color: #b2b2b2;
+	color: #7fad39;
 	cursor: pointer;
 }
 
@@ -1990,7 +1997,7 @@ ol {
 
 .primary-btn.cart-btn {
 	color: #6f6f6f;
-	padding: 14px 30px 12px;
+	padding: 3px 20px 3px;/*padding: 14px 30px 12px;*/
 	background: #f5f5f5;
 }
 
@@ -2237,13 +2244,13 @@ ol {
 .checkout__order ul li {
 	font-size: 16px;
 	color: #6f6f6f;
-	line-height: 40px;
+	line-height: 20px;
 	list-style: none;
+	margin-top: 10px;
 }
 
 .checkout__order ul li span {
 	font-weight: 700;
-	float: right;
 }
 
 .checkout__order .checkout__order__subtotal {

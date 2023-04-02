@@ -225,6 +225,10 @@ namespace webbanlaptop.Controllers
         {
             var cart = GetCartItems();
             var item = cart.Find(p => p.SanPham.SanPhamID == id);
+            if (quantity == 0)
+            {
+                cart.Remove(item);
+            }
             item.SoLuong = quantity;
             SaveCartSession(cart);
             return RedirectToAction(nameof(ViewCart));
@@ -258,23 +262,22 @@ namespace webbanlaptop.Controllers
             return View(GetCartItems());
         }
 
-        public async Task<IActionResult> CreateBill(string cusname, string cusphone, string cusadd, int total)
+        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email, int ThanhTien)
         {
             // lưu hóa đơn
             var bill = new DonDatHang();
             bill.NgayLap = DateTime.Now;
-            bill.HoTen = cusname;
-            bill.SoDienThoai = cusphone;
-
-            var ship = new GiaoHang();
-            ship.DiaChi = cusadd;
+            bill.HoTen = Ten;
+            bill.SoDienThoai = SoDienThoai;
+            bill.DiaChi = DiaChi;
+            bill.Email = Email;
 
             _context.Add(bill);
             await _context.SaveChangesAsync();
 
             var cart = GetCartItems();
             int amount = 0;
-            total = 0;
+            ThanhTien = 0;
             //chi tiết hóa đơn
             foreach (var i in cart)
             {
@@ -283,8 +286,8 @@ namespace webbanlaptop.Controllers
                 b.SanPhamID = i.SanPham.SanPhamID;
                 b.DonGia = i.SanPham.ThanhTien;
                 b.SoLuong = i.SoLuong;
-                amount = i.SanPham.DonGia * i.SoLuong;
-                total += amount;
+                amount = i.SanPham.ThanhTien * i.SoLuong;
+                ThanhTien += amount;
                 b.SoLuong = i.SoLuong;
                 b.ThanhTien = amount;
                 bill.TongTien += amount;

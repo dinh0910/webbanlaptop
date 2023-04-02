@@ -14,6 +14,9 @@ namespace webbanlaptop.Models
         [Display(Name = "Họ tên")]
         public string? HoTen { get; set; }
 
+        [Display(Name = "Địa chỉ")]
+        public string? DiaChi { get; set; }
+
         [Display(Name = "Số điện thoại")]
         public string? SoDienThoai { get; set; }
 

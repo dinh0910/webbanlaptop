@@ -1,1 +1,57 @@
-﻿<h1>Đang xây dựng</h1>
+﻿@model List<webbanlaptop.Models.CartItem>
+
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Tiến hành đặt hàng</h4>
+            <form asp-action="CreateBill">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="checkout__input">
+                            <p>Họ tên<span>*</span></p>
+                            <input type="text" name="Ten">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Địa chỉ<span>*</span></p>
+                            <input type="text" name="DiaChi" placeholder="Street Address" class="checkout__input__add">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Số điện thoại<span>*</span></p>
+                                    <input type="text" name="SoDienThoai">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input type="text" name="Email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Chi tiết đơn hàng</h4>
+                            @if (Model.Count > 0)
+                            {
+                                int amount = 0;
+                                int total = 0;
+                                <div class="checkout__order__products">Sản phẩm</div>
+                                <ul>
+                                    @foreach(var item in Model){
+                                        amount = item.SanPham.ThanhTien * item.SoLuong;
+                                        total += amount;
+                                        <li>@item.SanPham.Ten <span>@(amount.ToString("n0"))đ</span></li>
+                                    }
+                                </ul>
+                                <div class="checkout__order__total">Thành tiền <span>@(total.ToString("n0"))</span></div>
+                                <button type="submit" class="primary-btn" style="border: none;">Xác nhận</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
