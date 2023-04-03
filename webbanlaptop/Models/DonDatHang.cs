@@ -37,14 +37,6 @@ namespace webbanlaptop.Models
         [Display(Name = "Duyệt đơn")]
         public int DuyetDon { get; set; }
 
-        [Display(Name = "Thanh toán")]
-        public int HinhThucThanhToanID { get; set; }
-        public HinhThucThanhToan? HinhThucThanhToans { get; set; }
-
-        [Display(Name = "Nhận hàng")]
-        public int HinhThucNhanHangID { get; set; }
-        public HinhThucNhanHang? HinhThucNhanHangs { get; set; }
-
         public ICollection<ChiTietDatHang>? ChiTietDatHangs { get; set; }
     }
 }

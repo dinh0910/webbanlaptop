@@ -23,32 +23,6 @@ namespace webbanlaptop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HinhThucNhanHang",
-                columns: table => new
-                {
-                    HinhThucNhanHangID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HinhThucNhanHang", x => x.HinhThucNhanHangID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HinhThucThanhToan",
-                columns: table => new
-                {
-                    HinhThucThanhToanID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HinhThucThanhToan", x => x.HinhThucThanhToanID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "LoaiThongSo",
                 columns: table => new
                 {
@@ -94,30 +68,17 @@ namespace webbanlaptop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NgayLap = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HoTen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TienShip = table.Column<int>(type: "int", nullable: false),
                     TongTien = table.Column<int>(type: "int", nullable: false),
                     DuyetDon = table.Column<int>(type: "int", nullable: false),
-                    HinhThucThanhToanID = table.Column<int>(type: "int", nullable: false),
-                    HinhThucNhanHangID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DonDatHang", x => x.DonDatHangID);
-                    table.ForeignKey(
-                        name: "FK_DonDatHang_HinhThucNhanHang_HinhThucNhanHangID",
-                        column: x => x.HinhThucNhanHangID,
-                        principalTable: "HinhThucNhanHang",
-                        principalColumn: "HinhThucNhanHangID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DonDatHang_HinhThucThanhToan_HinhThucThanhToanID",
-                        column: x => x.HinhThucThanhToanID,
-                        principalTable: "HinhThucThanhToan",
-                        principalColumn: "HinhThucThanhToanID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,16 +242,6 @@ namespace webbanlaptop.Migrations
                 column: "SanPhamID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DonDatHang_HinhThucNhanHangID",
-                table: "DonDatHang",
-                column: "HinhThucNhanHangID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DonDatHang_HinhThucThanhToanID",
-                table: "DonDatHang",
-                column: "HinhThucThanhToanID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_HinhAnh_SanPhamID",
                 table: "HinhAnh",
                 column: "SanPhamID");
@@ -351,12 +302,6 @@ namespace webbanlaptop.Migrations
 
             migrationBuilder.DropTable(
                 name: "TenThongSo");
-
-            migrationBuilder.DropTable(
-                name: "HinhThucNhanHang");
-
-            migrationBuilder.DropTable(
-                name: "HinhThucThanhToan");
 
             migrationBuilder.DropTable(
                 name: "ThuongHieu");

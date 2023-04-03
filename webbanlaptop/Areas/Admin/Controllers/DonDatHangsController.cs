@@ -23,109 +23,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // GET: Admin/DonDatHangs
         public async Task<IActionResult> Index()
         {
-            var webbanlaptopContext = _context.DonDatHang.Include(d => d.HinhThucNhanHangs).Include(d => d.HinhThucThanhToans);
-            return View(await webbanlaptopContext.ToListAsync());
-        }
-
-        // GET: Admin/DonDatHangs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.DonDatHang == null)
-            {
-                return NotFound();
-            }
-
-            var donDatHang = await _context.DonDatHang
-                .Include(d => d.HinhThucNhanHangs)
-                .Include(d => d.HinhThucThanhToans)
-                .FirstOrDefaultAsync(m => m.DonDatHangID == id);
-            if (donDatHang == null)
-            {
-                return NotFound();
-            }
-
-            return View(donDatHang);
-        }
-
-        // GET: Admin/DonDatHangs/Create
-        public IActionResult Create()
-        {
-            ViewData["HinhThucNhanHangID"] = new SelectList(_context.Set<HinhThucNhanHang>(), "HinhThucNhanHangID", "HinhThucNhanHangID");
-            ViewData["HinhThucThanhToanID"] = new SelectList(_context.HinhThucThanhToan, "HinhThucThanhToanID", "HinhThucThanhToanID");
-            return View();
-        }
-
-        // POST: Admin/DonDatHangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DonDatHangID,NgayLap,HoTen,SoDienThoai,Email,GhiChu,TienShip,TongTien,DuyetDon,HinhThucThanhToanID,HinhThucNhanHangID")] DonDatHang donDatHang)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(donDatHang);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HinhThucNhanHangID"] = new SelectList(_context.Set<HinhThucNhanHang>(), "HinhThucNhanHangID", "HinhThucNhanHangID", donDatHang.HinhThucNhanHangID);
-            ViewData["HinhThucThanhToanID"] = new SelectList(_context.HinhThucThanhToan, "HinhThucThanhToanID", "HinhThucThanhToanID", donDatHang.HinhThucThanhToanID);
-            return View(donDatHang);
-        }
-
-        // GET: Admin/DonDatHangs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.DonDatHang == null)
-            {
-                return NotFound();
-            }
-
-            var donDatHang = await _context.DonDatHang.FindAsync(id);
-            if (donDatHang == null)
-            {
-                return NotFound();
-            }
-            ViewData["HinhThucNhanHangID"] = new SelectList(_context.Set<HinhThucNhanHang>(), "HinhThucNhanHangID", "HinhThucNhanHangID", donDatHang.HinhThucNhanHangID);
-            ViewData["HinhThucThanhToanID"] = new SelectList(_context.HinhThucThanhToan, "HinhThucThanhToanID", "HinhThucThanhToanID", donDatHang.HinhThucThanhToanID);
-            return View(donDatHang);
-        }
-
-        // POST: Admin/DonDatHangs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DonDatHangID,NgayLap,HoTen,SoDienThoai,Email,GhiChu,TienShip,TongTien,DuyetDon,HinhThucThanhToanID,HinhThucNhanHangID")] DonDatHang donDatHang)
-        {
-            if (id != donDatHang.DonDatHangID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(donDatHang);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DonDatHangExists(donDatHang.DonDatHangID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HinhThucNhanHangID"] = new SelectList(_context.Set<HinhThucNhanHang>(), "HinhThucNhanHangID", "HinhThucNhanHangID", donDatHang.HinhThucNhanHangID);
-            ViewData["HinhThucThanhToanID"] = new SelectList(_context.HinhThucThanhToan, "HinhThucThanhToanID", "HinhThucThanhToanID", donDatHang.HinhThucThanhToanID);
-            return View(donDatHang);
+            return View(await _context.DonDatHang.ToListAsync());
         }
 
         // GET: Admin/DonDatHangs/Delete/5
@@ -137,8 +35,6 @@ namespace webbanlaptop.Areas.Admin.Controllers
             }
 
             var donDatHang = await _context.DonDatHang
-                .Include(d => d.HinhThucNhanHangs)
-                .Include(d => d.HinhThucThanhToans)
                 .FirstOrDefaultAsync(m => m.DonDatHangID == id);
             if (donDatHang == null)
             {
@@ -165,6 +61,16 @@ namespace webbanlaptop.Areas.Admin.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            var webbanlaptopContext = _context.ChiTietDatHang
+                .Include(c => c.DonDatHangs)
+                .Include(c => c.SanPhams)
+                .Where(m => m.DonDatHangID == id);
+
+            return View(await webbanlaptopContext.ToListAsync());
         }
 
         private bool DonDatHangExists(int id)

@@ -300,8 +300,6 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Message()
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
             return View();
         }
     }
