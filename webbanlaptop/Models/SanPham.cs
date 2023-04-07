@@ -30,5 +30,8 @@ namespace webbanlaptop.Models
         [Display(Name = "Thành tiền")]
         [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int ThanhTien { get; set; }
+
+        [Display(Name = "Số lượng")]
+        public int SoLuong { get; set; } = 0;
     }
 }

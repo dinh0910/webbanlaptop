@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NToastNotify;
 using System.Diagnostics;
+using System.Net.WebSockets;
 using webbanlaptop.Data;
 using webbanlaptop.Libs;
 using webbanlaptop.Models;
@@ -278,6 +279,7 @@ namespace webbanlaptop.Controllers
             var cart = GetCartItems();
             int amount = 0;
             ThanhTien = 0;
+            int soLuong = 0;
             //chi tiết hóa đơn
             foreach (var i in cart)
             {
@@ -288,7 +290,8 @@ namespace webbanlaptop.Controllers
                 b.SoLuong = i.SoLuong;
                 amount = i.SanPham.ThanhTien * i.SoLuong;
                 ThanhTien += amount;
-                b.SoLuong = i.SoLuong;
+                var sp = _context.SanPham.FirstOrDefault(s => s.SanPhamID == b.SanPhamID);
+                sp.SoLuong -= i.SoLuong;
                 b.ThanhTien = amount;
                 bill.TongTien += amount;
                 _context.Add(b);
