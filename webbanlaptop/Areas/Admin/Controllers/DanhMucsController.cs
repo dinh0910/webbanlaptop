@@ -26,7 +26,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // GET: Admin/DanhMucs
         public async Task<IActionResult> Index()
         {
-              return View(await _context.DanhMuc.ToListAsync());
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                return View(await _context.DanhMuc.ToListAsync());
+            }
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: Admin/DanhMucs/Create

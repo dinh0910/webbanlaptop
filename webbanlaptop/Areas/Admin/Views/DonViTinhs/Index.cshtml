@@ -1,11 +1,11 @@
-﻿@model IEnumerable<webbanlaptop.Models.DanhMuc>
+﻿@model IEnumerable<webbanlaptop.Models.DonViTinh>
 
 @{
     ViewData["Title"] = "Index";
     var i = 1;
 }
 
-<h1>Danh sách Danh mục</h1>
+<h1>Danh sách Đơn vị tính</h1>
 
 <div>
     <a class="btn btn-primary mb-5" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Thêm mới</a>
@@ -16,7 +16,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="text-center mb-2">
-                    <span class="fw-bold fs-3" style="color:#7fad39">Thêm Danh Mục</span>
+                    <span class="fw-bold fs-3" style="color:#7fad39">Thêm Đơn vị tính</span>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -24,7 +24,7 @@
                 <div class="p-2">
                     <form asp-action="Create">
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Tên danh mục</label>
+                            <label class="control-label mb-1">Tên đơn vị tính</label>
                             <input type="text" name="Ten" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -48,7 +48,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @(i++)
@@ -57,7 +57,7 @@
                 @Html.DisplayFor(modelItem => item.Ten)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DanhMucID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                <a asp-action="Edit" asp-route-id="@item.DonViTinhID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
 
                 <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modal@(i)">
                     <i class="fa-solid fa-trash text-danger"></i>
@@ -70,7 +70,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-footer">
-                                <a href="/Admin/DanhMucs/Delete/@item.DanhMucID" role="button" class="btn btn-danger">Xóa</a>
+                                <a href="/Admin/DonViTinhs/Delete/@item.DonViTinhID" role="button" class="btn btn-danger">Xóa</a>
                                 <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
                             </div>
                         </div>
@@ -78,6 +78,6 @@
                 </div>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

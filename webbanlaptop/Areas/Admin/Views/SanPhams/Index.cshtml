@@ -119,10 +119,10 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SanPhamID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
 
-                <a role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(i)">
                     <i class="fa-solid fa-trash text-danger"></i>
                 </a>
-                <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                <div class="modal fade" id="modal@(i)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

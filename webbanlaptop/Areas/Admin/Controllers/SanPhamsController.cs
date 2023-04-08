@@ -91,7 +91,8 @@ namespace webbanlaptop.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                var webbanlaptopContext = _context.SanPham.Include(s => s.ThuongHieus);
+                var webbanlaptopContext = _context.NhapHang.Include(s => s.TaiKhoans).Include(s => s.NhaCungCaps);
+                ViewData["SanPhamID"] = new SelectList(_context.SanPham, "SanPhamID", "Ten");
                 return View(await webbanlaptopContext.ToListAsync());
             }
             return RedirectToAction("Login", "Home");
@@ -100,7 +101,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
         List<CartItem> GetCartItems()
         {
             var session = HttpContext.Session;
-            string jsoncart = session.GetString("shopcart");
+            string jsoncart = session.GetString("addcart");
             if (jsoncart != null)
             {
                 return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
@@ -113,14 +114,14 @@ namespace webbanlaptop.Areas.Admin.Controllers
         {
             var session = HttpContext.Session;
             string jsoncart = JsonConvert.SerializeObject(list);
-            session.SetString("shopcart", jsoncart);
+            session.SetString("addcart", jsoncart);
         }
 
         // Xóa session giỏ hàng
         void ClearCart()
         {
             var session = HttpContext.Session;
-            session.Remove("shopcart");
+            session.Remove("addcart");
         }
 
         // Cho hàng vào giỏ

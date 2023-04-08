@@ -47,5 +47,13 @@ namespace webbanlaptop.Data
         public DbSet<webbanlaptop.Models.ThongTin> ThongTin { get; set; }
 
         public DbSet<webbanlaptop.Models.ThongTinSanPham> ThongTinSanPham { get; set; }
+
+        public DbSet<webbanlaptop.Models.DonViTinh> DonViTinh { get; set; }
+
+        public DbSet<webbanlaptop.Models.NhaCungCap> NhaCungCap { get; set; }
+
+        public DbSet<webbanlaptop.Models.NhapHang> NhapHang { get; set; }
+
+        public DbSet<webbanlaptop.Models.ChiTietNhapHang> ChiTietNhapHang { get; set; }
     }
 }
