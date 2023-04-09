@@ -91,26 +91,48 @@ namespace webbanlaptop.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                var webbanlaptopContext = _context.NhapHang.Include(s => s.TaiKhoans).Include(s => s.NhaCungCaps);
-                ViewData["SanPhamID"] = new SelectList(_context.SanPham, "SanPhamID", "Ten");
+                var webbanlaptopContext = _context.SanPham;
                 return View(await webbanlaptopContext.ToListAsync());
             }
             return RedirectToAction("Login", "Home");
         }
 
-        List<CartItem> GetCartItems()
+        public async Task<IActionResult> HistoryImport()
+        {
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                var webbanlaptopContext = _context.NhapHang.Include(s => s.TaiKhoans).Include(s => s.NhaCungCaps);
+                ViewData["SanPhamID"] = new SelectList(_context.SanPham, "SanPhamID", "Ten");
+                ViewData["DonViTinhID"] = new SelectList(_context.DonViTinh, "DonViTinhID", "Ten");
+                return View(await webbanlaptopContext.ToListAsync());
+            }
+            return RedirectToAction("Login", "Home");
+        }
+
+        public async Task<IActionResult> ImportDetails(int? id)
+        {
+            var webbanlaptopContext = _context.ChiTietNhapHang
+                .Include(c => c.NhapHangs)
+                .Include(c => c.SanPhams)
+                .Include(c => c.DonViTinhs)
+                .Where(m => m.NhapHangID == id);
+
+            return View(await webbanlaptopContext.ToListAsync());
+        }
+
+        List<ImportItem> GetCartItems()
         {
             var session = HttpContext.Session;
             string jsoncart = session.GetString("addcart");
             if (jsoncart != null)
             {
-                return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+                return JsonConvert.DeserializeObject<List<ImportItem>>(jsoncart);
             }
-            return new List<CartItem>();
+            return new List<ImportItem>();
         }
 
         // Lưu danh sách CartItem trong giỏ hàng vào session
-        void SaveCartSession(List<CartItem> list)
+        void SaveCartSession(List<ImportItem> list)
         {
             var session = HttpContext.Session;
             string jsoncart = JsonConvert.SerializeObject(list);
@@ -125,30 +147,31 @@ namespace webbanlaptop.Areas.Admin.Controllers
         }
 
         // Cho hàng vào giỏ
-        public async Task<IActionResult> AddToCart(int id)
+        public async Task<IActionResult> AddToCart([Bind("SanPhamID,DonViTinhID,SoLuong")] ImportItem importItem)
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
             var product = await _context.SanPham
-                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+                .FirstOrDefaultAsync(m => m.SanPhamID == importItem.SanPhamID);
+            var dvt = await _context.DonViTinh
+                .FirstOrDefaultAsync(m => m.DonViTinhID == importItem.DonViTinhID);
             if (product == null)
             {
                 _toastNotification.AddInfoToastMessage("Sản phẩm không tồn tại.");
             }
             var cart = GetCartItems();
-            var item = cart.Find(p => p.SanPham.SanPhamID == id);
+            var item = cart.Find(p => p.SanPham.SanPhamID == importItem.SanPhamID);
             if (item != null)
             {
-                item.SoLuong++;
+                item.SoLuong += importItem.SoLuong;
             }
             else
             {
-                cart.Add(new CartItem() { SanPham = product, SoLuong = 1 });
+                cart.Add(new ImportItem() { SanPham = product, DonViTinh = dvt, SoLuong = importItem.SoLuong });
             }
             SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewCart));
+            return RedirectToAction(nameof(ViewImport));
         }
 
+        [Route("/updateitem", Name = "updateitem")]
         public async Task<IActionResult> UpdateItem(int id, int quantity)
         {
             var cart = GetCartItems();
@@ -159,7 +182,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             }
             item.SoLuong = quantity;
             SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewCart));
+            return RedirectToAction(nameof(ViewImport));
         }
 
         public async Task<IActionResult> RemoveItem(int id)
@@ -171,61 +194,50 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 cart.Remove(item);
             }
             SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewCart));
+            return RedirectToAction(nameof(ViewImport));
         }
 
-
-        // Chuyển đến view xem giỏ hàng
-        public IActionResult ViewCart()
+        [Route("/viewimport", Name = "import")]
+        public IActionResult ViewImport()
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
+            ViewData["NhaCungCapID"] = new SelectList(_context.NhaCungCap, "NhaCungCapID", "Ten");
             return View(GetCartItems());
         }
 
-        public IActionResult CheckOut()
-        {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
-            return View(GetCartItems());
-        }
-
-        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email, int ThanhTien)
+        public async Task<IActionResult> CreateBill(int NhaCungCapID)
         {
             // lưu hóa đơn
-            var bill = new DonDatHang();
-            bill.NgayLap = DateTime.Now;
-            bill.HoTen = Ten;
-            bill.SoDienThoai = SoDienThoai;
-            bill.DiaChi = DiaChi;
-            bill.Email = Email;
+            var bill = new NhapHang();
+            bill.NgayNhap = DateTime.Now;
+            bill.NhaCungCapID = NhaCungCapID;
+            bill.TaiKhoanID = (int)HttpContext.Session.GetInt32("_TaiKhoanID");
 
             _context.Add(bill);
             await _context.SaveChangesAsync();
 
             var cart = GetCartItems();
             int amount = 0;
-            ThanhTien = 0;
             int soLuong = 0;
             //chi tiết hóa đơn
             foreach (var i in cart)
             {
-                var b = new ChiTietDatHang();
-                b.DonDatHangID = bill.DonDatHangID;
+                var b = new ChiTietNhapHang();
+                b.NhapHangID = bill.NhapHangID;
                 b.SanPhamID = i.SanPham.SanPhamID;
+                b.DonViTinhID = i.DonViTinh.DonViTinhID;
                 b.DonGia = i.SanPham.ThanhTien;
                 b.SoLuong = i.SoLuong;
                 amount = i.SanPham.ThanhTien * i.SoLuong;
-                ThanhTien += amount;
-                var sp = _context.SanPham.FirstOrDefault(s => s.SanPhamID == b.SanPhamID);
-                sp.SoLuong -= i.SoLuong;
                 b.ThanhTien = amount;
+
+                var sp = _context.SanPham.FirstOrDefault(s => s.SanPhamID == b.SanPhamID);
+                sp.SoLuong += i.SoLuong;
                 bill.TongTien += amount;
                 _context.Add(b);
             }
             await _context.SaveChangesAsync();
             ClearCart();
-            return RedirectToAction();
+            return RedirectToAction(nameof(Stored));
         }
     }
 }

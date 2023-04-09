@@ -171,15 +171,27 @@ namespace webbanlaptop.Controllers
             return View(grid);
         }
 
+        public const string CARTKEY = "shopcart";
+
         List<CartItem> GetCartItems()
         {
             var session = HttpContext.Session;
-            string jsoncart = session.GetString("shopcart");
+            string jsoncart = session.GetString(CARTKEY);
             if (jsoncart != null)
             {
                 return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
             }
             return new List<CartItem>();
+        }
+
+        List<CartLove> GetCartsLove()
+        {
+            var jsoncartlove = HttpContext.Request.Cookies[$"{SessionTK}_cartlove"];
+            if (!string.IsNullOrEmpty(jsoncartlove))
+            {
+                return JsonConvert.DeserializeObject<List<CartLove>>(jsoncartlove);
+            }
+            return new List<CartLove>();
         }
 
         // Lưu danh sách CartItem trong giỏ hàng vào session
@@ -195,6 +207,13 @@ namespace webbanlaptop.Controllers
         {
             var session = HttpContext.Session;
             session.Remove("shopcart");
+        }
+        
+        // Lưu danh sách CartItem trong giỏ hàng vào session
+        void SaveCartLoveSession(List<CartLove> love)
+        {
+            string jsoncartlove = JsonConvert.SerializeObject(love);
+            HttpContext.Response.Cookies.Append($"{HttpContext.Session.GetInt32(SessionTK)}_cartlove", jsoncartlove);
         }
 
         // Cho hàng vào giỏ
@@ -220,6 +239,23 @@ namespace webbanlaptop.Controllers
             }
             SaveCartSession(cart);
             return RedirectToAction(nameof(ViewCart));
+        }
+
+        public async Task<IActionResult> AddToCartLove(int id)
+        {
+            var danhmuc = _context.DanhMuc;
+            ViewBag.danhmuc = danhmuc;
+            var product = await _context.SanPham
+                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+            if (product == null)
+            {
+                _toastNotification.AddInfoToastMessage("Sản phẩm không tồn tại.");
+            }
+            var cart = GetCartsLove();
+            cart.Add(new CartLove() { SanPhams = product });
+
+            SaveCartLoveSession(cart);
+            return RedirectToAction(nameof(ViewLove));
         }
 
         public async Task<IActionResult> UpdateItem(int id, int quantity)
@@ -255,6 +291,13 @@ namespace webbanlaptop.Controllers
             ViewBag.danhmuc = danhmuc;
             return View(GetCartItems());
         }
+        
+        public IActionResult ViewLove()
+        {
+            var danhmuc = _context.DanhMuc;
+            ViewBag.danhmuc = danhmuc;
+            return View(GetCartsLove());
+        }
 
         public IActionResult CheckOut()
         {
@@ -263,7 +306,7 @@ namespace webbanlaptop.Controllers
             return View(GetCartItems());
         }
 
-        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email, int ThanhTien)
+        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email)
         {
             // lưu hóa đơn
             var bill = new DonDatHang();
@@ -278,7 +321,6 @@ namespace webbanlaptop.Controllers
 
             var cart = GetCartItems();
             int amount = 0;
-            ThanhTien = 0;
             int soLuong = 0;
             //chi tiết hóa đơn
             foreach (var i in cart)
@@ -289,10 +331,10 @@ namespace webbanlaptop.Controllers
                 b.DonGia = i.SanPham.ThanhTien;
                 b.SoLuong = i.SoLuong;
                 amount = i.SanPham.ThanhTien * i.SoLuong;
-                ThanhTien += amount;
+                b.ThanhTien = amount;
+
                 var sp = _context.SanPham.FirstOrDefault(s => s.SanPhamID == b.SanPhamID);
                 sp.SoLuong -= i.SoLuong;
-                b.ThanhTien = amount;
                 bill.TongTien += amount;
                 _context.Add(b);
             }

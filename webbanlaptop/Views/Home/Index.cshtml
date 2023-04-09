@@ -85,7 +85,7 @@
                                     <div class="product__discount__percent">-@item.GiamGia%</div>
                                 }
                                 <ul class="featured__item__pic__hover">
-                                    <li class="shadow rounded-circle"><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li class="shadow rounded-circle"><a asp-action="AddToCartLove" asp-route-id="@item.SanPhamID"><i class="fa fa-heart"></i></a></li>
                                     <li class="shadow rounded-circle"><a asp-action="AddToCart" asp-route-id="@item.SanPhamID"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>

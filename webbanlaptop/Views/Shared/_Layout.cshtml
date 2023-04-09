@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -33,7 +37,6 @@
                 <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                 <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__auth">
@@ -153,10 +156,24 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a asp-controller="Home" asp-action="ViewCart"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a asp-controller="Home" asp-action="ViewLove"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                            <li>
+                                <a asp-controller="Home" asp-action="ViewCart">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span>
+                                        @{
+                                            var session = HttpContextAccessor.HttpContext.Session;
+                                            string jsoncart = session.GetString(webbanlaptop.Controllers.HomeController.CARTKEY);
+                                            if (jsoncart != null)
+                                            {
+                                                var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+                                                @cart.Count
+                                            }
+                                        }
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
             </div>

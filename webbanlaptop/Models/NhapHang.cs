@@ -19,6 +19,10 @@ namespace webbanlaptop.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime NgayNhap {  get; set; }
 
+        [Display(Name = "Tổng tiền")]
+        [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
+        public int TongTien { get; set; }
+
         public ICollection<ChiTietNhapHang>? ChiTietNhapHangs { get; set; }
     }
 }

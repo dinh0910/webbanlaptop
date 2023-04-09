@@ -16,13 +16,13 @@ namespace webbanlaptop.Areas.Admin.Controllers
         private readonly webbanlaptopContext _context;
         private readonly IToastNotification _toastNotification;
 
-        const string SessionTKAdmin = "_TaiKhoanID";
-        const string SessionHoten = "_HoTen";
-        const string SessionTenDN = "_TenTaiKhoan";
-        const string SessionEmail = "_Email";
-        const string SessionSDT = "_SDT";
-        const string SessionDiaChi = "_DiaChi";
-        const string SessionQuyen = "_QuyenID";
+        public const string SessionTKAdmin = "_TaiKhoanID";
+        public const string SessionHoten = "_HoTen";
+        public const string SessionTenDN = "_TenTaiKhoan";
+        public const string SessionEmail = "_Email";
+        public const string SessionSDT = "_SDT";
+        public const string SessionDiaChi = "_DiaChi";
+        public const string SessionQuyen = "_QuyenID";
 
         public HomeController(ILogger<HomeController> logger, webbanlaptopContext context, IToastNotification toastNotification)
         {

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<webbanlaptop.Models.NhapHang>
+
+@{
+    var i = 1;
+}
+
+<h1>Lịch sử nhập hàng</h1>
+
+<table class="table table-hover" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Nhân viên
+            </th>
+            <th>
+                Nhà cung cấp
+            </th>
+            <th>
+                Ngày nhập đơn
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaiKhoans.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NhaCungCaps.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayNhap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TongTien)
+                </td>
+                <td>
+                    <a asp-action="ImportDetails" asp-route-id="@item.NhapHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

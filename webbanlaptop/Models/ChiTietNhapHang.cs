@@ -20,12 +20,14 @@ namespace webbanlaptop.Models
         public DonViTinh? DonViTinhs { get; set; }
 
         [Display(Name = "Đơn giá")]
+        [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int DonGia { get; set; }
 
         [Display(Name = "Số lượng")]
         public int SoLuong { get; set; }
 
        [Display(Name = "Thành tiền")]
+        [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int ThanhTien { get; set; }
     }
 }

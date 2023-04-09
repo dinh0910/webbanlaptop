@@ -1,4 +1,4 @@
-﻿@model IEnumerable<webbanlaptop.Models.NhapHang>
+﻿@model IEnumerable<webbanlaptop.Models.SanPham>
 
 @{
     var i = 1;
@@ -8,7 +8,8 @@
 
 <div class="mb-5">
     <a class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Nhập hàng</a>
-    <a class="btn btn-outline-success mx-3">Danh sách phiếu nhập</a>
+    <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3">Danh sách phiếu nhập</a>
+    <a asp-controller="SanPhams" asp-action="HistoryImport" class="btn btn-outline-secondary">Lịch sử nhập hàng</a>
 </div>
 
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
@@ -22,10 +23,14 @@
             </div>
             <div class="modal-body">
                 <div class="p-2">
-                    <form asp-action="AddProduct">
+                    <form asp-action="AddToCart">
                         <div class="form-group">
                             <label class="control-label">Sản phẩm</label>
                             <select name="SanPhamID" class="form-control" asp-items="ViewBag.SanPhamID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Đơn vị tính</label>
+                            <select name="DonViTinhID" class="form-control" asp-items="ViewBag.DonViTinhID"></select>
                         </div>
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Số lượng</label>
@@ -48,33 +53,42 @@
                 STT
             </th>
             <th>
-                Nhân viên
+                Hình ảnh
             </th>
             <th>
-                Nhà cung cấp
+                Tên sản phẩm
             </th>
             <th>
-                Ngày nhập đơn
+                Đơn giá
+            </th>
+            <th>
+                Số lượng
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @(i++)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaiKhoans.HoTen)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NhaCungCaps.Ten)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgayNhap)
-                </td>
-            </tr>
+            @if (item.SoLuong > 0)
+            {
+                <tr>
+                    <td>
+                        @(i++)
+                    </td>
+                    <td>
+                        <img src="~/images/products/@Html.DisplayFor(modelItem => item.HinhAnh)" width="100" class="img-thumbnail" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ten)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonGia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
