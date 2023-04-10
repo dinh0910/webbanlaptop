@@ -141,7 +141,7 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
+	padding-top: 50px;
 	padding-bottom: 100px;
 }
 
@@ -635,7 +635,7 @@ ol {
 
 .hero__search {
 	overflow: hidden;
-	margin-bottom: 30px;
+	margin-bottom: 0px;
 }
 
 .hero__search__form {
@@ -727,10 +727,10 @@ ol {
 }
 
 .hero__item {
-	height: 431px;
+	height: 375px;
 	display: flex;
 	align-items: center;
-	padding-left: 75px;
+	/*padding-left: 75px;*/
 }
 
 .hero__text span {
@@ -811,8 +811,8 @@ ol {
 -----------------------*/
 
 .featured {
-	padding-top: 80px;
-	padding-bottom: 40px;
+	padding-top: 30px;
+	padding-bottom: 50px;
 }
 
 .featured__controls {
@@ -895,6 +895,12 @@ ol {
 	list-style: none;
 	display: inline-block;
 	margin-right: 6px;
+}
+
+.loved {
+	background: #7fad39;
+	border-color: #7fad39;
+	color: #ffffff;
 }
 
 .featured__item__pic__hover li:last-child {

@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using webbanlaptop.Data;
 using webbanlaptop.Libs;
 using webbanlaptop.Models;
+using XAct;
 
 namespace webbanlaptop.Controllers
 {
@@ -186,7 +187,7 @@ namespace webbanlaptop.Controllers
 
         List<CartLove> GetCartsLove()
         {
-            var jsoncartlove = HttpContext.Request.Cookies[$"{SessionTK}_cartlove"];
+            var jsoncartlove = HttpContext.Request.Cookies[$"{HttpContext.Session.GetInt32("_TaiKhoanID")}_cartlove"];
             if (!string.IsNullOrEmpty(jsoncartlove))
             {
                 return JsonConvert.DeserializeObject<List<CartLove>>(jsoncartlove);
@@ -243,19 +244,23 @@ namespace webbanlaptop.Controllers
 
         public async Task<IActionResult> AddToCartLove(int id)
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
-            var product = await _context.SanPham
-                .FirstOrDefaultAsync(m => m.SanPhamID == id);
-            if (product == null)
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                _toastNotification.AddInfoToastMessage("Sản phẩm không tồn tại.");
-            }
-            var cart = GetCartsLove();
-            cart.Add(new CartLove() { SanPhams = product });
+                var danhmuc = _context.DanhMuc;
+                ViewBag.danhmuc = danhmuc;
+                var product = await _context.SanPham
+                    .FirstOrDefaultAsync(m => m.SanPhamID == id);
+                if (product == null)
+                {
+                    _toastNotification.AddInfoToastMessage("Sản phẩm không tồn tại.");
+                }
+                var cart = GetCartsLove();
+                cart.Add(new CartLove() { SanPhams = product });
 
-            SaveCartLoveSession(cart);
-            return RedirectToAction(nameof(ViewLove));
+                SaveCartLoveSession(cart);
+                return RedirectToAction(nameof(ViewLove));
+            }
+            return RedirectToAction("Login", "Home");
         }
 
         public async Task<IActionResult> UpdateItem(int id, int quantity)
@@ -283,6 +288,18 @@ namespace webbanlaptop.Controllers
             return RedirectToAction(nameof(ViewCart));
         }
 
+        public async Task<IActionResult> RemoveItemLove(int id)
+        {
+            var cart = GetCartsLove();
+            var item = cart.Find(p => p.SanPhams.SanPhamID == id);
+            if (item != null)
+            {
+                cart.Remove(item);
+            }
+            SaveCartLoveSession(cart);
+            return RedirectToAction(nameof(ViewLove));
+        }
+
 
         // Chuyển đến view xem giỏ hàng
         public IActionResult ViewCart()
@@ -294,9 +311,13 @@ namespace webbanlaptop.Controllers
         
         public IActionResult ViewLove()
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
-            return View(GetCartsLove());
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                var danhmuc = _context.DanhMuc;
+                ViewBag.danhmuc = danhmuc;
+                return View(GetCartsLove());
+            }
+            return RedirectToAction("Login", "Home");
         }
 
         public IActionResult CheckOut()

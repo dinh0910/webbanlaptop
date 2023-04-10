@@ -9,5 +9,7 @@ namespace webbanlaptop.Models
 
         [Display(Name = "Hình ảnh")]
         public string? HinhAnh { get; set; }
+
+        public string? BiaDau { get; set; }
     }
 }

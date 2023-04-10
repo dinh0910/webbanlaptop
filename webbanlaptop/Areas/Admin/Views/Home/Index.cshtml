@@ -1,8 +1,105 @@
-﻿@{
+﻿@model IEnumerable<webbanlaptop.Models.DonDatHang>
+
+@{
     ViewData["Title"] = "Home Page";
+    var ddh = ViewBag.dondathang as IQueryable<webbanlaptop.Models.DonDatHang>;
+    var i = 1;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Dashboard</h1>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Dashboard</li>
+</ol>
+
+<div class="row">
+    <div class="col-xl-6 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">Tổng đơn đặt hàng hôm nay: @Model.Count()</div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">Tổng đơn đặt hàng trong tháng: @ddh.Count()</div>
+
+        </div>
+    </div>
 </div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Đơn đặt hàng hôm nay
+    </div>
+    <div class="card-body">
+        <table class="table table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NgayLap)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HoTen)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SoDienThoai)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GhiChu)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TienShip)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TongTien)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DuyetDon)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NgayLap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoTen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoDienThoai)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GhiChu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TienShip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TongTien)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DuyetDon)
+                        </td>
+                        <td>
+                            <a asp-controller="DonDatHangs" asp-action="Details" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

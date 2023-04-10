@@ -97,15 +97,6 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
-                            <!--<div class="header__top__right__language">
-                                <img src="img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>-->
                             <div class="header__top__right__auth">
                                 @if(@Context.Session.GetInt32("_TaiKhoanID") == null){
                                     <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-user"></i> Đăng nhập</a>
@@ -156,21 +147,31 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a asp-controller="Home" asp-action="ViewLove"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                            <li>
+                                <a asp-controller="Home" asp-action="ViewLove">
+                                    <i class="fa fa-heart"></i>
+                                    @{
+                                        string jsoncartl = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanID")}_cartlove"];
+                                        if (jsoncartl != null)
+                                        {
+                                            var cartloved = JsonConvert.DeserializeObject<List<CartLove>>(jsoncartl);
+                                            <span>@cartloved.Count</span>
+                                        }
+                                    }
+                                </a>
+                            </li>
                             <li>
                                 <a asp-controller="Home" asp-action="ViewCart">
                                     <i class="fa fa-shopping-bag"></i>
-                                    <span>
-                                        @{
-                                            var session = HttpContextAccessor.HttpContext.Session;
-                                            string jsoncart = session.GetString(webbanlaptop.Controllers.HomeController.CARTKEY);
-                                            if (jsoncart != null)
-                                            {
-                                                var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
-                                                @cart.Count
-                                            }
+                                    @{
+                                        var session = HttpContextAccessor.HttpContext.Session;
+                                        string jsoncart = session.GetString(webbanlaptop.Controllers.HomeController.CARTKEY);
+                                        if (jsoncart != null)
+                                        {
+                                            var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+                                            <span>@cart.Count</span>
                                         }
-                                    </span>
+                                    }
                                 </a>
                             </li>
                         </ul>

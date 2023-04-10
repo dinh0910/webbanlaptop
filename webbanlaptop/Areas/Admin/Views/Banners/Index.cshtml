@@ -26,6 +26,10 @@
                             <label class="control-label mb-1">Hình ảnh</label>
                             <input type="file" name="file" class="form-control" />
                         </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Active</label>
+                            <input type="text" name="BiaDau" class="form-control" />
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
@@ -42,20 +46,26 @@
             <th>
                 @Html.DisplayNameFor(model => model.HinhAnh)
             </th>
+            <th>
+                Active
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr class="mb-4">
-            <td class ="d-flex">
+            <td>
+                <img src="~/images/banners/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
+            </td>
+            <td class="d-flex">
                 <div class="p-2 w-100">
-                    <img src="~/images/banners/@Html.DisplayFor(modelItem => item.HinhAnh)" class="img-thumbnail" width="100" />
+                    @Html.DisplayFor(modelItem => item.BiaDau)
                 </div>
                 <div class="p-2 flex-shrink-1 d-flex flex-column">
                     <a class="p-2" asp-action="Edit" asp-route-id="@item.BannerID">
                         <i class="fa-solid fa-pen-to-square text-success"></i>
                     </a>
-                    
+
                     <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
                         <i class="fa-solid fa-trash text-danger"></i>
                     </a>

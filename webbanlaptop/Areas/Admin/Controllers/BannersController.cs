@@ -40,7 +40,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("BannerID,HinhAnh")] Banner banner)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("BannerID,HinhAnh, BiaDau")] Banner banner)
         {
             if (ModelState.IsValid)
             {

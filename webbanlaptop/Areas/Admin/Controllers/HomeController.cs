@@ -65,15 +65,23 @@ namespace webbanlaptop.Areas.Admin.Controllers
         [Route("/admin")]
         public IActionResult Login()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") == null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("/admin/home")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                return View();
+                var dateNow = DateTime.Today.Date;
+                var webbanlaptopContext = _context.DonDatHang.Where(d => d.NgayLap.Date == dateNow);
+                ViewBag.dondathang = _context.DonDatHang.Where(d => d.NgayLap.Month == DateTime.Today.Month);
+
+                return View(await webbanlaptopContext.ToListAsync());
             }
             return RedirectToAction("Login", "Home");
         }
