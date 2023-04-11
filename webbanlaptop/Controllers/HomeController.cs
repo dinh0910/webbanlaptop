@@ -20,6 +20,7 @@ namespace webbanlaptop.Controllers
         public const string SessionTK = "_TaiKhoanID";
         public const string SessionHoten = "_HoTen";
         public const string SessionTenDN = "_TenTaiKhoan";
+        public const string SessionMK = "_MatKhau";
         public const string SessionEmail = "_Email";
         public const string SessionSDT = "_SDT";
         public const string SessionDiaChi = "_DiaChi";
@@ -61,6 +62,7 @@ namespace webbanlaptop.Controllers
                     // Đăng ký SESSION
                     HttpContext.Session.SetInt32(SessionTK, (int)taiKhoan.TaiKhoanID);
                     HttpContext.Session.SetString(SessionTenDN, taiKhoan.TenTaiKhoan);
+                    HttpContext.Session.SetString(SessionMK, taiKhoan.MatKhau);
                     //HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
                     //HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
                     //HttpContext.Session.SetString(SessionSDT, taiKhoan.SoDienThoai);
@@ -126,6 +128,7 @@ namespace webbanlaptop.Controllers
             HttpContext.Session.Remove("_TaiKhoanID");
             //HttpContext.Session.Remove("_Hoten");
             HttpContext.Session.Remove("_TenTaiKhoan");
+            HttpContext.Session.Remove("_MatKhau");
             //HttpContext.Session.Remove("_Quyen");
             //HttpContext.Session.Remove("_HinhAnh");
             //HttpContext.Session.Remove("_Email");
@@ -141,11 +144,6 @@ namespace webbanlaptop.Controllers
 
         public IActionResult ChangePassword() 
         { 
-            return View();
-        }
-
-        public IActionResult PersonalInformation()
-        {
             return View();
         }
 
@@ -367,6 +365,29 @@ namespace webbanlaptop.Controllers
         public IActionResult Message()
         {
             return View();
+        }
+
+        public async Task<IActionResult> PersonalInformation(int? id)
+        {
+            var taikhoan = await _context.TaiKhoan.FindAsync(id);
+            return View(taikhoan);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PersonalInformation([Bind("TaiKhoanID","TenTaiKhoan","MatKhau","HoTen","Email","SoDienThoai","DiaChi")] TaiKhoan tk)
+        {
+            _context.Update(tk);
+            await _context.SaveChangesAsync();
+
+            return View(tk);
+        }
+
+        public async Task<IActionResult> SearchOrder(string? SoDienThoai)
+        {
+            var order = _context.DonDatHang.Where(d => d.SoDienThoai == SoDienThoai);
+            ViewBag.ctdh = _context.ChiTietDatHang.Include(c => c.SanPhams);
+            return View(order);
         }
     }
 }

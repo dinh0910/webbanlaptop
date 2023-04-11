@@ -107,13 +107,13 @@ namespace webbanlaptop.Migrations
                 {
                     TaiKhoanID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenTaiKhoan = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MatKhau = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenTaiKhoan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MatKhau = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HoTen = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuyenID = table.Column<int>(type: "int", nullable: false)
+                    QuyenID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

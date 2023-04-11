@@ -1,0 +1,22 @@
+﻿<div class="modal fade" id="searchOrderModal" tabindex="-1" aria-labelledby="searchOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-2">
+                    <div class="text-center mb-4">
+                        <span class="fw-bold fs-3" style="color:#7fad39">KIỂM TRA ĐƠN HÀNG CỦA BẠN</span>
+                    </div>
+                    <form asp-antiforgery="true" action="/Home/SearchOrder" method="post">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="SoDienThoai" class="form-control" id="floatingInput" placeholder="Nhập số điện thoại của bạn để kiểm tra">
+                            <label for="floatingInput">Số điện thoại</label>
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" value="Kiểm tra" class="btn text-white col fw-semibold" style="background-color:#7fad39" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -106,7 +106,7 @@
                                         <i class="fa fa-user"></i> Chào, @Context.Session.GetString("_TenTaiKhoan")!
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/Home/PersonalInformation" class="dropdown-item" role="button">Thông tin cá nhân</a></li>
+                                        <li><a href="/Home/PersonalInformation/@Context.Session.GetInt32("_TaiKhoanID")" class="dropdown-item" role="button">Thông tin cá nhân</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a href="/Home/Logout" class="dropdown-item">Đăng xuất</a></li>
                                     </ul>
@@ -147,6 +147,12 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
+                            <li>
+                                <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#searchOrderModal">
+                                    <i class="fa-solid fa-truck-fast"></i>
+                                </a>
+                                <partial name="_PartialSearchOrder" />
+                            </li>
                             <li>
                                 <a asp-controller="Home" asp-action="ViewLove">
                                     <i class="fa fa-heart"></i>

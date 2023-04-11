@@ -7,11 +7,9 @@ namespace webbanlaptop.Models
     {
         public int TaiKhoanID { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập tên tài khoản!")]
         [Display(Name = "Tên tài khoản")]
         public string? TenTaiKhoan { get; set; }
 
-        [Required]
         [Display(Name = "Mật khẩu")]
         public string MatKhau { get; set; }
 

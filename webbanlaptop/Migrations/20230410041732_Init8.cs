@@ -13,6 +13,7 @@ namespace webbanlaptop.Migrations
                 table: "Banner",
                 type: "nvarchar(max)",
                 nullable: true);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
