@@ -24,15 +24,11 @@ namespace webbanlaptop.Data
 
         public DbSet<webbanlaptop.Models.HinhAnh> HinhAnh { get; set; }
 
-        public DbSet<webbanlaptop.Models.LoaiThongSo> LoaiThongSo { get; set; }
-
         public DbSet<webbanlaptop.Models.Quyen> Quyen { get; set; }
 
         public DbSet<webbanlaptop.Models.SanPham> SanPham { get; set; }
 
         public DbSet<webbanlaptop.Models.TaiKhoan> TaiKhoan { get; set; }
-
-        public DbSet<webbanlaptop.Models.TenThongSo> TenThongSo { get; set; }
 
         public DbSet<webbanlaptop.Models.ThongSo> ThongSo { get; set; }
 
@@ -40,13 +36,9 @@ namespace webbanlaptop.Data
 
         public DbSet<webbanlaptop.Models.KhuyenMai> KhuyenMai { get; set; }
 
-        public DbSet<webbanlaptop.Models.KhuyenMaiSanPham> KhuyenMaiSanPham { get; set; }
-
         public DbSet<webbanlaptop.Models.Mau> Mau { get; set; }
 
         public DbSet<webbanlaptop.Models.ThongTin> ThongTin { get; set; }
-
-        public DbSet<webbanlaptop.Models.ThongTinSanPham> ThongTinSanPham { get; set; }
 
         public DbSet<webbanlaptop.Models.DonViTinh> DonViTinh { get; set; }
 

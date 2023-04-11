@@ -7,6 +7,9 @@ namespace webbanlaptop.Models
     {
         public int KhuyenMaiID { get; set; }
 
+        public int SanPhamID { get; set; }
+        public SanPham? SanPhams { get; set; }
+
         [Display(Name = "Nội dung")]
         public string? NoiDung { get; set; }
     }

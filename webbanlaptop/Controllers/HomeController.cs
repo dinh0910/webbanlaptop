@@ -389,5 +389,12 @@ namespace webbanlaptop.Controllers
             ViewBag.ctdh = _context.ChiTietDatHang.Include(c => c.SanPhams);
             return View(order);
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            var products = await _context.SanPham.FirstOrDefaultAsync(s => s.SanPhamID == id);
+            
+            return View(products);
+        }
     }
 }

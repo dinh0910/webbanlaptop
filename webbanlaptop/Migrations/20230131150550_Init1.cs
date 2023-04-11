@@ -23,19 +23,6 @@ namespace webbanlaptop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoaiThongSo",
-                columns: table => new
-                {
-                    LoaiThongSoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoaiThongSo", x => x.LoaiThongSoID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Quyen",
                 columns: table => new
                 {
@@ -79,26 +66,6 @@ namespace webbanlaptop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DonDatHang", x => x.DonDatHangID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TenThongSo",
-                columns: table => new
-                {
-                    TenThongSoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LoaiThongSoID = table.Column<int>(type: "int", nullable: false),
-                    Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TenThongSo", x => x.TenThongSoID);
-                    table.ForeignKey(
-                        name: "FK_TenThongSo_LoaiThongSo_LoaiThongSoID",
-                        column: x => x.LoaiThongSoID,
-                        principalTable: "LoaiThongSo",
-                        principalColumn: "LoaiThongSoID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,8 +178,18 @@ namespace webbanlaptop.Migrations
                     ThongSoID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SanPhamID = table.Column<int>(type: "int", nullable: false),
-                    TenThongSoID = table.Column<int>(type: "int", nullable: false),
-                    NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LoaiCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ram = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoaiRam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SoKheRam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OCung = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    KichThuocManHinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CongNgheManHinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Pin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HeDieuHanh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DoPhanGiai = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CongGiaoTiep = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TinhNangKhac = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -222,12 +199,6 @@ namespace webbanlaptop.Migrations
                         column: x => x.SanPhamID,
                         principalTable: "SanPham",
                         principalColumn: "SanPhamID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ThongSo_TenThongSo_TenThongSoID",
-                        column: x => x.TenThongSoID,
-                        principalTable: "TenThongSo",
-                        principalColumn: "TenThongSoID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -262,19 +233,9 @@ namespace webbanlaptop.Migrations
                 column: "QuyenID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenThongSo_LoaiThongSoID",
-                table: "TenThongSo",
-                column: "LoaiThongSoID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ThongSo_SanPhamID",
                 table: "ThongSo",
                 column: "SanPhamID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ThongSo_TenThongSoID",
-                table: "ThongSo",
-                column: "TenThongSoID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -301,13 +262,7 @@ namespace webbanlaptop.Migrations
                 name: "SanPham");
 
             migrationBuilder.DropTable(
-                name: "TenThongSo");
-
-            migrationBuilder.DropTable(
                 name: "ThuongHieu");
-
-            migrationBuilder.DropTable(
-                name: "LoaiThongSo");
 
             migrationBuilder.DropTable(
                 name: "DanhMuc");

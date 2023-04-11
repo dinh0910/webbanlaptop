@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace webbanlaptop.Models
@@ -7,7 +8,13 @@ namespace webbanlaptop.Models
     {
         public int ThongTinID { get; set; }
 
-        [Display(Name = "Nội dung")]
-        public string? NoiDung { get; set; }
+        public int SanPhamID { get; set; }
+        public SanPham? SanPhams { get; set; }
+
+        public string? TrongHop { get; set; }
+
+        public string? BaoHanhPin { get; set; }
+
+        public string? BaoHanh { get; set; }
     }
 }

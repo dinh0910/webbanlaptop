@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NToastNotify;
+using System.Reflection;
 using webbanlaptop.Data;
 using webbanlaptop.Models;
 
@@ -238,6 +239,61 @@ namespace webbanlaptop.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             ClearCart();
             return RedirectToAction(nameof(Stored));
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            var sp = await _context.SanPham.FirstOrDefaultAsync(s => s.SanPhamID == id);
+            var tt = await _context.ThongTin.FirstOrDefaultAsync(s => s.SanPhamID == id);
+            ViewBag.thongtin = _context.ThongTin;
+            ViewBag.thongso = _context.ThongSo;
+            ViewBag.hinhanh = _context.HinhAnh;
+            ViewBag.khuyenmai = _context.KhuyenMai;
+            return View(sp, tt);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DetailThongSo([Bind("ThongSoID","SanPhamID","LoaiCard","Ram","LoaiRam","SoKheRam","OCung",
+            "KichThuocManHinh","CongNgheManHinh","Pin","HeDieuHanh","DoPhanGiai","CongGiaoTiep","TinhNangKhac")] ThongSo thongSo)
+        {
+            _context.Update(thongSo);
+            await _context.SaveChangesAsync();
+            return View(thongSo);
+        }
+
+        public IActionResult DetailThongTin()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(int id, [Bind("ThongTinID","SanPhamID","TrongHop","BaoHanhPin","BaoHanh")] ThongTin thongTin
+            , [Bind("KhuyenMaiID", "SanPhamID", "NoiDung")] KhuyenMai khuyenMai)
+        {
+            if(thongTin.BaoHanh != null)
+            {
+                _context.Update(thongTin);
+                await _context.SaveChangesAsync();
+            } else
+            {
+                _context.Update(khuyenMai);
+                await _context.SaveChangesAsync();
+            }
+            
+            //return View(sp);
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DetailHinhAnh(IFormFile file, [Bind("HinhAnhID", "SanPhamID", "Anh")] HinhAnh hinhAnh)
+        {
+            hinhAnh.Anh = Upload(file);
+            _context.Update(hinhAnh);
+            await _context.SaveChangesAsync();
+            return View(hinhAnh);
         }
     }
 }

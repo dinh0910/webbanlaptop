@@ -119,6 +119,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SanPhamID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
 
+                <a asp-action="Details" asp-route-id="@item.SanPhamID"><i class="fa-solid fa-circle-info text-primary"></i></a>
+
                 <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(i)">
                     <i class="fa-solid fa-trash text-danger"></i>
                 </a>
