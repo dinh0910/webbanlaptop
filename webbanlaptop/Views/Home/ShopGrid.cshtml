@@ -46,8 +46,9 @@
     </div>
 </section>
 
-<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+<section class="breadcrumb-section">
     <div class="container">
+        <img src="~/images/banners/7d721817-5cb4-41a0-9975-1def893d934c_banner-web-dell-809x458-1.jpg" />
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
@@ -61,6 +62,10 @@
         </div>
     </div>
 </section>
+
+<style>
+
+</style>
 
 @{
     var jsoncartlove = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanID")}_cartlove"];
@@ -77,7 +82,7 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Department</h4>
+                        <h4>Danh mục</h4>
                         <ul>
                             @foreach(var item in danhmuc)
                             {
@@ -90,7 +95,7 @@
             <div class="col-lg-9 col-md-7">
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
-                        <h2>Sale Off</h2>
+                        <h2>Khuyến mãi</h2>
                     </div>
                     <div class="row">
                         <div class="product__discount__slider owl-carousel">

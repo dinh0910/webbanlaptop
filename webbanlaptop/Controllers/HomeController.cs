@@ -34,12 +34,9 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Index()
         {
-            var banner = _context.Banner;
-            var danhmuc = _context.DanhMuc;
-            ViewBag.banner = banner;
-            ViewBag.danhmuc = danhmuc;
-            var sanPham = _context.SanPham;
-            ViewBag.sanPham = sanPham;
+            ViewBag.banner = _context.Banner;
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.sanPham = _context.SanPham;
             return View();
         }
 
@@ -120,6 +117,7 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Login()
         {
+            ViewBag.danhmuc = _context.DanhMuc;
             return View();
         }
 
@@ -139,11 +137,13 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Register()
         {
+            ViewBag.danhmuc = _context.DanhMuc;
             return View();
         }
 
         public IActionResult ChangePassword() 
-        { 
+        {
+            ViewBag.danhmuc = _context.DanhMuc;
             return View();
         }
 
@@ -157,8 +157,7 @@ namespace webbanlaptop.Controllers
         {
             var grid = _context.SanPham.Where(d => d.DanhMucID == id);
 
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
+            ViewBag.danhmuc = _context.DanhMuc;
 
             return View(grid);
         }
@@ -211,8 +210,7 @@ namespace webbanlaptop.Controllers
         // Cho hàng vào giỏ
         public async Task<IActionResult> AddToCart(int id)
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
+            ViewBag.danhmuc = _context.DanhMuc;
             var product = await _context.SanPham
                 .FirstOrDefaultAsync(m => m.SanPhamID == id);
             if (product == null)
@@ -237,8 +235,7 @@ namespace webbanlaptop.Controllers
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                var danhmuc = _context.DanhMuc;
-                ViewBag.danhmuc = danhmuc;
+                ViewBag.danhmuc = _context.DanhMuc;
                 var product = await _context.SanPham
                     .FirstOrDefaultAsync(m => m.SanPhamID == id);
                 if (product == null)
@@ -295,8 +292,8 @@ namespace webbanlaptop.Controllers
         // Chuyển đến view xem giỏ hàng
         public IActionResult ViewCart()
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
+            ViewBag.danhmuc = _context.DanhMuc;
+
             return View(GetCartItems());
         }
         
@@ -304,8 +301,8 @@ namespace webbanlaptop.Controllers
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
-                var danhmuc = _context.DanhMuc;
-                ViewBag.danhmuc = danhmuc;
+                ViewBag.danhmuc = _context.DanhMuc;
+
                 return View(GetCartsLove());
             }
             return RedirectToAction("Login", "Home");
@@ -313,8 +310,8 @@ namespace webbanlaptop.Controllers
 
         public IActionResult CheckOut()
         {
-            var danhmuc = _context.DanhMuc;
-            ViewBag.danhmuc = danhmuc;
+            ViewBag.danhmuc = _context.DanhMuc;
+
             return View(GetCartItems());
         }
 
@@ -357,12 +354,16 @@ namespace webbanlaptop.Controllers
 
         public IActionResult Message()
         {
+            ViewBag.danhmuc = _context.DanhMuc;
+
             return View();
         }
 
         public async Task<IActionResult> PersonalInformation(int? id)
         {
             var taikhoan = await _context.TaiKhoan.FindAsync(id);
+            ViewBag.danhmuc = _context.DanhMuc;
+
             return View(taikhoan);
         }
 
@@ -380,6 +381,7 @@ namespace webbanlaptop.Controllers
         {
             var order = _context.DonDatHang.Where(d => d.SoDienThoai == SoDienThoai);
             ViewBag.ctdh = _context.ChiTietDatHang.Include(c => c.SanPhams);
+            ViewBag.danhmuc = _context.DanhMuc;
             return View(order);
         }
 
