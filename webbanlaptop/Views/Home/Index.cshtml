@@ -30,7 +30,7 @@
                     <div class="hero__search__form">
                         <form action="#">
                             <input type="text" placeholder="What do yo u need?">
-                            <button type="submit" class="site-btn">SEARCH</button>
+                            <button type="submit" class="site-btn">Tìm kiếm</button>
                         </form>
                     </div>
                     <div class="hero__search__phone">
@@ -38,8 +38,8 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+65 11.188.888</h5>
-                            <span>support 24/7 time</span>
+                            <h5>+84 358 908 564</h5>
+                            <span>Hỗ trợ 24/7</span>
                         </div>
                     </div>
                 </div>
@@ -87,14 +87,12 @@
         </div>
 
         @{
-
             var jsoncartlove = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanID")}_cartlove"];
             var loves = new List<CartLove>();
             @if (!string.IsNullOrEmpty(jsoncartlove))
             {
                 loves = JsonConvert.DeserializeObject<List<CartLove>>(jsoncartlove);
             }
-
         }
 
         <div class="row featured__filter">
@@ -125,7 +123,7 @@
                                 </ul>
                             </div>
                             <div class="featured__item__text">
-                                <div><h6><a href="#">@item.Ten</a></h6></div>
+                                <div><h6><a asp-action="Details" asp-route-id="@item.SanPhamID">@item.Ten</a></h6></div>
                                 <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
                             </div>
                         </div>

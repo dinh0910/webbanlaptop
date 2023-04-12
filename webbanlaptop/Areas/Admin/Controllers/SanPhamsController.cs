@@ -47,6 +47,48 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var sanPham = await _context.SanPham.FindAsync(id);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucConID", "Ten", sanPham.DanhMucID);
+            ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
+            return View(sanPham);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,ThanhTien,SoLuong")] SanPham sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(sanPham);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SanPhamExists(sanPham.SanPhamID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten", sanPham.DanhMucID);
+            ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
+            return View(sanPham);
+        }
+
+        private bool SanPhamExists(int id)
+        {
+            return _context.SanPham.Any(e => e.SanPhamID == id);
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.SanPham == null)
@@ -88,11 +130,15 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return fn;
         }
 
+        public const string CARTIMPORT = "addcart";
+
         public async Task<IActionResult> Stored()
         {
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
                 var webbanlaptopContext = _context.SanPham;
+                ViewData["SanPhamID"] = new SelectList(_context.SanPham, "SanPhamID", "Ten");
+                ViewData["DonViTinhID"] = new SelectList(_context.DonViTinh, "DonViTinhID", "Ten");
                 return View(await webbanlaptopContext.ToListAsync());
             }
             return RedirectToAction("Login", "Home");
@@ -124,7 +170,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
         List<ImportItem> GetCartItems()
         {
             var session = HttpContext.Session;
-            string jsoncart = session.GetString("addcart");
+            string jsoncart = session.GetString(CARTIMPORT);
             if (jsoncart != null)
             {
                 return JsonConvert.DeserializeObject<List<ImportItem>>(jsoncart);
@@ -169,7 +215,8 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 cart.Add(new ImportItem() { SanPham = product, DonViTinh = dvt, SoLuong = importItem.SoLuong });
             }
             SaveCartSession(cart);
-            return RedirectToAction(nameof(ViewImport));
+            //return RedirectToAction(nameof(ViewImport));
+            return RedirectToAction("Stored", "SanPhams");
         }
 
         [Route("/updateitem", Name = "updateitem")]
@@ -244,56 +291,87 @@ namespace webbanlaptop.Areas.Admin.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             var sp = await _context.SanPham.FirstOrDefaultAsync(s => s.SanPhamID == id);
-            var tt = await _context.ThongTin.FirstOrDefaultAsync(s => s.SanPhamID == id);
             ViewBag.thongtin = _context.ThongTin;
             ViewBag.thongso = _context.ThongSo;
             ViewBag.hinhanh = _context.HinhAnh;
             ViewBag.khuyenmai = _context.KhuyenMai;
-            return View(sp, tt);
+            return View(sp);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailThongSo([Bind("ThongSoID","SanPhamID","LoaiCard","Ram","LoaiRam","SoKheRam","OCung",
-            "KichThuocManHinh","CongNgheManHinh","Pin","HeDieuHanh","DoPhanGiai","CongGiaoTiep","TinhNangKhac")] ThongSo thongSo)
-        {
-            _context.Update(thongSo);
-            await _context.SaveChangesAsync();
-            return View(thongSo);
-        }
-
-        public IActionResult DetailThongTin()
-        {
-            return View();
-        }
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(int id, [Bind("ThongTinID","SanPhamID","TrongHop","BaoHanhPin","BaoHanh")] ThongTin thongTin
-            , [Bind("KhuyenMaiID", "SanPhamID", "NoiDung")] KhuyenMai khuyenMai)
+            , [Bind("KhuyenMaiID", "SanPhamID", "NoiDung")] KhuyenMai khuyenMai, [Bind("ThongSoID","SanPhamID","LoaiCard","Ram","LoaiRam","SoKheRam","OCung",
+            "KichThuocManHinh","CongNgheManHinh","Pin","HeDieuHanh","DoPhanGiai","CongGiaoTiep","TinhNangKhac","CanNang")] ThongSo thongSo,
+            IFormFile file, [Bind("HinhAnhID", "SanPhamID", "Anh")] HinhAnh hinhAnh)
         {
             if(thongTin.BaoHanh != null)
             {
                 _context.Update(thongTin);
                 await _context.SaveChangesAsync();
-            } else
+            } 
+            else if (khuyenMai.NoiDung != null)
             {
                 _context.Update(khuyenMai);
                 await _context.SaveChangesAsync();
+            } 
+            else if (thongSo.LoaiCard != null)
+            {
+                _context.Update(thongSo);
+                await _context.SaveChangesAsync();
+            }
+            else 
+            {
+                hinhAnh.Anh = Upload(file);
+                _context.Update(hinhAnh);
+                await _context.SaveChangesAsync();
             }
             
-            //return View(sp);
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailHinhAnh(IFormFile file, [Bind("HinhAnhID", "SanPhamID", "Anh")] HinhAnh hinhAnh)
+        public async Task<IActionResult> DeleteThongTin(int? id)
         {
-            hinhAnh.Anh = Upload(file);
-            _context.Update(hinhAnh);
+            var tt = await _context.ThongTin
+                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+
+            _context.ThongTin.Remove(tt);
             await _context.SaveChangesAsync();
-            return View(hinhAnh);
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteThongSo(int? id)
+        {
+            var ts = await _context.ThongSo
+                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+
+            _context.ThongSo.Remove(ts);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteKhuyenMai(int? id)
+        {
+            var tt = await _context.KhuyenMai
+                .FirstOrDefaultAsync(m => m.KhuyenMaiID == id);
+
+            _context.KhuyenMai.Remove(tt);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteHinhAnh(int? id)
+        {
+            var tt = await _context.HinhAnh
+                .FirstOrDefaultAsync(m => m.HinhAnhID == id);
+
+            _context.HinhAnh.Remove(tt);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
     }
 }

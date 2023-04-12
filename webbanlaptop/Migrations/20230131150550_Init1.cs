@@ -190,6 +190,7 @@ namespace webbanlaptop.Migrations
                     DoPhanGiai = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CongGiaoTiep = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TinhNangKhac = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CanNang = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {

@@ -155,17 +155,10 @@ namespace webbanlaptop.Controllers
 
         public async Task<IActionResult> ShopGrid(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var grid = await _context.SanPham.FirstOrDefaultAsync(d => d.DanhMucID == id);
+            var grid = _context.SanPham.Where(d => d.DanhMucID == id);
 
             var danhmuc = _context.DanhMuc;
             ViewBag.danhmuc = danhmuc;
-
-            var sanPham = _context.SanPham;
-            ViewBag.sanPham = sanPham;
 
             return View(grid);
         }
@@ -393,7 +386,11 @@ namespace webbanlaptop.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             var products = await _context.SanPham.FirstOrDefaultAsync(s => s.SanPhamID == id);
-            
+            ViewBag.hinhanh = _context.HinhAnh;
+            ViewBag.thongtin = _context.ThongTin;
+            ViewBag.thongso = _context.ThongSo;
+            ViewBag.khuyenmai = _context.KhuyenMai;
+            ViewBag.danhmuc = _context.DanhMuc;
             return View(products);
         }
     }

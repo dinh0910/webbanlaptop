@@ -1,4 +1,6 @@
-﻿@model IEnumerable<webbanlaptop.Models.SanPham>
+﻿@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<webbanlaptop.Models.SanPham>
 
 @{
     var i = 1;
@@ -8,7 +10,18 @@
 
 <div class="mb-5">
     <a class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Nhập hàng</a>
-    <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3">Danh sách phiếu nhập</a>
+    <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3">
+        Danh sách phiếu nhập
+        @{
+            var session = HttpContextAccessor.HttpContext.Session;
+            string jsoncart = session.GetString(webbanlaptop.Areas.Admin.Controllers.SanPhamsController.CARTIMPORT);
+            if (jsoncart != null)
+            {
+                var cart = JsonConvert.DeserializeObject<List<ImportItem>>(jsoncart);
+                <span>(@cart.Count)</span>
+            }
+        }
+    </a>
     <a asp-controller="SanPhams" asp-action="HistoryImport" class="btn btn-outline-secondary">Lịch sử nhập hàng</a>
 </div>
 

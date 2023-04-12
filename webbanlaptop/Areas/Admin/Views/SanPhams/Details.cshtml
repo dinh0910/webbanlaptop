@@ -1,33 +1,43 @@
-﻿@model (webbanlaptop.Models.SanPham, webbanlaptop.Models.ThongTin)
+﻿@model webbanlaptop.Models.SanPham
 
 @{
     var tt = ViewBag.thongtin as IQueryable<webbanlaptop.Models.ThongTin>;
     var ts = ViewBag.thongso as IQueryable<webbanlaptop.Models.ThongSo>;
     var ha = ViewBag.hinhanh as IQueryable<webbanlaptop.Models.HinhAnh>;
     var km = ViewBag.khuyenmai as IQueryable<webbanlaptop.Models.KhuyenMai>;
+    var i = 1;
+    var j = 1;
 }
 
-<h1 class="mt-4">Chi tiết sản phẩm @Model.Item1.Ten</h1>
+<h1 class="mt-4">Chi tiết sản phẩm @Model.Ten</h1>
 
 <div class="row mt-4">
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header d-flex">
                 <div class="me-auto">
-                    <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin">Thêm thông tin</a>
+                    @if(tt.Count() == 1)
+                    {
+                        <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin" aria-disabled="true">Thêm thông tin</a>
+                        <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT">Xóa</a>
+                    } else
+                    {
+                        <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin">Thêm thông tin</a>
+                        <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT" aria-disabled="true">Xóa</a>
+                    }
                 </div>
-                <div class="p-2 mx-4">
+                <div class="p-2">
                     Thông tin sản phẩm
                 </div>
                 <div class="p-2">
-                    <i class="fas fa-table me-1"></i>
+                    <i class="fa-solid fa-list"></i>
                 </div>
             </div>
             <div class="card-body">
                 <ol class="list-group list-group-numbered">
                     @foreach (var item in tt)
                     {
-                        @if (item.SanPhamID == Model.Item1.SanPhamID)
+                        @if (item.SanPhamID == Model.SanPhamID)
                         {
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
@@ -59,21 +69,42 @@
                 <div class="me-auto">
                     <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalKhuyenMai">Thêm khuyến mãi</a>
                 </div>
-                <div class="p-2 mx-4">
+                <div class="p-2">
                     Khuyến mãi sản phẩm
                 </div>
                 <div class="p-2">
-                    <i class="fas fa-table me-1"></i>
+                    <i class="fa-solid fa-list"></i>
                 </div>
             </div>
             <div class="card-body">
-                <ol class="list-group list-group-numbered">
+                <ol class="list-group">
                     @foreach(var item in km)
                     {
-                        @if(item.SanPhamID == Model.Item1.SanPhamID)
+                        @if(item.SanPhamID == Model.SanPhamID)
                         {
-                            <li class="list-group-item">
-                                    @item.NoiDung
+                            <li class="list-group-item d-flex">
+                                <div class="me-auto">
+                                    @(i++). @item.NoiDung
+                                </div>
+                                <div>
+                                    <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(i)">
+                                        <i class="fa-solid fa-trash text-danger"></i>
+                                    </a>
+                                    <div class="modal fade" id="modal@(i)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="/Admin/SanPhams/DeleteKhuyenMai/@item.KhuyenMaiID" role="button" class="btn btn-danger">Xóa</a>
+                                                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         }
                     }
@@ -86,9 +117,17 @@
 <div class="card mb-4">
     <div class="card-header d-flex">
         <div class="me-auto">
-            <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo">Thêm thông số</a>
+            @if (ts.Count() == 1)
+            {
+                <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo" aria-disabled="true">Thêm thông số</a>
+                <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTS">Xóa</a>
+            } else
+            {
+                <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo">Thêm thông số</a>
+                <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTS" aria-disabled="true">Xóa</a>
+            }
         </div>
-        <div class="p-2 mx-4">
+        <div class="p-2">
             Thông số sản phẩm
         </div>
         <div class="p-2">
@@ -111,12 +150,13 @@
                     <th>Độ phân giải màn hình</th>
                     <th>Cổng giao tiếp</th>
                     <th>Tính năng khác</th>
+                    <th>Cân nặng</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in ts)
                 {
-                    @if (item.SanPhamID == Model.Item1.SanPhamID)
+                    @if (item.SanPhamID == Model.SanPhamID)
                     {
                         <tr>
                             <td>@item.LoaiCard</td>
@@ -131,6 +171,7 @@
                             <td>@item.DoPhanGiai</td>
                             <td>@item.CongGiaoTiep</td>
                             <td>@item.TinhNangKhac</td>
+                            <td>@item.CanNang</td>
                         </tr>
                     }
                 }
@@ -144,7 +185,7 @@
         <div class="me-auto">
             <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalHinhAnh">Thêm hình ảnh</a>
         </div>
-        <div class="p-2 mx-4">
+        <div class="p-2">
             Hình ảnh sản phẩm
         </div>
         <div class="p-2">
@@ -155,17 +196,39 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th>STT</th>
                     <th>Hình ảnh</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in ha)
                 {
-                    @if (item.SanPhamID == Model.Item1.SanPhamID)
+                    @if (item.SanPhamID == Model.SanPhamID)
                     {
                         <tr>
+                            <td>@(j++)</td>
                             <td>
                                 <img src="~/images/products/@item.Anh" class="img-thumbnail" width="200" height="250" />
+                            </td>
+                            <td>
+                                <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(j)">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>
+                                <div class="modal fade" id="modal@(j)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="/Admin/SanPhams/DeleteHinhAnh/@item.HinhAnhID" role="button" class="btn btn-danger">Xóa</a>
+                                                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -187,18 +250,18 @@
             <div class="modal-body">
                 <div class="p-2">
                     <form asp-action="Details">
-                        <input type="hidden" asp-for="Item1.SanPhamID" value="@Model.Item1.SanPhamID" />
+                        <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Trong hộp</label>
-                            <input type="text" asp-for="Item2.TrongHop" class="form-control" />
+                            <input type="text" name="TrongHop" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Bảo hành pin</label>
-                            <input type="text" asp-for="Item2.BaoHanhPin" class="form-control" />
+                            <input type="text" name="BaoHanhPin" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Bảo hành máy</label>
-                            <input type="text" asp-for="Item2.BaoHanh" class="form-control" />
+                            <input type="text" name="BaoHanh" class="form-control" />
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Thêm" class="btn btn-primary" />
@@ -222,7 +285,7 @@
             <div class="modal-body">
                 <div class="p-2">
                     <form asp-action="Details">
-                        <input type="hidden" asp-for="Item1.SanPhamID" value="@Model.Item1.SanPhamID" />
+                        <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Nội dung</label>
                             <input type="text" name="NoiDung" class="form-control" />
@@ -232,6 +295,138 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalThongSo" tabindex="-1" aria-labelledby="modalThongSoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="text-center mb-2">
+                    <span class="fw-bold fs-3" style="color:#7fad39">Thêm thông số</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2">
+                    <form asp-action="Details">
+                        <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Loại card đồ họa</label>
+                            <input type="text" name="LoaiCard" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Dung lượng Ram</label>
+                            <input type="text" name="Ram" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Loại Ram</label>
+                            <input type="text" name="LoaiRam" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Số khe Ram</label>
+                            <input type="text" name="SoKheRam" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Ổ cứng</label>
+                            <input type="text" name="OCung" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Kích thước màn hình</label>
+                            <input type="text" name="KichThuocManHinh" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Công nghệ màn hình</label>
+                            <input type="text" name="CongNgheManHinh" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Pin</label>
+                            <input type="text" name="Pin" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Hệ điều hành</label>
+                            <input type="text" name="HeDieuHanh" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Độ phân giải</label>
+                            <input type="text" name="DoPhanGiai" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Cổng giao tiếp</label>
+                            <input type="text" name="CongGiaoTiep" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Tính năng khác</label>
+                            <input type="text" name="TinhNangKhac" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Cân nặng</label>
+                            <input type="text" name="CanNang" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Thêm" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHinhAnh" tabindex="-1" aria-labelledby="modalHinhAnhLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="text-center mb-2">
+                    <span class="fw-bold fs-3" style="color:#7fad39">Thêm hình ảnh</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2">
+                    <form asp-action="Details" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Hình ảnh</label>
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Thêm" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDelTT" tabindex="-1" aria-labelledby="modalDelTTLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <a href="/Admin/SanPhams/DeleteThongTin/@Model.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
+                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDelTS" tabindex="-1" aria-labelledby="modalDelTSLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <a href="/Admin/SanPhams/DeleteThongSo/@Model.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
+                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
             </div>
         </div>
     </div>

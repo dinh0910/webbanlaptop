@@ -34,5 +34,7 @@ namespace webbanlaptop.Models
         public string? CongGiaoTiep { get; set; }
 
         public string? TinhNangKhac { get; set; }
+
+        public string? CanNang { get; set; }
     }
 }

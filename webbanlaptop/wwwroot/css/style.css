@@ -1754,6 +1754,24 @@ ol {
 	margin-top: 50px;
 }
 
+.product__details ul {
+	padding-top: 20px;
+	margin-top: 20px;
+}
+
+.product__details ul li {
+	font-size: 16px;
+	color: #1c1c1c;
+	list-style: none;
+	line-height: 36px;
+}
+
+.product__details ul li b {
+	font-weight: 700;
+	width: 170px;
+	display: inline-block;
+}
+
 .product__details__text ul li {
 	font-size: 16px;
 	color: #1c1c1c;
