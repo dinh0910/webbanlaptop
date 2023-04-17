@@ -122,7 +122,14 @@
                             </div>
                             <div class="featured__item__text">
                                 <div><h6><a asp-action="Details" asp-route-id="@item.SanPhamID">@item.Ten</a></h6></div>
-                                <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
+                                @if (item.GiamGia > 0)
+                                {
+                                    <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien) <span class="text-muted" style="text-decoration: line-through">@Html.DisplayFor(modelItem => item.DonGia)</span></h5>
+                                }
+                                else
+                                {
+                                    <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
+                                }
                             </div>
                         </div>
                     </div>

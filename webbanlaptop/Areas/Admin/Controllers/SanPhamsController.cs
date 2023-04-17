@@ -42,7 +42,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             _toastNotification.AddErrorToastMessage("Thêm thất bại!");
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucConID", "Ten", sanPham.DanhMucID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten", sanPham.DanhMucID);
             ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return RedirectToAction(nameof(Index));
         }
@@ -50,14 +50,14 @@ namespace webbanlaptop.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             var sanPham = await _context.SanPham.FindAsync(id);
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucConID", "Ten", sanPham.DanhMucID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "Ten", sanPham.DanhMucID);
             ViewData["ThuongHieuID"] = new SelectList(_context.ThuongHieu, "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return View(sanPham);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,ThanhTien,SoLuong")] SanPham sanPham)
+        public async Task<IActionResult> Edit(int id, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,DacTrung,ThanhTien,SoLuong")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {

@@ -102,14 +102,14 @@
                     @foreach (var item in Model)
                     {
                         <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item shadow p-3 mb-5 bg-light rounded-3">
-                                <div class="product__item__pic">
+                            <div class="featured__item shadow p-3 mb-5 bg-light rounded-3">
+                                <div class="featured__item__pic">
                                     <img src="~/images/products/@item.HinhAnh" />
                                     @if (item.GiamGia > 0)
                                     {
                                         <div class="product__discount__percent">-@item.GiamGia%</div>
                                     }
-                                    <ul class="product__item__pic__hover">
+                                    <ul class="featured__item__pic__hover">
                                         @{
                                             var loved = loves.FirstOrDefault(loveyou => loveyou.SanPhams.SanPhamID == item.SanPhamID);
                                         }
@@ -128,7 +128,14 @@
                                 </div>
                                 <div class="featured__item__text">
                                     <div><h6><a asp-action="Details" asp-route-id="@item.SanPhamID">@item.Ten</a></h6></div>
-                                    <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
+                                    @if (item.GiamGia > 0)
+                                    {
+                                        <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien) <span class="text-muted" style="text-decoration: line-through">@Html.DisplayFor(modelItem => item.DonGia)</span></h5>
+                                    }
+                                    else
+                                    {
+                                        <h5 class="text-danger">@Html.DisplayFor(modelItem => item.ThanhTien)</h5>
+                                    }
                                 </div>
                             </div>
                         </div>
