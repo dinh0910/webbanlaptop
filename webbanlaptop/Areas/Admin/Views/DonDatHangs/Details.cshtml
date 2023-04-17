@@ -2,53 +2,76 @@
 
 @{
     ViewData["Title"] = "Index";
+    var ddh = (DonDatHang)ViewBag.ddh;
 }
 
-<h1>Chi tiết đơn hàng</h1>
+<h1 class="mt-4">Chi tiết</h1>
 
-<button class="btn btn-info" id="print" onclick="printContent('printerDiv');">Print</button>
+<div>
+    <button class="btn btn-info" id="print" onclick="printContent('printerDiv');">Print</button>
+</div>
 
-<table class="table table-hover" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DonDatHangs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SanPhams)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DonGia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoLuong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThanhTien)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="page-inner" id="printerDiv">
+    <h4 class="mb-3" style="font-size:18px;">Tên shop: Ogani Shop</h4>
+    <h4 class="mb-3" style="font-size:18px;">Địa chỉ: số 18, Ung Văn Khiêm, P. Đông Xuyên, TP. Long Xuyên, Tỉnh An Giang</h4>
+    <div class="text-center text-uppercase fs-3 fw-bold">Đơn đặt hàng</div>
+    <h4 class="mb-3" style="font-size:18px;">Tên khách hàng: @ddh.HoTen</h4>
+    <h4 class="mb-3" style="font-size:18px;">Email: @ddh.Email</h4>
+    <h4 class="mb-3" style="font-size:18px;">Số điện thoại: @ddh.SoDienThoai</h4>
+    <h4 class="mb-3" style="font-size:18px;">Địa chỉ: @ddh.DiaChi</h4>
+    <h4 class="mb-3" style="font-size:18px;">Ghi chú: @ddh.GhiChu</h4>
+
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DonDatHangs.DonDatHangID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SanPhams.SanPhamID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DonGia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SoLuong)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ThanhTien)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.DonDatHangs)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SanPhams)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DonGia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ThanhTien)
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonDatHangs.DonDatHangID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SanPhams.Ten)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonGia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThanhTien)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
+<script>
+    function printContent(el) {
+        var restorepage = $('body').html();
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+</script>

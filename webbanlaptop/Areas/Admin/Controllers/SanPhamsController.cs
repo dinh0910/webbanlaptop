@@ -31,7 +31,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile file, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,ThanhTien")] SanPham sanPham)
+        public async Task<IActionResult> Create(IFormFile file, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,GiamGia,DacTrung,ThanhTien")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {

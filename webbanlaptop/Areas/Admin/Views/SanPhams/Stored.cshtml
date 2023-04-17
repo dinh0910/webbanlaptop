@@ -6,7 +6,13 @@
     var i = 1;
 }
 
-<h1>Danh sách sản phẩm trong kho</h1>
+<h1 class="mt-4">Danh sách sản phẩm trong kho</h1>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item"><a asp-action="Index">Sản phẩm</a></li>
+    <li class="breadcrumb-item active">Kho</li>
+</ol>
 
 <div class="mb-5">
     <a class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Nhập hàng</a>

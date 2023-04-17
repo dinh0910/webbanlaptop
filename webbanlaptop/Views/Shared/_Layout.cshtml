@@ -50,7 +50,7 @@
             <ul>
                 <li class="active"><a href="/">Trang chủ</a></li>
                 <li><a href="./shop-grid.html">Về chúng tôi</a></li>
-                <li><a href="./contact.html">Liên hệ</a></li>
+                <li><a asp-action="Contact">Liên hệ</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -91,15 +91,15 @@
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
                             <div class="header__top__right__auth">
-                                @if(@Context.Session.GetInt32("_TaiKhoanID") == null){
+                                @if(@Context.Session.GetInt32("_TaiKhoanIDU") == null){
                                     <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-user"></i> Đăng nhập</a>
                                 } else
                                 {
                                     <a class="" data-bs-toggle="dropdown" aria-expanded="false" href="#" role="button">
-                                        <i class="fa fa-user"></i> Chào, @Context.Session.GetString("_TenTaiKhoan")!
+                                        <i class="fa fa-user"></i> Chào, @Context.Session.GetString("_TenTaiKhoanU")!
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/Home/PersonalInformation/@Context.Session.GetInt32("_TaiKhoanID")" class="dropdown-item" role="button">Thông tin cá nhân</a></li>
+                                        <li><a href="/Home/PersonalInformation/@Context.Session.GetInt32("_TaiKhoanIDU")" class="dropdown-item" role="button">Thông tin cá nhân</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a href="/Home/Logout" class="dropdown-item">Đăng xuất</a></li>
                                     </ul>
@@ -123,7 +123,7 @@
                         <ul>
                             <li class="active"><a href="/">Trang chủ</a></li>
                             <li><a href="/">Về chúng tôi</a></li>
-                            <li><a href="./contact.html">Liên hệ</a></li>
+                            <li><a asp-action="Contact">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -140,7 +140,7 @@
                                 <a asp-controller="Home" asp-action="ViewLove">
                                     <i class="fa fa-heart"></i>
                                     @{
-                                        string jsoncartl = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanID")}_cartlove"];
+                                        string jsoncartl = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanIDU")}_cartlove"];
                                         if (jsoncartl != null)
                                         {
                                             var cartloved = JsonConvert.DeserializeObject<List<CartLove>>(jsoncartl);

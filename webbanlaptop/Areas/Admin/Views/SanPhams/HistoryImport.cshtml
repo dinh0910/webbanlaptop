@@ -4,7 +4,14 @@
     var i = 1;
 }
 
-<h1>Lịch sử nhập hàng</h1>
+<h1 class="mt-4">Lịch sử nhập hàng</h1>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item"><a asp-controller="SanPhams" asp-action="Index">Sản phẩm</a></li>
+    <li class="breadcrumb-item"><a asp-controller="SanPhams" asp-action="Stored">Kho</a></li>
+    <li class="breadcrumb-item active">Lịch sử nhập hàng</li>
+</ol>
 
 <table class="table table-hover" id="myTable">
     <thead>

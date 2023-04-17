@@ -11,8 +11,8 @@
         </div>
         <form asp-action="PersonalInformation">
             <input type="hidden" asp-for="TaiKhoanID" />
-            <input type="hidden" asp-for="TenTaiKhoan" value="@Context.Session.GetString("_TenTaiKhoan")" />
-            <input type="hidden" asp-for="MatKhau" value="@Context.Session.GetString("_MatKhau")" />
+            <input type="hidden" asp-for="TenTaiKhoan" value="@Context.Session.GetString("_TenTaiKhoanU")" />
+            <input type="hidden" asp-for="MatKhau" value="@Context.Session.GetString("_MatKhauU")" />
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <label for="name">Họ và tên</label>

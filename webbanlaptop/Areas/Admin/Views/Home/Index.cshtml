@@ -6,7 +6,7 @@
     var i = 1;
 }
 
-<h1>Dashboard</h1>
+<h1 class="mt-4">Dashboard</h1>
 
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Dashboard</li>
@@ -21,7 +21,6 @@
     <div class="col-xl-6 col-md-6">
         <div class="card bg-danger text-white mb-4">
             <div class="card-body">Tổng đơn đặt hàng trong tháng: @ddh.Count()</div>
-
         </div>
     </div>
 </div>
@@ -29,7 +28,7 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Đơn đặt hàng hôm nay
+        Đơn đặt hàng trong tháng
     </div>
     <div class="card-body">
         <table class="table table-hover" id="myTable">
@@ -49,16 +48,7 @@
                         @Html.DisplayNameFor(model => model.Email)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.GhiChu)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TienShip)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.TongTien)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DuyetDon)
                     </th>
                     <th></th>
                 </tr>
@@ -81,16 +71,7 @@
                             @Html.DisplayFor(modelItem => item.Email)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.GhiChu)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TienShip)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.TongTien)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DuyetDon)
                         </td>
                         <td>
                             <a asp-controller="DonDatHangs" asp-action="Details" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>

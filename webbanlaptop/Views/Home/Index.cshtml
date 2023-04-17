@@ -5,7 +5,6 @@
     var danhmuc = ViewBag.danhmuc as IQueryable<webbanlaptop.Models.DanhMuc>;
     var sanpham = ViewBag.sanpham as IQueryable<webbanlaptop.Models.SanPham>;
     var banner = ViewBag.banner as IQueryable<webbanlaptop.Models.Banner>;
-    var d = "macbook";
     var i = 0;
 }
 
@@ -28,8 +27,8 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
-                            <input type="text" placeholder="What do yo u need?">
+                        <form asp-action="SearchProduct">
+                            <input type="text" name="name" placeholder="Bạn cần tìm gì?">
                             <button type="submit" class="site-btn">Tìm kiếm</button>
                         </form>
                     </div>
@@ -81,13 +80,12 @@
                     <li data-filter=".macbook">Macbook</li>
                     <li data-filter=".gaming">Gaming</li>
                     <li data-filter=".vanphong">Văn phòng</li>
-                    <li data-filter=".phukien">Phụ kiện</li>
                 </ul>
             </div>
         </div>
 
         @{
-            var jsoncartlove = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanID")}_cartlove"];
+            var jsoncartlove = Context.Request.Cookies[$"{Context.Session.GetInt32("_TaiKhoanIDU")}_cartlove"];
             var loves = new List<CartLove>();
             @if (!string.IsNullOrEmpty(jsoncartlove))
             {
@@ -99,7 +97,7 @@
             @foreach(var item in sanpham){
                 if (i < 8)
                 {
-                    <div class="col-lg-3 col-md-4 col-sm-6 mix @d">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix @item.DacTrung">
                         <div class="featured__item shadow p-3 mb-5 bg-light rounded-3">
                             <div class="featured__item__pic">
                                 <img src="~/images/products/@item.HinhAnh" />

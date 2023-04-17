@@ -5,7 +5,12 @@
     var i = 1;
 }
 
-<h1>Danh mục Sản phẩm</h1>
+<h1 class="mt-4">Danh mục Sản phẩm</h1>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item active">Danh sách Sản phẩm</li>
+</ol>
 
 <div class="mb-5">
     <a class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Thêm mới</a>
@@ -29,7 +34,7 @@
                             <select name="DanhMucID" class="form-control" asp-items="ViewBag.DanhMucID"></select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Danh mục</label>
+                            <label class="control-label">Thương hiệu</label>
                             <select name="ThuongHieuID" class="form-control" asp-items="ViewBag.ThuongHieuID"></select>
                         </div>
                         <div class="form-group mb-3">
@@ -47,6 +52,15 @@
                         <div class="form-group mb-3">
                             <label class="control-label mb-1">Giảm giá(%)</label>
                             <input type="number" id="GiamGia" name="GiamGia" class="form-control" value="0" oninput="tinhSale();" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="control-label mb-1">Đặc trưng</label>
+                            <select class="form-select" name="DacTrung" aria-label="Default select example">
+                                <option selected>--Chọn--</option>
+                                <option value="macbook">Macbook</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vanphong">Văn phòng</option>
+                            </select>
                         </div>
                         <input hidden type="text" name="ThanhTien" id="ThanhTien" />
                         <div class="form-group">

@@ -70,6 +70,8 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 .Include(c => c.SanPhams)
                 .Where(m => m.DonDatHangID == id);
 
+            ViewBag.ddh = _context.DonDatHang.FirstOrDefault(d => d.DonDatHangID == id);
+
             return View(await webbanlaptopContext.ToListAsync());
         }
 

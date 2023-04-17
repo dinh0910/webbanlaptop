@@ -17,13 +17,13 @@ namespace webbanlaptop.Controllers
         private readonly webbanlaptopContext _context;
         private readonly IToastNotification _toastNotification;
 
-        public const string SessionTK = "_TaiKhoanID";
-        public const string SessionHoten = "_HoTen";
-        public const string SessionTenDN = "_TenTaiKhoan";
-        public const string SessionMK = "_MatKhau";
-        public const string SessionEmail = "_Email";
-        public const string SessionSDT = "_SDT";
-        public const string SessionDiaChi = "_DiaChi";
+        public const string SessionTK = "_TaiKhoanIDU";
+        public const string SessionHoten = "_HoTenU";
+        public const string SessionTenDN = "_TenTaiKhoanU";
+        public const string SessionMK = "_MatKhauU";
+        public const string SessionEmail = "_EmailU";
+        public const string SessionSDT = "_SDTU";
+        public const string SessionDiaChi = "_DiaChiU";
 
         public HomeController(ILogger<HomeController> logger, webbanlaptopContext context, IToastNotification toastNotification)
         {
@@ -123,10 +123,10 @@ namespace webbanlaptop.Controllers
 
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove("_TaiKhoanID");
+            HttpContext.Session.Remove("_TaiKhoanIDU");
             //HttpContext.Session.Remove("_Hoten");
-            HttpContext.Session.Remove("_TenTaiKhoan");
-            HttpContext.Session.Remove("_MatKhau");
+            HttpContext.Session.Remove("_TenTaiKhoanU");
+            HttpContext.Session.Remove("_MatKhauU");
             //HttpContext.Session.Remove("_Quyen");
             //HttpContext.Session.Remove("_HinhAnh");
             //HttpContext.Session.Remove("_Email");
@@ -158,6 +158,7 @@ namespace webbanlaptop.Controllers
             var grid = _context.SanPham.Where(d => d.DanhMucID == id);
 
             ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
 
             return View(grid);
         }
@@ -177,7 +178,7 @@ namespace webbanlaptop.Controllers
 
         List<CartLove> GetCartsLove()
         {
-            var jsoncartlove = HttpContext.Request.Cookies[$"{HttpContext.Session.GetInt32("_TaiKhoanID")}_cartlove"];
+            var jsoncartlove = HttpContext.Request.Cookies[$"{HttpContext.Session.GetInt32("_TaiKhoanIDU")}_cartlove"];
             if (!string.IsNullOrEmpty(jsoncartlove))
             {
                 return JsonConvert.DeserializeObject<List<CartLove>>(jsoncartlove);
@@ -315,7 +316,7 @@ namespace webbanlaptop.Controllers
             return View(GetCartItems());
         }
 
-        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email)
+        public async Task<IActionResult> CreateBill(string Ten, string SoDienThoai, string DiaChi, string Email, string GhiChu)
         {
             // lưu hóa đơn
             var bill = new DonDatHang();
@@ -324,6 +325,7 @@ namespace webbanlaptop.Controllers
             bill.SoDienThoai = SoDienThoai;
             bill.DiaChi = DiaChi;
             bill.Email = Email;
+            bill.GhiChu = GhiChu;
 
             _context.Add(bill);
             await _context.SaveChangesAsync();
@@ -394,6 +396,22 @@ namespace webbanlaptop.Controllers
             ViewBag.khuyenmai = _context.KhuyenMai;
             ViewBag.danhmuc = _context.DanhMuc;
             return View(products);
+        }
+
+        public async Task<IActionResult> SearchProduct(string? name)
+        {
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
+            var sanPham = _context.SanPham
+               .Include(s => s.ThuongHieus)
+               .Where(s => s.Ten.Contains(name));
+            return View(sanPham);
+        }
+
+        public IActionResult Contact()
+        {
+            ViewBag.danhmuc = _context.DanhMuc;
+            return View();
         }
     }
 }

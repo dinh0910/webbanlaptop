@@ -5,11 +5,13 @@
     var i = 1;
 }
 
-<h1>Index</h1>
+<h1 class="mt-4">Danh sách đơn đặt hàng</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item active">Đơn đặt hàng</li>
+</ol>
+
 <table class="table table-hover" id="myTable">
     <thead>
         <tr>
@@ -27,16 +29,10 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TienShip)
+                @Html.DisplayNameFor(model => model.DiaChi)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TongTien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuyetDon)
             </th>
             <th></th>
         </tr>
@@ -58,16 +54,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienShip)
+                @Html.DisplayFor(modelItem => item.DiaChi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TongTien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuyetDon)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.DonDatHangID"><i class="fa-solid fa-circle-info text-primary"></i></a>

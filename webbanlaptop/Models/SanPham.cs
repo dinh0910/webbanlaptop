@@ -27,6 +27,8 @@ namespace webbanlaptop.Models
         [Display(Name = "Giảm giá")]
         public int GiamGia { get; set; }
 
+        public string? DacTrung { get; set; }
+
         [Display(Name = "Thành tiền")]
         [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int ThanhTien { get; set; }

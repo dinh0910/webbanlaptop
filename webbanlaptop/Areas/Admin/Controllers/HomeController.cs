@@ -78,7 +78,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
             if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
             {
                 var dateNow = DateTime.Today.Date;
-                var webbanlaptopContext = _context.DonDatHang.Where(d => d.NgayLap.Date == dateNow);
+                var webbanlaptopContext = _context.DonDatHang.Where(d => d.NgayLap.Month == DateTime.Today.Month);
                 ViewBag.dondathang = _context.DonDatHang.Where(d => d.NgayLap.Month == DateTime.Today.Month);
 
                 return View(await webbanlaptopContext.ToListAsync());
