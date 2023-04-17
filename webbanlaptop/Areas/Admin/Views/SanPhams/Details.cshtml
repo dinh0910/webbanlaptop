@@ -14,7 +14,7 @@
 
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-    <li class="breadcrumb-item">Sản phẩm</li>
+    <li class="breadcrumb-item"><a href="/admin/sanphams">Sản phẩm</a></li>
     <li class="breadcrumb-item active">Chi tiết sản phẩm @Model.Ten</li>
 </ol>
 
@@ -25,12 +25,12 @@
                 <div class="me-auto">
                     @if(tt.Count() == 1)
                     {
-                        <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin" aria-disabled="true">Thêm thông tin</a>
-                        <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT">Xóa</a>
+                        <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin" aria-disabled="true">Thêm thông tin</a>
+                        <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT">Xóa</a>
                     } else
                     {
-                        <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin">Thêm thông tin</a>
-                        <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT" aria-disabled="true">Xóa</a>
+                        <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin">Thêm thông tin</a>
+                        <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT" aria-disabled="true">Xóa</a>
                     }
                 </div>
                 <div class="p-2">

@@ -245,7 +245,7 @@ namespace webbanlaptop.Controllers
             if (item != null)
             {
                 item.SoLuong+=cartItem.SoLuong;
-                if(item.SoLuong == 5)
+                if(item.SoLuong >= 5)
                 {
                     _toastNotification.AddWarningToastMessage("Sản phẩm bạn chọn vượt mức cho phép!");
                     cart.Remove(item);
@@ -253,7 +253,7 @@ namespace webbanlaptop.Controllers
             }
             else
             {
-                if (cartItem.SoLuong == 5)
+                if (cartItem.SoLuong >= 5)
                 {
                     _toastNotification.AddWarningToastMessage("Sản phẩm bạn chọn vượt mức cho phép!");
                     cart.Remove(item);
@@ -290,6 +290,10 @@ namespace webbanlaptop.Controllers
             var item = cart.Find(p => p.SanPham.SanPhamID == id);
             if (quantity == 0)
             {
+                cart.Remove(item);
+            } else if(quantity >= 5)
+            {
+                _toastNotification.AddWarningToastMessage("Sản phẩm bạn chọn vượt mức cho phép!");
                 cart.Remove(item);
             }
             item.SoLuong = quantity;
