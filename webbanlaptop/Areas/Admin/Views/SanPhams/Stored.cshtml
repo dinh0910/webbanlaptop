@@ -16,18 +16,28 @@
 
 <div class="mb-5">
     <a class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Nhập hàng</a>
-    <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3">
-        Danh sách phiếu nhập
-        @{
-            var session = HttpContextAccessor.HttpContext.Session;
-            string jsoncart = session.GetString(webbanlaptop.Areas.Admin.Controllers.SanPhamsController.CARTIMPORT);
-            if (jsoncart != null)
+    @{
+        var session = HttpContextAccessor.HttpContext.Session;
+        string jsoncart = session.GetString(webbanlaptop.Areas.Admin.Controllers.SanPhamsController.CARTIMPORT);
+        if (jsoncart != null)
+        {
+            var cart = JsonConvert.DeserializeObject<List<ImportItem>>(jsoncart);
+            @if(cart.Count > 0)
             {
-                var cart = JsonConvert.DeserializeObject<List<ImportItem>>(jsoncart);
-                <span>(@cart.Count)</span>
+                <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3 position-relative">
+                    Phiếu nhập
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        @cart.Count
+                    </span>
+                </a>
+            } else
+            {
+                <a asp-controller="SanPhams" asp-action="ViewImport" class="btn btn-outline-success mx-3 disabled">
+                    Phiếu nhập
+                </a>
             }
         }
-    </a>
+    }
     <a asp-controller="SanPhams" asp-action="HistoryImport" class="btn btn-outline-secondary">Lịch sử nhập hàng</a>
 </div>
 

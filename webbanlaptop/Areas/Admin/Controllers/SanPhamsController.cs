@@ -300,12 +300,11 @@ namespace webbanlaptop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(int id, [Bind("ThongTinID","SanPhamID","TrongHop","BaoHanhPin","BaoHanh")] ThongTin thongTin
-            , [Bind("KhuyenMaiID", "SanPhamID", "NoiDung")] KhuyenMai khuyenMai, [Bind("ThongSoID","SanPhamID","LoaiCard","Ram","LoaiRam","SoKheRam","OCung",
-            "KichThuocManHinh","CongNgheManHinh","Pin","HeDieuHanh","DoPhanGiai","CongGiaoTiep","TinhNangKhac","CanNang")] ThongSo thongSo,
-            IFormFile file, [Bind("HinhAnhID", "SanPhamID", "Anh")] HinhAnh hinhAnh)
+        public async Task<IActionResult> Details(int id, [Bind("ThongTinID,SanPhamID,TrongHop,BaoHanh,ChinhSach")] ThongTin thongTin
+            , [Bind("KhuyenMaiID,SanPhamID,NoiDung")] KhuyenMai khuyenMai, [Bind("ThongSoID,SanPhamID,TenThongSo,NoiDung")] ThongSo thongSo,
+            IFormFile file, [Bind("HinhAnhID,SanPhamID,Anh")] HinhAnh hinhAnh)
         {
-            if(thongTin.BaoHanh != null)
+            if(thongTin.BaoHanh != null || thongTin.BaoHanh != null || thongTin.ChinhSach != null)
             {
                 _context.Update(thongTin);
                 await _context.SaveChangesAsync();
@@ -315,7 +314,7 @@ namespace webbanlaptop.Areas.Admin.Controllers
                 _context.Update(khuyenMai);
                 await _context.SaveChangesAsync();
             } 
-            else if (thongSo.LoaiCard != null)
+            else if (thongSo.TenThongSo != null || thongSo.NoiDung != null)
             {
                 _context.Update(thongSo);
                 await _context.SaveChangesAsync();

@@ -51,10 +51,10 @@
 <section class="product-details spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6 text-center">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
-                        <img class="product__details__pic__item--large"
+                        <img width="300"
                              src="~/images/products/@Model.HinhAnh" />
                     </div>
                     <div class="product__details__pic__slider owl-carousel">
@@ -82,14 +82,17 @@
                             }
                         }
                     </ul>
-                    <div class="product__details__quantity">
-                        <div class="quantity">
-                            <div class="pro-qty">
-                                <input type="text" value="1">
+                    <form asp-action="AddToCartHasCount">
+                        <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" name="SoLuong" value="1" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <a href="#" class="primary-btn">Thêm vào giỏ</a>
+                        <button type="submit" class="primary-btn">Thêm vào giỏ</button>
+                    </form>
                     <a href="#" class="heart-icon"><i class="fa fa-heart"></i></a>
                     <ul>
                         <li>
@@ -126,8 +129,8 @@
                                             @if (item.SanPhamID == Model.SanPhamID)
                                             {
                                                 <li><b>Trong hộp</b> <span>@item.TrongHop</span></li>
-                                                <li><b>Bảo hành Pin</b> <span>@item.BaoHanhPin<span></li>
-                                                <li><b>Bảo hành Máy</b> <span>@item.BaoHanh</span></li>
+                                                <li><b>Bảo hành Pin</b> <span>@item.BaoHanh<span></li>
+                                                <li><b>Bảo hành Máy</b> <span>@item.ChinhSach</span></li>
                                             }
                                         }
                                     </ul>
@@ -143,19 +146,7 @@
                                         {
                                             @if (item.SanPhamID == Model.SanPhamID)
                                             {
-                                                <li><b>Loại Card đồ họa</b> <span>@item.LoaiCard</span></li>
-                                                <li><b>Dung lượng Ram</b> <span>@item.Ram<span></li>
-                                                <li><b>Loại Ram</b> <span>@item.LoaiRam</span></li>
-                                                <li><b>Số khe Ram</b> <span>@item.SoKheRam</span></li>
-                                                <li><b>Ổ cứng</b> <span>@item.OCung</span></li>
-                                                <li><b>Kích thước màn hình</b> <span>@item.KichThuocManHinh</span></li>
-                                                <li><b>Công nghệ màn hình</b> <span>@item.CongNgheManHinh</span></li>
-                                                <li><b>Pin</b> <span>@item.Pin</span></li>
-                                                <li><b>Hệ điều hành</b> <span>@item.HeDieuHanh</span></li>
-                                                <li><b>Độ phân giải</b> <span>@item.DoPhanGiai</span></li>
-                                                <li><b>Cổng giao tiếp</b> <span>@item.CongGiaoTiep</span></li>
-                                                <li><b>Tính năng khác</b> <span>@item.TinhNangKhac</span></li>
-                                                <li><b>Khối lượng</b> <span>@item.CanNang</span></li>
+                                                <li><b>@item.TenThongSo</b> <span>@item.NoiDung</span></li>
                                             }
                                         }
                                     </ul>

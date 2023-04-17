@@ -7,6 +7,7 @@
     var km = ViewBag.khuyenmai as IQueryable<webbanlaptop.Models.KhuyenMai>;
     var i = 1;
     var j = 1;
+    var k = 1;
 }
 
 <h1 class="mt-4">Chi tiết sản phẩm @Model.Ten</h1>
@@ -54,13 +55,13 @@
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">Bảo hành pin</div>
-                                    @item.BaoHanhPin
+                                    @item.BaoHanh
                                 </div>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Bảo hành máy</div>
-                                    @item.BaoHanh
+                                    <div class="fw-bold">Chính sách</div>
+                                    @item.ChinhSach
                                 </div>
                             </li>
                         }
@@ -93,10 +94,10 @@
                                     @(i++). @item.NoiDung
                                 </div>
                                 <div>
-                                    <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(i)">
+                                    <a role="button" data-bs-toggle="modal" data-bs-target="#modalKM@(i)">
                                         <i class="fa-solid fa-trash text-danger"></i>
                                     </a>
-                                    <div class="modal fade" id="modal@(i)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalKM@(i)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -120,127 +121,124 @@
     </div>
 </div>
 
-<div class="card mb-4">
-    <div class="card-header d-flex">
-        <div class="me-auto">
-            @if (ts.Count() == 1)
-            {
-                <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo" aria-disabled="true">Thêm thông số</a>
-                <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTS">Xóa</a>
-            } else
-            {
-                <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo">Thêm thông số</a>
-                <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTS" aria-disabled="true">Xóa</a>
-            }
-        </div>
-        <div class="p-2">
-            Thông số sản phẩm
-        </div>
-        <div class="p-2">
-            <i class="fas fa-table me-1"></i>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Loại card đồ họa</th>
-                    <th>Dung lượng Ram</th>
-                    <th>Loại Ram</th>
-                    <th>Số khe Ram</th>
-                    <th>Ổ cứng</th>
-                    <th>Kích thước màn hình</th>
-                    <th>Công nghệ màn hình</th>
-                    <th>Pin</th>
-                    <th>Hệ điều hành</th>
-                    <th>Độ phân giải màn hình</th>
-                    <th>Cổng giao tiếp</th>
-                    <th>Tính năng khác</th>
-                    <th>Cân nặng</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ts)
-                {
-                    @if (item.SanPhamID == Model.SanPhamID)
-                    {
+<div class="row mt-4">
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex">
+                <div class="me-auto">
+                    <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongSo">Thêm thông số</a>
+                </div>
+                <div class="p-2">
+                    Thông số sản phẩm
+                </div>
+                <div class="p-2">
+                    <i class="fas fa-table me-1"></i>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>@item.LoaiCard</td>
-                            <td>@item.Ram</td>
-                            <td>@item.LoaiRam</td>
-                            <td>@item.SoKheRam</td>
-                            <td>@item.OCung</td>
-                            <td>@item.KichThuocManHinh</td>
-                            <td>@item.CongNgheManHinh</td>
-                            <td>@item.Pin</td>
-                            <td>@item.HeDieuHanh</td>
-                            <td>@item.DoPhanGiai</td>
-                            <td>@item.CongGiaoTiep</td>
-                            <td>@item.TinhNangKhac</td>
-                            <td>@item.CanNang</td>
+                            <th>STT</th>
+                            <th>Tên thông số</th>
+                            <th>Nội dung</th>
+                            <th></th>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="card mb-4">
-    <div class="card-header d-flex">
-        <div class="me-auto">
-            <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalHinhAnh">Thêm hình ảnh</a>
-        </div>
-        <div class="p-2">
-            Hình ảnh sản phẩm
-        </div>
-        <div class="p-2">
-            <i class="fas fa-table me-1"></i>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Hình ảnh</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ha)
-                {
-                    @if (item.SanPhamID == Model.SanPhamID)
-                    {
-                        <tr>
-                            <td>@(j++)</td>
-                            <td>
-                                <img src="~/images/products/@item.Anh" class="img-thumbnail" width="200" height="250" />
-                            </td>
-                            <td>
-                                <a role="button" data-bs-toggle="modal" data-bs-target="#modal@(j)">
-                                    <i class="fa-solid fa-trash text-danger"></i>
-                                </a>
-                                <div class="modal fade" id="modal@(j)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="/Admin/SanPhams/DeleteHinhAnh/@item.HinhAnhID" role="button" class="btn btn-danger">Xóa</a>
-                                                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ts)
+                        {
+                            @if (item.SanPhamID == Model.SanPhamID)
+                            {
+                                <tr>
+                                    <td>@(k++)</td>
+                                    <td>@item.TenThongSo</td>
+                                    <td>@item.NoiDung</td>
+                                    <td>
+                                        <a role="button" data-bs-toggle="modal" data-bs-target="#modalTS@(k)">
+                                            <i class="fa-solid fa-trash text-danger"></i>
+                                        </a>
+                                        <div class="modal fade" id="modalTS@(k)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/Admin/SanPhams/DeleteThongSo/@item.ThongSoID" role="button" class="btn btn-danger">Xóa</a>
+                                                        <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex">
+                <div class="me-auto">
+                    <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalHinhAnh">Thêm hình ảnh</a>
+                </div>
+                <div class="p-2">
+                    Hình ảnh sản phẩm
+                </div>
+                <div class="p-2">
+                    <i class="fas fa-table me-1"></i>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Thao tác</th>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ha)
+                        {
+                            @if (item.SanPhamID == Model.SanPhamID)
+                            {
+                                <tr>
+                                    <td>@(j++)</td>
+                                    <td>
+                                        <img src="~/images/products/@item.Anh" class="img-thumbnail" width="200" height="250" />
+                                    </td>
+                                    <td>
+                                        <a role="button" data-bs-toggle="modal" data-bs-target="#modalHA@(j)">
+                                            <i class="fa-solid fa-trash text-danger"></i>
+                                        </a>
+                                        <div class="modal fade" id="modalHA@(j)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/Admin/SanPhams/DeleteHinhAnh/@item.HinhAnhID" role="button" class="btn btn-danger">Xóa</a>
+                                                        <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -262,12 +260,12 @@
                             <input type="text" name="TrongHop" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Bảo hành pin</label>
-                            <input type="text" name="BaoHanhPin" class="form-control" />
+                            <label class="control-label mb-1">Bảo hành</label>
+                            <input type="text" name="BaoHanh" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Bảo hành máy</label>
-                            <input type="text" name="BaoHanh" class="form-control" />
+                            <label class="control-label mb-1">Chính sách</label>
+                            <input type="text" name="ChinhSach" class="form-control" />
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Thêm" class="btn btn-primary" />
@@ -320,56 +318,16 @@
                     <form asp-action="Details">
                         <input type="hidden" asp-for="SanPhamID" value="@Model.SanPhamID" />
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Loại card đồ họa</label>
-                            <input type="text" name="LoaiCard" class="form-control" />
+                            <label class="control-label mb-1">STT</label>
+                            <input type="number" name="ThongSoID" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Dung lượng Ram</label>
-                            <input type="text" name="Ram" class="form-control" />
+                            <label class="control-label mb-1">Tên thông số</label>
+                            <input type="text" name="TenThongSo" class="form-control" />
                         </div>
                         <div class="form-group mb-3">
-                            <label class="control-label mb-1">Loại Ram</label>
-                            <input type="text" name="LoaiRam" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Số khe Ram</label>
-                            <input type="text" name="SoKheRam" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Ổ cứng</label>
-                            <input type="text" name="OCung" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Kích thước màn hình</label>
-                            <input type="text" name="KichThuocManHinh" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Công nghệ màn hình</label>
-                            <input type="text" name="CongNgheManHinh" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Pin</label>
-                            <input type="text" name="Pin" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Hệ điều hành</label>
-                            <input type="text" name="HeDieuHanh" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Độ phân giải</label>
-                            <input type="text" name="DoPhanGiai" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Cổng giao tiếp</label>
-                            <input type="text" name="CongGiaoTiep" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Tính năng khác</label>
-                            <input type="text" name="TinhNangKhac" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="control-label mb-1">Cân nặng</label>
-                            <input type="text" name="CanNang" class="form-control" />
+                            <label class="control-label mb-1">Nội dung</label>
+                            <input type="text" name="NoiDung" class="form-control" />
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Thêm" class="btn btn-primary" />
@@ -417,21 +375,6 @@
             </div>
             <div class="modal-footer">
                 <a href="/Admin/SanPhams/DeleteThongTin/@Model.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
-                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalDelTS" tabindex="-1" aria-labelledby="modalDelTSLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <a href="/Admin/SanPhams/DeleteThongSo/@Model.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
                 <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
             </div>
         </div>

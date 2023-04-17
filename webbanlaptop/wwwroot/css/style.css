@@ -162,13 +162,13 @@ ol {
 
 .primary-btn {
 	display: inline-block;
-	font-size: 14px;
+	font-size: 12px;
 	padding: 10px 28px 10px;
 	color: #ffffff;
 	text-transform: uppercase;
-	font-weight: 700;
+	/*font-weight: 700;*/
 	background: #7fad39;
-	letter-spacing: 2px;
+	/*letter-spacing: 2px;*/
 }
 
 .site-btn {
@@ -1691,7 +1691,7 @@ ol {
 }
 
 .product__details__pic__item img {
-	min-width: 100%;
+	min-width: 50%;
 }
 
 .product__details__pic__slider img {
@@ -1735,7 +1735,7 @@ ol {
 }
 
 .product__details__text .primary-btn {
-	padding: 16px 28px 14px;
+	padding: 12px 20px 12px;
 	margin-right: 6px;
 	margin-bottom: 5px;
 }
@@ -1810,8 +1810,8 @@ ol {
 }
 
 .pro-qty {
-	width: 140px;
-	height: 50px;
+	width: 130px;
+	height: 35px;
 	display: inline-block;
 	position: relative;
 	text-align: center;

@@ -13,8 +13,8 @@ namespace webbanlaptop.Models
 
         public string? TrongHop { get; set; }
 
-        public string? BaoHanhPin { get; set; }
-
         public string? BaoHanh { get; set; }
+
+        public string? ChinhSach { get; set; }
     }
 }

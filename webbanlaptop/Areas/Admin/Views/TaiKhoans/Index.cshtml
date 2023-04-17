@@ -2,9 +2,15 @@
 
 @{
     ViewData["Title"] = "Index";
+    var i = 1;
 }
 
-<h1>Danh sách Tài khoản</h1>
+<h1 class="mt-4">Tài khoản</h1>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item active">Tài khoản</li>
+</ol>
 
 <div>
     <a class="btn btn-primary mb-5" role="button" data-bs-toggle="modal" data-bs-target="#modalCreate">Thêm mới</a>
@@ -59,26 +65,24 @@
 <table class="table table-hover" id="myTable">
     <thead>
         <tr>
+            <th>STT</th>
             <th>
-                @Html.DisplayNameFor(model => model.TenTaiKhoan)
+                Tên tài khoản
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
+                Họ tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HoTen)
+                Địa chỉ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
+                Số điện thoại
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoDienThoai)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quyens)
+                Quyền hạn
             </th>
             <th></th>
         </tr>
@@ -86,11 +90,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@(i++)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.TenTaiKhoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HoTen)
@@ -105,15 +107,13 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quyens.QuyenID)
+                @Html.DisplayFor(modelItem => item.Quyens.Ten)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.TaiKhoanID"><i class="fa-solid fa-pen-to-square text-success"></i></a>
-
-                <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                <a class="p-2" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete@(i)">
                     <i class="fa-solid fa-trash text-danger"></i>
                 </a>
-                <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                <div class="modal fade" id="modalDelete@(i)" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

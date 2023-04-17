@@ -191,14 +191,14 @@ namespace webbanlaptop.Controllers
         {
             var session = HttpContext.Session;
             string jsoncart = JsonConvert.SerializeObject(list);
-            session.SetString("shopcart", jsoncart);
+            session.SetString(CARTKEY, jsoncart);
         }
 
         // Xóa session giỏ hàng
         void ClearCart()
         {
             var session = HttpContext.Session;
-            session.Remove("shopcart");
+            session.Remove(CARTKEY);
         }
         
         // Lưu danh sách CartItem trong giỏ hàng vào session
@@ -208,7 +208,6 @@ namespace webbanlaptop.Controllers
             HttpContext.Response.Cookies.Append($"{HttpContext.Session.GetInt32(SessionTK)}_cartlove", jsoncartlove);
         }
 
-        // Cho hàng vào giỏ
         public async Task<IActionResult> AddToCart(int id)
         {
             ViewBag.danhmuc = _context.DanhMuc;
@@ -227,6 +226,39 @@ namespace webbanlaptop.Controllers
             else
             {
                 cart.Add(new CartItem() { SanPham = product, SoLuong = 1 });
+            }
+            SaveCartSession(cart);
+            return RedirectToAction(nameof(ViewCart));
+        }
+
+        public async Task<IActionResult> AddToCartHasCount([Bind("SanPhamID,SoLuong")] CartItem cartItem)
+        {
+            ViewBag.danhmuc = _context.DanhMuc;
+            var product = await _context.SanPham
+                .FirstOrDefaultAsync(m => m.SanPhamID == cartItem.SanPhamID);
+            if (product == null)
+            {
+                _toastNotification.AddInfoToastMessage("Sản phẩm không tồn tại.");
+            }
+            var cart = GetCartItems();
+            var item = cart.Find(p => p.SanPham.SanPhamID == cartItem.SanPhamID);
+            if (item != null)
+            {
+                item.SoLuong+=cartItem.SoLuong;
+                if(item.SoLuong == 5)
+                {
+                    _toastNotification.AddWarningToastMessage("Sản phẩm bạn chọn vượt mức cho phép!");
+                    cart.Remove(item);
+                }
+            }
+            else
+            {
+                if (cartItem.SoLuong == 5)
+                {
+                    _toastNotification.AddWarningToastMessage("Sản phẩm bạn chọn vượt mức cho phép!");
+                    cart.Remove(item);
+                }
+                cart.Add(new CartItem() { SanPham = product, SoLuong = cartItem.SoLuong });
             }
             SaveCartSession(cart);
             return RedirectToAction(nameof(ViewCart));

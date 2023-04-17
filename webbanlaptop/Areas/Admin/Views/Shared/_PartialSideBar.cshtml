@@ -16,12 +16,30 @@
                 </a>
                 <div class="collapse" id="collapseSanPham" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" asp-controller="Banners" asp-action="Index">Danh sách Banner</a>
-                        <a class="nav-link" asp-controller="DanhMucs" asp-action="Index">Danh sách Danh mục</a>
-                        <a class="nav-link" asp-controller="ThuongHieus" asp-action="Index">Danh sách Thương hiệu</a>
-                        <a class="nav-link" asp-controller="DonViTinhs" asp-action="Index">Danh sách Đơn vị tính</a>
-                        <a class="nav-link" asp-controller="NhaCungCaps" asp-action="Index">Danh sách Nhà cung cấp</a>
-                        <a class="nav-link" asp-controller="SanPhams" asp-action="Index">Danh sách Sản phẩm</a>
+                        <a class="nav-link" asp-controller="Banners" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-regular fa-image"></i></div>
+                            Banner
+                        </a>
+                        <a class="nav-link" asp-controller="DanhMucs" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
+                            Danh mục
+                        </a>
+                        <a class="nav-link" asp-controller="ThuongHieus" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-trademark"></i></div>
+                            Thương hiệu
+                        </a>
+                        <a class="nav-link" asp-controller="DonViTinhs" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-coins"></i></div>
+                            Đơn vị tính
+                        </a>
+                        <a class="nav-link" asp-controller="NhaCungCaps" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-warehouse"></i></div>
+                            Nhà cung cấp
+                        </a>
+                        <a class="nav-link" asp-controller="SanPhams" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-laptop"></i></div>
+                            Sản phẩm
+                        </a>
                     </nav>
                 </div>
 
@@ -39,8 +57,14 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" asp-controller="TaiKhoans" asp-action="Index">Danh sách Tài khoản</a>
-                            <a class="nav-link" asp-controller="Quyens" asp-action="Index">Danh sách Quyền</a>
+                            <a class="nav-link" asp-controller="TaiKhoans" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                                Tài khoản
+                            </a>
+                            <a class="nav-link" asp-controller="Quyens" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                                Quyền hạn
+                            </a>
                         </nav>
                     </div>
                 }
