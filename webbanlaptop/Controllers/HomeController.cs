@@ -103,16 +103,19 @@ namespace webbanlaptop.Controllers
                         await _context.SaveChangesAsync();
                         _toastNotification.AddSuccessToastMessage("Đăng ký tài khoản thành công!");
                         return RedirectToAction("Login", "Home");
+                    } else
+                    {
+                        _toastNotification.AddErrorToastMessage("Mật khẩu phải nhiều hơn 8 ký tự, ít nhất 1 chữ thường 1 chữ in hoa, 1 chữ số, 1 ký tự đặc biệt!");
+                        return RedirectToAction("Register", "Home");
                     }
-                    _toastNotification.AddErrorToastMessage("Mật khẩu phải nhiều hơn 8 ký tự, ít nhất 1 chữ thường 1 chữ in hoa, 1 chữ số, 1 ký tự đặc biệt!");
                 }
                 else
                 {
                     _toastNotification.AddWarningToastMessage("Tên đăng nhập đã tồn tại. Bạn hãy nhập tên khác!");
-                    return View();
+                    return RedirectToAction("Register", "Home");
                 }
             }
-            return View();
+            return RedirectToAction("Register", "Home");
         }
 
         public IActionResult Login()
@@ -266,7 +269,7 @@ namespace webbanlaptop.Controllers
 
         public async Task<IActionResult> AddToCartLove(int id)
         {
-            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            if (HttpContext.Session.GetInt32("_TaiKhoanIDU") != null)
             {
                 ViewBag.danhmuc = _context.DanhMuc;
                 var product = await _context.SanPham
@@ -336,7 +339,7 @@ namespace webbanlaptop.Controllers
         
         public IActionResult ViewLove()
         {
-            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            if (HttpContext.Session.GetInt32("_TaiKhoanIDU") != null)
             {
                 ViewBag.danhmuc = _context.DanhMuc;
 
@@ -369,6 +372,7 @@ namespace webbanlaptop.Controllers
             var cart = GetCartItems();
             int amount = 0;
             int soLuong = 0;
+
             //chi tiết hóa đơn
             foreach (var i in cart)
             {

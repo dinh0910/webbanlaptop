@@ -98,26 +98,23 @@
     <tbody>
         @foreach (var item in Model)
         {
-            @if (item.SoLuong > 0)
-            {
-                <tr>
-                    <td>
-                        @(i++)
-                    </td>
-                    <td>
-                        <img src="~/images/products/@Html.DisplayFor(modelItem => item.HinhAnh)" width="100" class="img-thumbnail" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ten)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DonGia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SoLuong)
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    <img src="~/images/products/@Html.DisplayFor(modelItem => item.HinhAnh)" width="100" class="img-thumbnail" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonGia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+            </tr>
         }
     </tbody>
 </table>

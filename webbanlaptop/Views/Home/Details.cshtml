@@ -91,7 +91,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="primary-btn">Thêm vào giỏ</button>
+                        @if(Model.SoLuong > 0)
+                        {
+                            <button class="primary-btn" disabled>Hết hàng!</button>
+                        } else
+                        {
+                            <button type="submit" class="primary-btn">Thêm vào giỏ</button>
+                        }
                     </form>
                     <a href="#" class="heart-icon"><i class="fa fa-heart"></i></a>
                     <ul>
@@ -146,7 +152,7 @@
                                         {
                                             @if (item.SanPhamID == Model.SanPhamID)
                                             {
-                                                <li><b>@item.TenThongSo</b> <span>@item.NoiDung</span></li>
+                                                <li><b>@item.TenThongSo</b> <span>@item.NoiDungTS</span></li>
                                             }
                                         }
                                     </ul>

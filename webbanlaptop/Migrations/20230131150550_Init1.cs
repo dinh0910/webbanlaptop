@@ -175,7 +175,8 @@ namespace webbanlaptop.Migrations
                 name: "ThongSo",
                 columns: table => new
                 {
-                    ThongSoID = table.Column<int>(type: "int", nullable: false),
+                    ThongSoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     SanPhamID = table.Column<int>(type: "int", nullable: false),
                     LoaiCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ram = table.Column<string>(type: "nvarchar(max)", nullable: true),
