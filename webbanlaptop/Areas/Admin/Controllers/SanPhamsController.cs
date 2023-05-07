@@ -329,10 +329,10 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        public async Task<IActionResult> DeleteThongTin(int? id)
+        public async Task<IActionResult> DeleteThongTin(int? id, int idtt)
         {
             var tt = await _context.ThongTin
-                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+                .FirstOrDefaultAsync(m => m.ThongTinID == idtt);
 
             _context.ThongTin.Remove(tt);
             await _context.SaveChangesAsync();
@@ -340,10 +340,10 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        public async Task<IActionResult> DeleteThongSo(int? id)
+        public async Task<IActionResult> DeleteThongSo(int? id, int idts)
         {
             var ts = await _context.ThongSo
-                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+                .FirstOrDefaultAsync(m => m.ThongSoID == idts);
 
             _context.ThongSo.Remove(ts);
             await _context.SaveChangesAsync();
@@ -351,10 +351,10 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        public async Task<IActionResult> DeleteKhuyenMai(int? id)
+        public async Task<IActionResult> DeleteKhuyenMai(int? id, int idkm)
         {
             var tt = await _context.KhuyenMai
-                .FirstOrDefaultAsync(m => m.KhuyenMaiID == id);
+                .FirstOrDefaultAsync(m => m.KhuyenMaiID == idkm);
 
             _context.KhuyenMai.Remove(tt);
             await _context.SaveChangesAsync();
@@ -362,10 +362,10 @@ namespace webbanlaptop.Areas.Admin.Controllers
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        public async Task<IActionResult> DeleteHinhAnh(int? id)
+        public async Task<IActionResult> DeleteHinhAnh(int? id, int idha)
         {
             var tt = await _context.HinhAnh
-                .FirstOrDefaultAsync(m => m.HinhAnhID == id);
+                .FirstOrDefaultAsync(m => m.HinhAnhID == idha);
 
             _context.HinhAnh.Remove(tt);
             await _context.SaveChangesAsync();

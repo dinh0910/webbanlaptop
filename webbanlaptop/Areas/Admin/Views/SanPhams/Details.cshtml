@@ -23,15 +23,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex">
                 <div class="me-auto">
-                    @if(tt.Count() == 1)
-                    {
-                        <a class="btn btn-outline-dark disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin" aria-disabled="true">Thêm thông tin</a>
-                        <a class="btn btn-outline-danger" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT">Xóa</a>
-                    } else
-                    {
-                        <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin">Thêm thông tin</a>
-                        <a class="btn btn-outline-danger disabled" role="button" data-bs-toggle="modal" data-bs-target="#modalDelTT" aria-disabled="true">Xóa</a>
-                    }
+                    <a class="btn btn-outline-dark" role="button" data-bs-toggle="modal" data-bs-target="#modalThongTin" aria-disabled="true">Thêm thông tin</a>
                 </div>
                 <div class="p-2">
                     Thông tin sản phẩm
@@ -64,6 +56,13 @@
                                     @item.ChinhSach
                                 </div>
                             </li>
+                            <div class="list-group-item d-flex justify-content-between align-items-start">
+                                <form asp-action="DeleteThongTin">
+                                    <input type="hidden" name="id" value="@Model.SanPhamID" />
+                                    <input type="hidden" name="idtt" value="@item.ThongTinID" />
+                                    <button type="submit" class="btn btn-outline-danger">Xóa</button>
+                                </form>
+                            </div>
                         }
                     }
                 </ol>
@@ -105,8 +104,12 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/Admin/SanPhams/DeleteKhuyenMai/@item.KhuyenMaiID" role="button" class="btn btn-danger">Xóa</a>
-                                                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                    <form asp-action="DeleteKhuyenMai">
+                                                        <input type="hidden" name="id" value="@Model.SanPhamID" />
+                                                        <input type="hidden" name="idkm" value="@item.KhuyenMaiID" />
+                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,8 +169,12 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="/Admin/SanPhams/DeleteThongSo/@item.ThongSoID" role="button" class="btn btn-danger">Xóa</a>
-                                                        <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                        <form asp-action="DeleteThongSo">
+                                                            <input type="hidden" name="id" value="@Model.SanPhamID" />
+                                                            <input type="hidden" name="idts" value="@item.ThongSoID" />
+                                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                                            <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -225,8 +232,12 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="/Admin/SanPhams/DeleteHinhAnh/@item.HinhAnhID" role="button" class="btn btn-danger">Xóa</a>
-                                                        <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
+                                                        <form asp-action="DeleteHinhAnh">
+                                                            <input type="hidden" name="id" value="@Model.SanPhamID" />
+                                                            <input type="hidden" name="idha" value="@item.HinhAnhID" />
+                                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                                            <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,21 +368,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalDelTT" tabindex="-1" aria-labelledby="modalDelTTLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc chắn xóa?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <a href="/Admin/SanPhams/DeleteThongTin/@Model.SanPhamID" role="button" class="btn btn-danger">Xóa</a>
-                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</a>
             </div>
         </div>
     </div>
